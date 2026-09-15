@@ -103,6 +103,29 @@ That number is how phones know a new version exists. If you do not change it, pe
 
 ---
 
+## The quiz
+
+The green button above the guide opens a 21-question quiz built into
+the app. It shows questions in whichever language is selected, scores
+the 8 knowledge questions itself, and sends every answer straight to
+your Google Form's spreadsheet — no one has to open the Form itself.
+
+This works because each question in `SURVEY` (inside `index.html`)
+carries the same `entry.xxxxxxx` number as the matching question in
+your actual Google Form. **If you ever add, remove, or reorder
+questions in the Google Form itself, those numbers change**, and
+you'd need a fresh pre-filled link (⋮ menu on the form → "Get
+pre-filled link" → answer everything → copy the link) to find the new
+ones and update `SURVEY` to match. Editing wording only, with the same
+questions in the same order, is safe and needs no changes here.
+
+**Test it once before handing this to students**: submit the quiz
+yourself through the real deployed link, then open your Google
+Sheet and confirm a new row appeared with the right answers in the
+right columns. The app can't confirm this for you — it can't read
+Google's reply, so it always shows "thank you" whether or not the
+submission actually landed.
+
 ## Before students use this
 
 The safety text here follows RNIMU's own published instructions, but it has not been checked by anyone at the university. Take it to the fire safety department and ask them to review it. Their approval is what turns this from a student project into something the university can hand out.
