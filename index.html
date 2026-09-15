@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fire Safety — RNIMU</title>
+<meta name="theme-color" content="#00843D">
+
+<!-- This line connects the app to manifest.json, which is what lets a phone
+     install it to the home screen. Without it, it is just a website. -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+/* ============================================================
+   COLOURS AND SIZES
+   These are the safety colours used on real evacuation signs.
+   Green means "this way out". Red means "never do this".
+   Keep that meaning — do not use red for decoration.
+   ============================================================ */
+:root{
+  --green:#00843D;        /* safety green — escape routes */
+  --green-dark:#00632E;
+  --red:#C8102E;          /* safety red — prohibitions only */
+  --ink:#14261C;          /* text */
+  --muted:#5A6B5F;        /* secondary text */
+  --paper:#FFFFFF;
+  --wash:#EFF4F0;         /* section background */
+  --line:#CBD8CE;         /* hairlines */
+  --radius:10px;
+}
+
+*{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  /* No downloaded fonts on purpose: the app must work with no internet,
+     and a font that fails to load is a font you cannot read. */
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--wash);
+}
+
+.page{max-width:520px;margin:0 auto;background:var(--paper);min-height:100vh}
+
+/* ---------- top bar ---------- */
+.bar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;border-bottom:1px solid var(--line);
+}
+.bar h1{font-size:17px;font-weight:600;margin:0;letter-spacing:-.01em}
+.bar .sub{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+
+select{
+  font:inherit;font-size:15px;padding:7px 10px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--paper);color:var(--ink);
+}
+
+/* ---------- emergency block ---------- */
+/* This sits at the very top because it is the one thing someone needs
+   to find in three seconds without reading anything else. */
+.emergency{background:var(--green);color:#fff;padding:20px 18px 22px}
+.emergency h2{margin:0 0 4px;font-size:15px;font-weight:600}
+.emergency p{margin:0 0 14px;font-size:14px;opacity:.9}
+
+.call{
+  display:flex;align-items:baseline;gap:12px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:var(--radius);
+  padding:13px 16px;margin-bottom:8px;
+  color:#fff;text-decoration:none;
+}
+.call:last-child{margin-bottom:0}
+.call .num{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.call .who{font-size:14px;opacity:.92}
+.call:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* ---------- sections ---------- */
+.list{padding:8px 0 40px}
+
+details{border-bottom:1px solid var(--line)}
+summary{
+  padding:16px 18px;cursor:pointer;font-weight:600;font-size:16px;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;font-size:22px;color:var(--muted);line-height:1}
+details[open] summary::after{content:"\2013"}
+summary:focus-visible{outline:3px solid var(--green);outline-offset:-3px}
+
+.body{padding:0 18px 18px}
+.body p{margin:0 0 12px}
+.body ol,.body ul{margin:0 0 12px;padding-inline-start:22px}
+.body li{margin-bottom:7px}
+.body strong{font-weight:600}
+
+/* A red rule marks a prohibition. Same meaning as a red sign on a wall. */
+.never{
+  border-inline-start:4px solid var(--red);
+  background:#FCF2F3;
+  padding:12px 14px;border-radius:0 var(--radius) var(--radius) 0;
+  margin:0 0 12px;
+}
+.never b{color:var(--red)}
+
+.note{font-size:14px;color:var(--muted)}
+
+/* ---------- footer ---------- */
+footer{padding:22px 18px 40px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+footer p{margin:0 0 8px}
+
+#offline{
+  display:none;background:var(--ink);color:#fff;
+  padding:9px 18px;font-size:14px;text-align:center;
+}
+body.is-offline #offline{display:block}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="bar">
+    <h1>Fire safety
+      <span class="sub" id="buildingLabel">RNIMU — Ostrovityanova 1</span>
+    </h1>
+    <!-- Add a new <option> here when you add a language below. -->
+    <select id="lang" aria-label="Language">
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="fa">فارسی</option>
+    </select>
+  </div>
+
+  <div id="offline">Offline — everything here still works.</div>
+
+  <section class="emergency">
+    <h2 id="emTitle"></h2>
+    <p id="emSub"></p>
+    <a class="call" href="tel:112"><span class="num">112</span><span class="who" id="who112"></span></a>
+    <a class="call" href="tel:101"><span class="num">101</span><span class="who" id="who101"></span></a>
+    <a class="call" href="tel:+74954345192"><span class="num">+7 495 434-51-92</span><span class="who" id="whoDuty"></span></a>
+  </section>
+
+  <div class="list" id="list"></div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+/* ============================================================
+   THE ONLY PART YOU NEED TO EDIT
+
+   Everything the app says lives in CONTENT below.
+   To add a language, copy a whole block (for example the "en" block),
+   paste it, change the two-letter code, translate the text,
+   and add a matching <option> to the language menu above.
+
+   Do not delete the commas or the curly brackets.
+   ============================================================ */
+
+const CONTENT = {
+
+  en: {
+    emTitle: "In an emergency, call",
+    emSub: "Free from any phone, including with no SIM card.",
+    who112: "All emergencies",
+    who101: "Fire service",
+    whoDuty: "RNIMU duty dispatcher",
+    sections: [
+
+      { title: "The alarm sounds",
+        html: `
+          <ol>
+            <li>Leave straight away. Do not wait to be told a second time, and do not wait to see fire or smoke.</li>
+            <li>Take your coat if it is next to you. Never go back for anything.</li>
+            <li>Use the stairs. Close doors behind you.</li>
+            <li>Go to the assembly point and stay there until you are told you may leave.</li>
+          </ol>
+          <div class="never"><b>Never use the lift.</b> It can stop at the fire floor or lose power with you inside.</div>
+          <p class="note">RNIMU instruction: the building should be clear within 5–7 minutes, and you should move 20–25 metres away from it.</p>`
+      },
+
+      { title: "You see a fire",
+        html: `
+          <ol>
+            <li>Warn the people around you and set off the nearest alarm.</li>
+            <li>Call 112 or 101. Say the address, the building, and the floor.</li>
+            <li>Leave. Close the door of the room behind you.</li>
+          </ol>
+          <p>Only consider an extinguisher if the fire is small, you have been trained, other people already know, and there is a clear way out behind you. If any of those is missing, leave.</p>`
+      },
+
+      { title: "Smoke in the corridor",
+        html: `
+          <p>Smoke kills far more people than flames. It rises, so the cleanest air is low down.</p>
+          <ol>
+            <li>Stay low and move towards the nearest safe exit.</li>
+            <li>If the smoke is thick, do not push through it. Use another route.</li>
+            <li>If no route is safe, go back to a room and close the door.</li>
+          </ol>`
+      },
+
+      { title: "You cannot get out",
+        html: `
+          <ol>
+            <li>Stay in the room and close the door.</li>
+            <li>Block the gap under the door with clothing or towels.</li>
+            <li>Call 112 and say exactly which building, floor and room you are in.</li>
+            <li>Go to the window and make yourself visible.</li>
+          </ol>
+          <div class="never"><b>Do not open windows wide</b> if smoke is coming in from outside. Air movement can pull fire towards you.</div>`
+      },
+
+      { title: "Clothing catches fire",
+        html: `
+          <p><strong>Stop. Drop. Roll.</strong></p>
+          <ol>
+            <li>Stop moving — running feeds the flames.</li>
+            <li>Drop to the ground.</li>
+            <li>Cover your face with your hands and roll until the fire is out.</li>
+          </ol>
+          <p>To help someone else, smother the flames with a coat or blanket, then cool the burn with cool running water for 20 minutes.</p>`
+      },
+
+      { title: "Using an extinguisher",
+        html: `
+          <ol>
+            <li>Pull the pin.</li>
+            <li>Aim at the <strong>base</strong> of the fire, not at the flames.</li>
+            <li>Squeeze the handle.</li>
+            <li>Sweep side to side.</li>
+          </ol>
+          <p>Keep your back to the exit so you can always leave. If the fire does not go out within seconds, leave.</p>`
+      },
+
+      { title: "Your building",
+        html: `
+          <p>Add the evacuation plan for each floor here as an image, and mark the assembly point.</p>
+          <p class="note">Photograph the official план эвакуации posted in the corridor, or ask the fire safety department for the file. Nothing in this section should differ from the plan on the wall.</p>`
+      },
+
+      { title: "Not allowed in the dormitory",
+        html: `
+          <div class="never"><b>Banned in rooms:</b> microwave ovens, hotplates, washing machines, oil heaters, charging e-bikes and scooters.</div>
+          <p>Allowed, one each: kettle, iron, fridge. A heater up to 1100 W. Computer equipment up to 700 W total.</p>
+          <p>Never block a corridor or prop a self-closing door open. That door is what keeps smoke out of the stairs.</p>`
+      }
+
+    ],
+    foot: `<p>Prepared by students of RNIMU. Check every instruction against the official notices in your building.</p>
+           <p>Last updated: September 2026.</p>`
+  },
+
+  ru: {
+    emTitle: "При пожаре звоните",
+    emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
+    who112: "Единая служба",
+    who101: "Пожарная охрана",
+    whoDuty: "Дежурный диспетчер РНИМУ",
+    sections: [
+      { title: "Сработала сигнализация",
+        html: `
+          <ol>
+            <li>Выходите сразу. Не ждите повторного сигнала и не ждите, пока увидите огонь или дым.</li>
+            <li>Возьмите верхнюю одежду, если она рядом. Никогда не возвращайтесь за вещами.</li>
+            <li>Идите по лестнице. Закрывайте за собой двери.</li>
+            <li>Идите на сборный пункт и оставайтесь там до разрешения.</li>
+          </ol>
+          <div class="never"><b>Лифтом пользоваться запрещено.</b> Он может остановиться на горящем этаже или обесточиться.</div>
+          <p class="note">Инструкция РНИМУ: эвакуация — не более 5–7 минут, отойти от здания на 20–25 метров.</p>`
+      },
+      { title: "Вы увидели пожар",
+        html: `
+          <ol>
+            <li>Предупредите людей рядом и включите ближайший извещатель.</li>
+            <li>Позвоните 112 или 101. Назовите адрес, корпус и этаж.</li>
+            <li>Выходите. Закройте дверь помещения за собой.</li>
+          </ol>
+          <p>Браться за огнетушитель можно, только если очаг маленький, вы умеете им пользоваться, другие уже предупреждены и позади вас свободный выход. Нет хотя бы одного — уходите.</p>`
+      },
+      { title: "Дым в коридоре",
+        html: `
+          <p>Дым опаснее огня. Он поднимается вверх, поэтому чистый воздух — внизу.</p>
+          <ol>
+            <li>Пригнитесь и двигайтесь к ближайшему безопасному выходу.</li>
+            <li>Не идите сквозь плотный дым. Ищите другой путь.</li>
+            <li>Если безопасного пути нет — вернитесь в помещение и закройте дверь.</li>
+          </ol>`
+      },
+      { title: "Выйти невозможно",
+        html: `
+          <ol>
+            <li>Останьтесь в комнате, закройте дверь.</li>
+            <li>Заткните щель под дверью одеждой или полотенцами.</li>
+            <li>Позвоните 112 и назовите корпус, этаж и номер комнаты.</li>
+            <li>Подойдите к окну, чтобы вас было видно.</li>
+          </ol>
+          <div class="never"><b>Не открывайте окно широко</b>, если дым идёт снаружи. Движение воздуха притягивает огонь.</div>`
+      },
+      { title: "Загорелась одежда",
+        html: `
+          <p><strong>Остановись. Упади. Катись.</strong></p>
+          <ol>
+            <li>Не бегите — бег раздувает пламя.</li>
+            <li>Упадите на пол.</li>
+            <li>Закройте лицо руками и катайтесь, пока огонь не погаснет.</li>
+          </ol>
+          <p>Чтобы помочь другому, накройте пламя курткой или одеялом, затем охлаждайте ожог прохладной водой 20 минут.</p>`
+      },
+      { title: "Как пользоваться огнетушителем",
+        html: `
+          <ol>
+            <li>Выдерните чеку.</li>
+            <li>Направьте раструб на <strong>основание</strong> огня, а не на пламя.</li>
+            <li>Нажмите рычаг.</li>
+            <li>Ведите из стороны в сторону.</li>
+          </ol>
+          <p>Стойте спиной к выходу, чтобы всегда можно было уйти. Не погасло за несколько секунд — уходите.</p>`
+      },
+      { title: "Ваш корпус",
+        html: `
+          <p>Сюда добавьте планы эвакуации по этажам и отметьте сборный пункт.</p>
+          <p class="note">Сфотографируйте официальный план эвакуации в коридоре или запросите файл в отделе пожарной безопасности. Ничего в этом разделе не должно расходиться с планом на стене.</p>`
+      },
+      { title: "Запрещено в общежитии",
+        html: `
+          <div class="never"><b>Запрещены в комнатах:</b> микроволновые печи, электроплиты, стиральные машины, масляные радиаторы, зарядка электросамокатов и велосипедов.</div>
+          <p>Разрешено по одному: чайник, утюг, холодильник. Обогреватель до 1100 Вт. Компьютерная техника суммарно до 700 Вт.</p>
+          <p>Не загромождайте коридор и не фиксируйте самозакрывающиеся двери открытыми. Эта дверь не пускает дым на лестницу.</p>`
+      }
+    ],
+    foot: `<p>Подготовлено студентами РНИМУ. Сверяйте все указания с официальными инструкциями в вашем корпусе.</p>
+           <p>Обновлено: сентябрь 2026 г.</p>`
+  },
+
+  fa: {
+    emTitle: "در شرایط اضطراری تماس بگیرید",
+    emSub: "تماس رایگان از هر تلفنی، حتی بدون سیم‌کارت.",
+    who112: "خدمات اضطراری",
+    who101: "آتش‌نشانی",
+    whoDuty: "افسر کشیک دانشگاه",
+    sections: [
+      { title: "آژیر به صدا درآمد",
+        html: `
+          <ol>
+            <li>بلافاصله خارج شوید. منتظر هشدار دوم یا دیدن آتش و دود نمانید.</li>
+            <li>اگر کاپشن کنار شماست بردارید. هرگز برای وسایل برنگردید.</li>
+            <li>از پله‌ها استفاده کنید و درها را پشت سر خود ببندید.</li>
+            <li>به نقطه تجمع بروید و تا اعلام مجوز آنجا بمانید.</li>
+          </ol>
+          <div class="never"><b>هرگز از آسانسور استفاده نکنید.</b> ممکن است در طبقه آتش متوقف شود یا برق آن قطع شود.</div>
+          <p class="note">دستورالعمل دانشگاه: تخلیه حداکثر ۵ تا ۷ دقیقه، و فاصله گرفتن ۲۰ تا ۲۵ متر از ساختمان.</p>`
+      },
+      { title: "آتش می‌بینید",
+        html: `
+          <ol>
+            <li>به اطرافیان هشدار دهید و نزدیک‌ترین آژیر را فعال کنید.</li>
+            <li>با ۱۱۲ یا ۱۰۱ تماس بگیرید. آدرس، ساختمان و طبقه را بگویید.</li>
+            <li>خارج شوید و در اتاق را ببندید.</li>
+          </ol>
+          <p>تنها زمانی سراغ خاموش‌کننده بروید که آتش کوچک باشد، آموزش دیده باشید، دیگران خبر داشته باشند و راه خروج پشت سر شما باز باشد.</p>`
+      },
+      { title: "دود در راهرو",
+        html: `
+          <p>دود بیش از شعله قربانی می‌گیرد. دود بالا می‌رود، پس هوای سالم پایین است.</p>
+          <ol>
+            <li>خم شوید و به سمت نزدیک‌ترین خروجی امن حرکت کنید.</li>
+            <li>از میان دود غلیظ عبور نکنید؛ مسیر دیگری پیدا کنید.</li>
+            <li>اگر هیچ مسیر امنی نیست، به اتاق برگردید و در را ببندید.</li>
+          </ol>`
+      },
+      { title: "راه خروج ندارید",
+        html: `
+          <ol>
+            <li>در اتاق بمانید و در را ببندید.</li>
+            <li>شکاف زیر در را با لباس یا حوله ببندید.</li>
+            <li>با ۱۱۲ تماس بگیرید و ساختمان، طبقه و شماره اتاق را بگویید.</li>
+            <li>کنار پنجره بروید تا دیده شوید.</li>
+          </ol>
+          <div class="never"><b>پنجره را کاملاً باز نکنید</b> اگر دود از بیرون می‌آید. جریان هوا آتش را به سمت شما می‌کشد.</div>`
+      },
+      { title: "لباس آتش گرفت",
+        html: `
+          <p><strong>بایست. بیفت. بغلت.</strong></p>
+          <ol>
+            <li>ندوید — دویدن شعله را بیشتر می‌کند.</li>
+            <li>روی زمین دراز بکشید.</li>
+            <li>صورت را با دست بپوشانید و بغلتید تا آتش خاموش شود.</li>
+          </ol>
+          <p>برای کمک به دیگری، شعله را با کاپشن یا پتو خفه کنید، سپس ۲۰ دقیقه سوختگی را با آب خنک بشویید.</p>`
+      },
+      { title: "استفاده از کپسول آتش‌نشانی",
+        html: `
+          <ol>
+            <li>ضامن را بکشید.</li>
+            <li>به <strong>پایه</strong> آتش نشانه بگیرید، نه به شعله.</li>
+            <li>اهرم را فشار دهید.</li>
+            <li>از یک طرف به طرف دیگر حرکت دهید.</li>
+          </ol>
+          <p>پشت شما به سمت خروجی باشد. اگر ظرف چند ثانیه خاموش نشد، خارج شوید.</p>`
+      },
+      { title: "ساختمان شما",
+        html: `
+          <p>نقشه تخلیه هر طبقه را اینجا اضافه کنید و نقطه تجمع را مشخص کنید.</p>
+          <p class="note">از نقشه رسمی نصب‌شده در راهرو عکس بگیرید یا فایل آن را از اداره ایمنی بخواهید. محتوای این بخش نباید با نقشه روی دیوار تفاوت داشته باشد.</p>`
+      },
+      { title: "ممنوع در خوابگاه",
+        html: `
+          <div class="never"><b>ممنوع در اتاق‌ها:</b> مایکروویو، اجاق برقی، ماشین لباسشویی، شوفاژ روغنی، شارژ اسکوتر و دوچرخه برقی.</div>
+          <p>مجاز، هرکدام یکی: کتری، اتو، یخچال. بخاری تا ۱۱۰۰ وات. تجهیزات رایانه‌ای مجموعاً تا ۷۰۰ وات.</p>
+          <p>راهرو را سد نکنید و درهای خودبسته‌شو را باز نگه ندارید. آن در جلوی ورود دود به پله‌ها را می‌گیرد.</p>`
+      }
+    ],
+    foot: `<p>تهیه‌شده توسط دانشجویان دانشگاه پیروگوف. هر دستورالعمل را با اطلاعیه‌های رسمی ساختمان خود مطابقت دهید.</p>
+           <p>آخرین به‌روزرسانی: سپتامبر ۲۰۲۶.</p>`
+  }
+
+};
+
+/* ============================================================
+   BELOW THIS LINE IS THE MACHINERY. You do not need to change it.
+   ============================================================ */
+
+const listEl = document.getElementById('list');
+const langEl = document.getElementById('lang');
+
+function render(code){
+  const c = CONTENT[code];
+  if(!c) return;
+
+  document.documentElement.lang = code;
+  // Persian and Arabic read right to left.
+  document.documentElement.dir = (code === 'fa' || code === 'ar') ? 'rtl' : 'ltr';
+
+  document.getElementById('emTitle').textContent = c.emTitle;
+  document.getElementById('emSub').textContent   = c.emSub;
+  document.getElementById('who112').textContent  = c.who112;
+  document.getElementById('who101').textContent  = c.who101;
+  document.getElementById('whoDuty').textContent = c.whoDuty;
+  document.getElementById('foot').innerHTML      = c.foot;
+
+  listEl.innerHTML = c.sections.map(s => `
+    <details>
+      <summary>${s.title}</summary>
+      <div class="body">${s.html}</div>
+    </details>`).join('');
+
+  try{ localStorage.setItem('lang', code); }catch(e){}
+}
+
+// Remember the chosen language, or guess from the phone's settings.
+let start = 'en';
+try{ start = localStorage.getItem('lang') || (navigator.language || 'en').slice(0,2); }catch(e){}
+if(!CONTENT[start]) start = 'en';
+langEl.value = start;
+render(start);
+
+langEl.addEventListener('change', e => render(e.target.value));
+
+// Tell the user when they are offline, so they trust that it still works.
+function netStatus(){ document.body.classList.toggle('is-offline', !navigator.onLine); }
+window.addEventListener('online', netStatus);
+window.addEventListener('offline', netStatus);
+netStatus();
+
+// This starts the service worker, which is what saves the app for offline use.
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+}
+</script>
+</body>
+</html>
