@@ -529,7 +529,10 @@ try{ start = localStorage.getItem('lang') || (navigator.language || 'en').slice(
 if(!CONTENT[start]) start = 'en';
 langEl.value = start;
 render(start);
-renderQuizLaunch();
+// NOTE: the quiz card is filled in at the very bottom of this script instead
+// of here. SURVEY is defined further down, and a const cannot be read before
+// the line that defines it has run — doing it here threw an error that stopped
+// the whole script, which killed the quiz AND the language switcher.
 
 langEl.addEventListener('change', e => {
   render(e.target.value);
@@ -929,6 +932,9 @@ function submitQuiz(){
 }
 
 document.getElementById('quizLaunchBtn').onclick = openQuiz;
+
+// Everything above is defined by now, so it is safe to fill the quiz card.
+renderQuizLaunch();
 </script>
 </body>
 </html>
