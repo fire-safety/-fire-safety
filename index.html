@@ -77,7 +77,7 @@ select{
   color:#fff;text-decoration:none;
 }
 .call:last-child{margin-bottom:0}
-.call .num{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.call .num{font-size:26px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;direction:ltr;unicode-bidi:isolate}
 .call .who{font-size:14px;opacity:.92}
 .call:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
@@ -168,7 +168,29 @@ body.is-offline #offline{display:block}
 .qScaleBtn.sel{border-color:var(--green);background:var(--green);color:#fff}
 .qScaleLabels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:18px}
 
-.qErr{color:var(--red);font-size:13px;margin:-14px 0 14px}
+.qErr{color:var(--red);font-size:13px;margin:4px 0 0}
+.qIntro{font-size:15px;margin:0 0 20px}
+.qKicker{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--green-dark);margin:0 0 4px}
+.qHelp{font-size:13px;color:var(--muted);margin:-8px 0 12px}
+textarea.qInput{min-height:84px;resize:vertical;display:block}
+.qCheck{position:relative;padding-inline-start:44px}
+.qCheck::before{content:"";position:absolute;inset-inline-start:14px;top:50%;width:18px;height:18px;margin-top:-9px;border:2px solid var(--line);border-radius:4px;background:var(--paper)}
+.qCheck.sel::before{content:"\2713";border-color:var(--green);background:var(--green);color:#fff;font-size:13px;line-height:18px;text-align:center}
+.qScaleBtn{min-width:0}
+.qScale.wide{gap:4px}
+.qScale.wide .qScaleBtn{font-size:14px;padding:11px 0}
+.qGridRow{margin:0 0 14px}
+.qGridLabel{font-size:15px;margin:0 0 6px}
+.qGridBtns{display:flex;gap:6px}
+.qGridBtn{flex:1;min-width:0;padding:10px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);font:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer}
+.qGridBtn.na{flex:2.2;font-size:12px;font-weight:500;line-height:1.2;padding:6px 4px}
+.qGridBtn.sel{border-color:var(--green);background:var(--green);color:#fff}
+.qGridBtn:focus-visible,.qScaleBtn:focus-visible{outline:3px solid var(--green-dark);outline-offset:1px}
+.qRank{font-size:20px;font-weight:700;margin:2px 0 18px}
+.qReview{text-align:start;margin:24px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--wash)}
+.qReview p{margin:0 0 10px;font-size:14px}
+.qReview p:last-child{margin-bottom:0}
+.qReviewTitle{font-weight:600;font-size:15px!important}
 
 .qNav{display:flex;gap:10px;padding:6px 18px 18px}
 .qBtn{
@@ -596,265 +618,324 @@ if('serviceWorker' in navigator){
 }
 
 /* ============================================================
-   THE SURVEY
+   THE SURVEY — Fire Safety Quest, Level 2
 
-   This feeds the same Google Form your team already built —
-   the "entry.xxxxxxx" number on each question is what ties it
-   to one specific question in that form. Get them from the
-   form's "Get pre-filled link" tool (⋮ menu). If you ever add,
-   remove, or reorder questions in the actual Google Form, the
-   entry numbers for any NEW questions will change, so you'd
-   need to regenerate a pre-filled link and update this section
-   to match.
+   This feeds the Google Form "Fire Safety Quest — Level 2".
+   The "entry.xxxxxxx" number on each question is what ties it to
+   one specific question in that form. If you add, remove or retype
+   questions or options in the Google Form, update this section to
+   match, or those answers will not be saved.
 
-   Each multiple-choice option has a "value" (always English —
-   this is what actually gets sent to the spreadsheet, so every
-   response lands in the same language no matter which language
-   the student saw) and a "label" per language (what the student
-   actually reads on screen).
+   Every option has a "value" (always English, copied exactly from the
+   Google Form — this is what gets saved in the spreadsheet, so all
+   answers land in one language) and a "label" per language (what the
+   student reads on screen).
+
+   Questions with a "correct" value are scored. Their options are
+   shuffled on screen so the right answer is not always in the same
+   place; what gets saved does not change.
    ============================================================ */
 
 const SURVEY = {
-  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSe1TNnM_pNUGF0YPxh-Cl7B77Bx9Ph5f2gM5X7j0LHY1uWzVg/formResponse',
-  pageHistory: '0,1,2,3',
+  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSf_svd6mQLiYpY33ueWK2xlbyIje8pBpTzmrGUjJPYYITXnQw/formResponse',
+  pageHistory: '0',
 
   launch: {
-    en: { title: 'Take the 5-minute safety quiz', sub: 'Helps the team understand what to teach next.' },
-    ru: { title: 'Пройти 5-минутный опрос по безопасности', sub: 'Поможет команде понять, чему учить в первую очередь.' },
-    fa: { title: 'شرکت در آزمون ۵ دقیقه‌ای ایمنی', sub: 'به تیم کمک می‌کند بداند چه چیزی را بعد آموزش دهد.' }
+    en: { title: '🔥 Fire Safety Quest — Level 2', sub: 'About 6 minutes · anonymous · see your score and rank at the end' },
+    ru: { title: '🔥 Квест по пожарной безопасности — уровень 2', sub: 'Около 6 минут · анонимно · в конце — ваш результат и звание' },
+    fa: { title: '🔥 کوئست ایمنی آتش‌سوزی — مرحلهٔ ۲', sub: 'حدود ۶ دقیقه · ناشناس · در پایان امتیاز و رتبهٔ خود را می‌بینید' }
   },
 
   ui: {
     en: { back:'Back to guide', next:'Next', submit:'Submit', required:'Please answer this question.',
           offline:"You'll need an internet connection to submit this. Your answers are still here — try again once you're online.",
-          doneTitle:'Thank you', doneScore:'out of 8 on the knowledge questions',
-          doneBody:'Your answers help the team improve this guide for other students.', doneBtn:'Back to guide' },
+          doneTitle:'Mission complete!', doneScore:'correct answers on the missions', rankLabel:'Your rank',
+          reviewTitle:'Check these again', correctLabel:'Correct answer:',
+          doneBody:'Thanks, agent! Your answers help the team improve this guide for other students.', doneBtn:'Back to guide' },
     ru: { back:'Назад к инструкции', next:'Далее', submit:'Отправить', required:'Пожалуйста, ответьте на этот вопрос.',
           offline:'Для отправки нужен интернет. Ваши ответы сохранены — попробуйте снова при подключении к сети.',
-          doneTitle:'Спасибо', doneScore:'из 8 в вопросах на знание',
-          doneBody:'Ваши ответы помогут команде улучшить этот гид для других студентов.', doneBtn:'Назад к инструкции' },
+          doneTitle:'Миссия выполнена!', doneScore:'правильных ответов в миссиях', rankLabel:'Ваше звание',
+          reviewTitle:'Повторите это', correctLabel:'Правильный ответ:',
+          doneBody:'Спасибо, агент! Ваши ответы помогут команде улучшить этот гид для других студентов.', doneBtn:'Назад к инструкции' },
     fa: { back:'بازگشت به راهنما', next:'بعدی', submit:'ارسال', required:'لطفاً به این سؤال پاسخ دهید.',
           offline:'برای ارسال به اینترنت نیاز دارید. پاسخ‌های شما ذخیره شده‌اند — پس از اتصال دوباره امتحان کنید.',
-          doneTitle:'سپاسگزاریم', doneScore:'از ۸ در سؤالات دانشی',
-          doneBody:'پاسخ‌های شما به تیم کمک می‌کند این راهنما را برای دانشجویان دیگر بهتر کند.', doneBtn:'بازگشت به راهنما' }
+          doneTitle:'مأموریت انجام شد!', doneScore:'پاسخ درست در مأموریت‌ها', rankLabel:'رتبهٔ شما',
+          reviewTitle:'این‌ها را دوباره مرور کنید', correctLabel:'پاسخ درست:',
+          doneBody:'ممنون، مأمور! پاسخ‌های شما به تیم کمک می‌کند این راهنما را برای دانشجویان دیگر بهتر کند.', doneBtn:'بازگشت به راهنما' }
   },
 
+  // Rank by number of correct answers (checked from the top down).
+  ranks: [
+    { min:11, label:{en:'🏆 Fire Safety Legend', ru:'🏆 Легенда пожарной безопасности', fa:'🏆 اسطورهٔ ایمنی آتش‌سوزی'} },
+    { min:9,  label:{en:'🥇 Senior Agent', ru:'🥇 Старший агент', fa:'🥇 مأمور ارشد'} },
+    { min:6,  label:{en:'🥈 Field Agent', ru:'🥈 Полевой агент', fa:'🥈 مأمور میدانی'} },
+    { min:3,  label:{en:'🥉 Agent in Training', ru:'🥉 Агент-стажёр', fa:'🥉 مأمور کارآموز'} },
+    { min:0,  label:{en:'🔰 Rookie', ru:'🔰 Новичок', fa:'🔰 تازه‌کار'} }
+  ],
+
   sections: [
-    { title: {en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
-      questions: [
-        { id:'code', entry:'entry.2071223648', type:'text',
-          text:{en:"Create a code only you will remember: the first two letters of your mother's first name, followed by the day of the month you were born.",
-                ru:'Придумайте код, который запомните только вы: первые две буквы имени вашей матери и день месяца, когда вы родились.',
-                fa:'کدی بسازید که فقط خودتان به خاطر بسپارید: دو حرف اول نام مادرتان، به‌علاوه روز تولدتان.'},
-          help:{en:'Use the exact same code if you take this survey again later.',
-                ru:'Используйте точно такой же код, если будете проходить опрос снова.',
-                fa:'اگر دوباره در این نظرسنجی شرکت کردید، از همان کد استفاده کنید.'},
-          placeholder:{en:'e.g. MA14', ru:'например, МА14', fa:'مثلاً MA14'} }
-      ]
-    },
-    { title: {en:'About you', ru:'О вас', fa:'درباره شما'},
-      questions: [
-        { id:'A1', entry:'entry.1193634390', type:'radio',
-          text:{en:'What year of study are you in?', ru:'На каком вы курсе?', fa:'در چه سال تحصیلی هستید؟'},
-          options:[
-            {value:'1st year', label:{en:'1st year', ru:'1 курс', fa:'سال اول'}},
-            {value:'2nd year', label:{en:'2nd year', ru:'2 курс', fa:'سال دوم'}},
-            {value:'3rd year', label:{en:'3rd year', ru:'3 курс', fa:'سال سوم'}},
-            {value:'4th year', label:{en:'4th year', ru:'4 курс', fa:'سال چهارم'}},
-            {value:'5th year', label:{en:'5th year', ru:'5 курс', fa:'سال پنجم'}},
-            {value:'6th year', label:{en:'6th year', ru:'6 курс', fa:'سال ششم'}},
-            {value:'Other (postgraduate, ординатура, etc.)', label:{en:'Other (postgraduate, etc.)', ru:'Другое (аспирантура, ординатура)', fa:'سایر (تحصیلات تکمیلی)'}}
-          ]},
-        { id:'A2', entry:'entry.336253365', type:'text',
-          text:{en:'Which country are you from?', ru:'Из какой вы страны?', fa:'اهل کدام کشور هستید؟'},
-          placeholder:{en:'Country', ru:'Страна', fa:'کشور'} },
-        { id:'A3', entry:'entry.1942324922', type:'radio',
-          text:{en:'How long have you been in Russia?', ru:'Сколько времени вы в России?', fa:'چه مدت است در روسیه هستید؟'},
-          options:[
-            {value:'Less than 6 months', label:{en:'Less than 6 months', ru:'Менее 6 месяцев', fa:'کمتر از ۶ ماه'}},
-            {value:'6–12 months', label:{en:'6–12 months', ru:'6–12 месяцев', fa:'۶ تا ۱۲ ماه'}},
-            {value:'1–3 years', label:{en:'1–3 years', ru:'1–3 года', fa:'۱ تا ۳ سال'}},
-            {value:'More than 3 years', label:{en:'More than 3 years', ru:'Более 3 лет', fa:'بیش از ۳ سال'}}
-          ]},
-        { id:'A4', entry:'entry.876655064', type:'radio',
-          text:{en:'How would you rate your Russian language level?', ru:'Как вы оцениваете свой уровень русского языка?', fa:'سطح زبان روسی خود را چگونه ارزیابی می‌کنید؟'},
-          options:[
-            {value:'Beginner', label:{en:'Beginner', ru:'Начальный', fa:'مبتدی'}},
-            {value:'Elementary', label:{en:'Elementary', ru:'Элементарный', fa:'ابتدایی'}},
-            {value:'Intermediate', label:{en:'Intermediate', ru:'Средний', fa:'متوسط'}},
-            {value:'Upper-intermediate', label:{en:'Upper-intermediate', ru:'Выше среднего', fa:'متوسط رو به بالا'}},
-            {value:'Advanced', label:{en:'Advanced', ru:'Продвинутый', fa:'پیشرفته'}},
-            {value:'Native speaker', label:{en:'Native speaker', ru:'Родной язык', fa:'زبان مادری'}}
-          ]},
-        { id:'A5', entry:'entry.169264194', type:'radio',
-          text:{en:'How would you rate your English language level?', ru:'Как вы оцениваете свой уровень английского языка?', fa:'سطح زبان انگلیسی خود را چگونه ارزیابی می‌کنید؟'},
-          options:[
-            {value:'Beginner', label:{en:'Beginner', ru:'Начальный', fa:'مبتدی'}},
-            {value:'Elementary', label:{en:'Elementary', ru:'Элементарный', fa:'ابتدایی'}},
-            {value:'Intermediate', label:{en:'Intermediate', ru:'Средний', fa:'متوسط'}},
-            {value:'Upper-intermediate', label:{en:'Upper-intermediate', ru:'Выше среднего', fa:'متوسط رو به بالا'}},
-            {value:'Advanced', label:{en:'Advanced', ru:'Продвинутый', fa:'پیشرفته'}},
-            {value:'Native speaker', label:{en:'Native speaker', ru:'Родной язык', fa:'زبان مادری'}}
-          ]},
-        { id:'A6', entry:'entry.1934894177', type:'radio',
-          text:{en:'Did you receive any fire safety briefing when you enrolled or moved into your accommodation?',
-                ru:'Проходили ли вы инструктаж по пожарной безопасности при поступлении или заселении?',
-                fa:'هنگام ثبت‌نام یا اسکان، آموزش ایمنی آتش‌نشانی دریافت کردید؟'},
+    { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
+      intro:{en:"Welcome back, agent! 🕵️ Since our first check, you've had our training, videos, website and chatbot. Let's see how much your skills have grown!",
+             ru:'С возвращением, агент! 🕵️ После первой проверки у вас были наше обучение, видео, сайт и чат-бот. Посмотрим, насколько выросли ваши навыки!',
+             fa:'خوش آمدید، مأمور! 🕵️ از بررسی اول تاکنون، آموزش، ویدیوها، وب‌سایت و چت‌بات ما را داشته‌اید. ببینیم مهارت‌هایتان چقدر پیشرفت کرده است!'},
+      questions:[
+        { id:'first', entry:'entry.1866014080', type:'radio',
+          text:{en:'Did you fill in our first questionnaire?', ru:'Вы проходили наш первый опрос?', fa:'آیا در پرسشنامهٔ اول ما شرکت کردید؟'},
           options:[
             {value:'Yes', label:{en:'Yes', ru:'Да', fa:'بله'}},
-            {value:'No', label:{en:'No', ru:'Нет', fa:'خیر'}},
-            {value:"I don't remember", label:{en:"I don't remember", ru:'Не помню', fa:'به خاطر نمی‌آورم'}}
+            {value:'No',  label:{en:'No',  ru:'Нет', fa:'خیر'}}
+          ]},
+        { id:'code', entry:'entry.1943426309', type:'text',
+          text:{en:'Your secret agent code', ru:'Ваш секретный код агента', fa:'کد مخفی مأمور شما'},
+          help:{en:"Same code as last time: the first 2 letters of your mother's first name + the day you were born (2 digits).",
+                ru:'Тот же код, что и в прошлый раз: первые 2 буквы имени вашей матери + день вашего рождения (2 цифры).',
+                fa:'همان کد دفعهٔ قبل: دو حرف اول نام مادرتان + روز تولدتان (دو رقم).'},
+          placeholder:{en:'e.g. MA07', ru:'например, МА07', fa:'مثلاً MA07'} }
+      ]
+    },
+
+    { title:{en:'🚨 Mission 1 — React', ru:'🚨 Миссия 1 — Действуй', fa:'🚨 مأموریت ۱ — واکنش'},
+      questions:[
+        { id:'Q1', entry:'entry.777401003', type:'radio', correct:'B. Leave using the designated safe evacuation route',
+          kicker:{en:'What would you do?', ru:'Что бы вы сделали?', fa:'چه می‌کنید؟'},
+          text:{en:'You are sitting in a university classroom when the fire alarm starts. You do not see any fire or smoke. What should you do?',
+                ru:'Вы сидите в учебной аудитории, и начинает звучать пожарная сигнализация. Огня и дыма вы не видите. Что нужно сделать?',
+                fa:'در کلاس دانشگاه نشسته‌اید که آژیر آتش به صدا درمی‌آید. هیچ آتش یا دودی نمی‌بینید. چه باید بکنید؟'},
+          options:[
+            {value:'A. Wait until someone confirms there is really a fire', label:{en:'Wait until someone confirms there is really a fire', ru:'Подождать, пока кто-нибудь подтвердит, что пожар настоящий', fa:'صبر کنم تا کسی تأیید کند که واقعاً آتش‌سوزی شده است'}},
+            {value:'B. Leave using the designated safe evacuation route', label:{en:'Leave using the designated safe evacuation route', ru:'Выйти по установленному безопасному пути эвакуации', fa:'از مسیر امن تخلیهٔ تعیین‌شده خارج شوم'}},
+            {value:'C. Use the elevator so you can leave faster', label:{en:'Use the elevator so you can leave faster', ru:'Воспользоваться лифтом, чтобы выйти быстрее', fa:'از آسانسور استفاده کنم تا سریع‌تر خارج شوم'}},
+            {value:'D. Finish what you are doing and then leave', label:{en:'Finish what you are doing and then leave', ru:'Закончить то, что делаю, а потом выйти', fa:'کارم را تمام کنم و بعد خارج شوم'}}
+          ]},
+        { id:'Q2', entry:'entry.404543737', type:'radio', correct:'B. Find a safer alternative exit/route and avoid the smoke if possible',
+          kicker:{en:'Smoke Challenge', ru:'Испытание дымом', fa:'چالش دود'},
+          text:{en:'You are evacuating your dormitory. Your usual corridor has become filled with smoke. What is the safest response?',
+                ru:'Вы эвакуируетесь из общежития. Ваш обычный коридор заполнился дымом. Как поступить безопаснее всего?',
+                fa:'در حال تخلیهٔ خوابگاه هستید. راهرویی که همیشه از آن می‌روید پر از دود شده است. امن‌ترین کار چیست؟'},
+          options:[
+            {value:'A. Walk through the smoke as quickly as possible', label:{en:'Walk through the smoke as quickly as possible', ru:'Как можно быстрее пройти сквозь дым', fa:'هرچه سریع‌تر از میان دود عبور کنم'}},
+            {value:'B. Find a safer alternative exit/route and avoid the smoke if possible', label:{en:'Find a safer exit or route and avoid the smoke if possible', ru:'Найти другой, более безопасный выход или путь и по возможности избегать дыма', fa:'خروجی یا مسیر امن‌تری پیدا کنم و تا جای ممکن از دود دوری کنم'}},
+            {value:'C. Wait in the corridor until the smoke disappears', label:{en:'Wait in the corridor until the smoke disappears', ru:'Ждать в коридоре, пока дым не рассеется', fa:'در راهرو منتظر بمانم تا دود از بین برود'}},
+            {value:'D. Use the elevator instead', label:{en:'Use the elevator instead', ru:'Вместо этого воспользоваться лифтом', fa:'به‌جای آن از آسانسور استفاده کنم'}}
           ]}
       ]
     },
-    { title:{en:'What would you do', ru:'Что бы вы сделали', fa:'چه می‌کنید'},
+
+    { title:{en:'🧭 Mission 2 — Find Your Way Out', ru:'🧭 Миссия 2 — Найди выход', fa:'🧭 مأموریت ۲ — راه خروج را پیدا کن'},
       questions:[
-        { id:'B1', entry:'entry.1756640301', type:'radio', correct:'Leave immediately by the marked route',
-          text:{en:"The fire alarm sounds. You don't see any fire or smoke. What should you do?",
-                ru:'Сработала пожарная сигнализация. Вы не видите ни огня, ни дыма. Что делать?',
-                fa:'آژیر آتش به صدا درآمد. آتش یا دودی نمی‌بینید. چه باید کرد؟'},
+        { id:'Q3', entry:'entry.1104570873', type:'radio', correct:'B. False', shuffle:false,
+          kicker:{en:'Elevator or Stairs?', ru:'Лифт или лестница?', fa:'آسانسور یا پله؟'},
+          text:{en:'True or false: during a fire evacuation, using an elevator is generally a safe way to leave the building quickly.',
+                ru:'Верно или неверно: при эвакуации во время пожара лифт — обычно безопасный способ быстро покинуть здание.',
+                fa:'درست یا نادرست: هنگام تخلیه در آتش‌سوزی، استفاده از آسانسور معمولاً راه امنی برای خروج سریع از ساختمان است.'},
           options:[
-            {value:'Leave immediately by the marked route', label:{en:'Leave immediately by the marked route', ru:'Сразу выйти по размеченному маршруту', fa:'بلافاصله از مسیر مشخص‌شده خارج شوید'}},
-            {value:"Wait for someone to confirm it's a real fire", label:{en:"Wait for someone to confirm it's a real fire", ru:'Подождать подтверждения, что пожар настоящий', fa:'منتظر بمانید تا کسی تأیید کند آتش‌سوزی واقعی است'}},
-            {value:'Take the elevator to leave faster', label:{en:'Take the elevator to leave faster', ru:'Воспользоваться лифтом, чтобы выйти быстрее', fa:'برای خروج سریع‌تر از آسانسور استفاده کنید'}},
-            {value:"Finish what I'm doing, then leave", label:{en:"Finish what I'm doing, then leave", ru:'Закончить дела, а потом выйти', fa:'کارم را تمام کنم، بعد خارج شوم'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
+            {value:'A. True', label:{en:'True', ru:'Верно', fa:'درست'}},
+            {value:'B. False', label:{en:'False', ru:'Неверно', fa:'نادرست'}},
+            {value:'C. Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
           ]},
-        { id:'B2', entry:'entry.317966352', type:'radio', correct:'Find another route and avoid the smoke',
-          text:{en:"Your dormitory corridor has filled with smoke. What's the safest response?",
-                ru:'Коридор общежития заполнился дымом. Как безопаснее поступить?',
-                fa:'راهروی خوابگاه پر از دود شده است. امن‌ترین واکنش چیست؟'},
+        { id:'Q4', entry:'entry.1044163087', type:'radio', correct:'B. Warn others/activate the alarm and begin following the emergency procedure',
+          kicker:{en:'You Discover a Fire', ru:'Вы обнаружили пожар', fa:'شما آتش را می‌بینید'},
+          text:{en:'You notice a fire developing in a university common area. What should be your first priority?',
+                ru:'Вы замечаете, что в общем помещении университета начинается пожар. Что нужно сделать в первую очередь?',
+                fa:'متوجه می‌شوید در یکی از فضاهای عمومی دانشگاه آتشی در حال شکل‌گیری است. اولویت اول شما چیست؟'},
           options:[
-            {value:'Walk through the smoke quickly', label:{en:'Walk through the smoke quickly', ru:'Быстро пройти через дым', fa:'سریع از میان دود عبور کنید'}},
-            {value:'Wait in the corridor until it clears', label:{en:'Wait in the corridor until it clears', ru:'Подождать в коридоре, пока дым рассеется', fa:'در راهرو منتظر بمانید تا دود از بین برود'}},
-            {value:'Find another route and avoid the smoke', label:{en:'Find another route and avoid the smoke', ru:'Найти другой путь и избежать дыма', fa:'مسیر دیگری پیدا کنید و از دود دوری کنید'}},
-            {value:'Take the elevator instead', label:{en:'Take the elevator instead', ru:'Воспользоваться лифтом', fa:'از آسانسور استفاده کنید'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B3', entry:'entry.1108342919', type:'radio', correct:'False',
-          text:{en:'True or false: using an elevator is generally a safe way to leave a building during a fire.',
-                ru:'Верно или неверно: лифт — обычно безопасный способ покинуть здание при пожаре.',
-                fa:'درست یا نادرست: استفاده از آسانسور معمولاً راه امنی برای خروج از ساختمان در آتش‌سوزی است.'},
-          options:[
-            {value:'False', label:{en:'False', ru:'Неверно', fa:'نادرست'}},
-            {value:'True', label:{en:'True', ru:'Верно', fa:'درست'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B4', entry:'entry.222257801', type:'radio', correct:'Warn others and start the emergency procedure',
-          text:{en:"You notice a fire starting in a common area. What's your first priority?",
-                ru:'Вы заметили начинающийся пожар в общем помещении. Что делать в первую очередь?',
-                fa:'متوجه شروع آتش‌سوزی در یک فضای مشترک می‌شوید. اولویت اول شما چیست؟'},
-          options:[
-            {value:'Record it on my phone', label:{en:'Record it on my phone', ru:'Снять на телефон', fa:'از آن با گوشی فیلم بگیرم'}},
-            {value:"Search for an extinguisher, whatever the fire's size", label:{en:"Search for an extinguisher, whatever the fire's size", ru:'Искать огнетушитель, независимо от размера очага', fa:'دنبال کپسول آتش‌نشانی بگردم، فارغ از اندازه آتش'}},
-            {value:'Open nearby doors and windows', label:{en:'Open nearby doors and windows', ru:'Открыть ближайшие двери и окна', fa:'درها و پنجره‌های اطراف را باز کنم'}},
-            {value:'Warn others and start the emergency procedure', label:{en:'Warn others and start the emergency procedure', ru:'Предупредить окружающих и начать действовать по инструкции', fa:'دیگران را مطلع کنم و روند اضطراری را شروع کنم'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B5', entry:'entry.367971472', type:'radio', correct:"If it's small, they're trained to use one, others are alerted, and the way out is clear",
-          text:{en:'When is it appropriate for an ordinary student to use a fire extinguisher?',
-                ru:'Когда обычному студенту уместно воспользоваться огнетушителем?',
-                fa:'چه زمانی استفاده از کپسول آتش‌نشانی برای یک دانشجوی عادی مناسب است؟'},
-          options:[
-            {value:"Whenever there's any fire, however small", label:{en:"Whenever there's any fire, however small", ru:'Всегда, при любом, даже маленьком возгорании', fa:'هر زمان که آتشی دیده شود، هرچقدر کوچک'}},
-            {value:"If it's small, they're trained to use one, others are alerted, and the way out is clear", label:{en:"If it's small, they're trained, others are alerted, and the way out is clear", ru:'Если очаг маленький, студент умеет пользоваться огнетушителем, другие уже предупреждены, а путь к выходу свободен', fa:'زمانی که آتش کوچک است، فرد آموزش دیده، دیگران خبردار شده‌اند و مسیر خروج باز است'}},
-            {value:'When smoke is too thick to see an exit', label:{en:'When smoke is too thick to see an exit', ru:'Когда дым слишком густой, чтобы найти выход', fa:'زمانی که دود آن‌قدر غلیظ است که راه خروج دیده نمی‌شود'}},
-            {value:'When the fire is already spreading fast', label:{en:'When the fire is already spreading fast', ru:'Когда пожар уже быстро распространяется', fa:'زمانی که آتش به سرعت در حال گسترش است'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B6', entry:'entry.1358239191', type:'radio', correct:'At the base of the fire',
-          text:{en:"You've decided it's safe to use the extinguisher. Where do you aim?",
-                ru:'Вы решили, что можно безопасно воспользоваться огнетушителем. Куда направлять струю?',
-                fa:'تصمیم گرفتید که استفاده از کپسول آتش‌نشانی امن است. کجا را نشانه می‌گیرید؟'},
-          options:[
-            {value:'At the base of the fire', label:{en:'At the base of the fire', ru:'В основание огня', fa:'پایه آتش'}},
-            {value:'At the top of the flames', label:{en:'At the top of the flames', ru:'В верхнюю часть пламени', fa:'بالای شعله‌ها'}},
-            {value:'Just above the fire', label:{en:'Just above the fire', ru:'Чуть выше огня', fa:'کمی بالاتر از آتش'}},
-            {value:'At the nearest wall', label:{en:'At the nearest wall', ru:'В ближайшую стену', fa:'نزدیک‌ترین دیوار'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B7', entry:'entry.1276338402', type:'radio', correct:'Get them to stop, drop to the ground, and roll',
-          text:{en:"Your friend's clothing catches fire. What should you do?",
-                ru:'У вашего друга загорелась одежда. Что делать?',
-                fa:'لباس دوستتان آتش می‌گیرد. چه باید کرد؟'},
-          options:[
-            {value:'Tell them to run outside', label:{en:'Tell them to run outside', ru:'Сказать, чтобы бежал на улицу', fa:'بگویید به بیرون بدود'}},
-            {value:'Get them to stop, drop to the ground, and roll', label:{en:'Get them to stop, drop, and roll', ru:'Остановить, уложить на пол и катать', fa:'او را متوقف کنید، روی زمین بخوابانید و بغلتانید'}},
-            {value:'Tell them to stand still and wait', label:{en:'Tell them to stand still and wait', ru:'Сказать, чтобы стоял неподвижно и ждал', fa:'بگویید بی‌حرکت بایستد و صبر کند'}},
-            {value:'Get them to the elevator quickly', label:{en:'Get them to the elevator quickly', ru:'Быстро отвести к лифту', fa:'سریع به آسانسور ببرید'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
-          ]},
-        { id:'B8', entry:'entry.2015455018', type:'radio', correct:'Stay, close the door, call for help, and signal from the window',
-          text:{en:"You're in your room. Smoke and heat in the corridor stop you from reaching an exit. What should you do?",
-                ru:'Вы в своей комнате. Дым и жар в коридоре не дают добраться до выхода. Что делать?',
-                fa:'در اتاق خود هستید. دود و گرما در راهرو مانع رسیدن شما به خروجی می‌شود. چه باید کرد؟'},
-          options:[
-            {value:'Run through the smoke anyway', label:{en:'Run through the smoke anyway', ru:'Всё равно пройти через дым', fa:'به هر حال از میان دود عبور کنم'}},
-            {value:'Hide under the bed', label:{en:'Hide under the bed', ru:'Спрятаться под кроватью', fa:'زیر تخت پنهان شوم'}},
-            {value:'Open the door and windows fully for airflow', label:{en:'Open the door and windows fully for airflow', ru:'Полностью открыть дверь и окна для проветривания', fa:'در و پنجره را کاملاً باز کنم تا هوا جریان یابد'}},
-            {value:'Stay, close the door, call for help, and signal from the window', label:{en:'Stay, close the door, call for help, signal from the window', ru:'Остаться, закрыть дверь, позвонить и подавать сигналы из окна', fa:'بمانم، در را ببندم، کمک بخواهم و از پنجره علامت بدهم'}},
-            {value:'Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
+            {value:'A. Record the fire on your phone', label:{en:'Record the fire on your phone', ru:'Снять пожар на телефон', fa:'از آتش با گوشی فیلم بگیرم'}},
+            {value:'B. Warn others/activate the alarm and begin following the emergency procedure', label:{en:'Warn others or activate the alarm, and start following the emergency procedure', ru:'Предупредить окружающих или включить сигнализацию и начать действовать по инструкции', fa:'دیگران را خبر کنم یا آژیر را فعال کنم و طبق دستورالعمل اضطراری عمل کنم'}},
+            {value:'C. Search for an extinguisher and fight the fire regardless of its size', label:{en:'Search for an extinguisher and fight the fire, whatever its size', ru:'Искать огнетушитель и тушить огонь, независимо от размера очага', fa:'دنبال کپسول آتش‌نشانی بگردم و فارغ از اندازهٔ آتش با آن مقابله کنم'}},
+            {value:'D. Open nearby doors and windows', label:{en:'Open nearby doors and windows', ru:'Открыть ближайшие двери и окна', fa:'درها و پنجره‌های اطراف را باز کنم'}}
           ]}
       ]
     },
-    { title:{en:"What you've noticed", ru:'Что вы заметили', fa:'چه چیزی متوجه شدید'},
+
+    { title:{en:'🧯 Mission 3 — Fire Extinguisher Challenge', ru:'🧯 Миссия 3 — Испытание огнетушителем', fa:'🧯 مأموریت ۳ — چالش کپسول آتش‌نشانی'},
       questions:[
-        { id:'C1', entry:'entry.1185667069', type:'radio',
-          text:{en:'How clear were the voice/PA announcements during drills or alarms?',
-                ru:'Насколько понятны были голосовые объявления во время учений или тревоги?',
-                fa:'اعلامیه‌های صوتی هنگام تمرین یا آژیر چقدر واضح بودند؟'},
+        { id:'Q5', entry:'entry.295403241', type:'radio', correct:'B. When the fire is small and contained, they can safely operate the extinguisher, others have been alerted/emergency response initiated, and they have a clear escape route',
+          kicker:{en:'When Should You Use a Fire Extinguisher?', ru:'Когда можно использовать огнетушитель?', fa:'کِی از کپسول آتش‌نشانی استفاده کنیم؟'},
+          text:{en:'When is it most appropriate for an ordinary student to consider using a fire extinguisher?',
+                ru:'Когда обычному студенту уместнее всего подумать о том, чтобы воспользоваться огнетушителем?',
+                fa:'چه زمانی برای یک دانشجوی عادی مناسب‌ترین زمان برای استفاده از کپسول آتش‌نشانی است؟'},
           options:[
-            {value:'Completely clear', label:{en:'Completely clear', ru:'Полностью понятны', fa:'کاملاً واضح'}},
-            {value:'Mostly clear', label:{en:'Mostly clear', ru:'В основном понятны', fa:'عمدتاً واضح'}},
-            {value:'Somewhat clear, but I missed important details', label:{en:'Somewhat clear, missed details', ru:'Частично понятны, упустил(а) важное', fa:'تا حدی واضح، برخی جزئیات را متوجه نشدم'}},
-            {value:'Not clear at all', label:{en:'Not clear at all', ru:'Совсем не понятны', fa:'اصلاً واضح نبود'}},
-            {value:'I did not hear an announcement', label:{en:"Didn't hear an announcement", ru:'Не слышал(а) объявления', fa:'اعلامیه‌ای نشنیدم'}}
+            {value:'A. Whenever they see any fire', label:{en:'Whenever they see any fire', ru:'Всегда, когда видит любой огонь', fa:'هر وقت هر نوع آتشی ببیند'}},
+            {value:'B. When the fire is small and contained, they can safely operate the extinguisher, others have been alerted/emergency response initiated, and they have a clear escape route', label:{en:'When the fire is small and contained, they can use the extinguisher safely, others have been alerted, and the way out is clear', ru:'Когда очаг маленький и локальный, студент умеет безопасно пользоваться огнетушителем, другие уже предупреждены, а путь к выходу свободен', fa:'وقتی آتش کوچک و محدود است، می‌تواند با خیال راحت از کپسول استفاده کند، دیگران خبردار شده‌اند و راه خروج باز است'}},
+            {value:'C. When smoke is too thick to find an exit', label:{en:'When smoke is too thick to find an exit', ru:'Когда дым такой густой, что не найти выход', fa:'وقتی دود آن‌قدر غلیظ است که راه خروج پیدا نمی‌شود'}},
+            {value:'D. When the fire is spreading rapidly', label:{en:'When the fire is spreading rapidly', ru:'Когда огонь быстро распространяется', fa:'وقتی آتش به‌سرعت در حال گسترش است'}}
           ]},
-        { id:'C2', entry:'entry.591301495', type:'radio',
-          text:{en:'How easy was it to understand the evacuation signs in your building?',
-                ru:'Насколько легко было понять знаки эвакуации в вашем здании?',
-                fa:'درک علائم تخلیه در ساختمان شما چقدر آسان بود؟'},
+        { id:'Q6', entry:'entry.912204784', type:'radio', correct:'B. At the base of the fire',
+          kicker:{en:'Where Would You Aim?', ru:'Куда направить струю?', fa:'کجا را نشانه بگیریم؟'},
+          text:{en:'You decide that it is safe and appropriate to use a fire extinguisher. Where should you aim?',
+                ru:'Вы решили, что пользоваться огнетушителем безопасно и уместно. Куда нужно направить струю?',
+                fa:'تصمیم گرفته‌اید که استفاده از کپسول آتش‌نشانی امن و مناسب است. کجا را باید نشانه بگیرید؟'},
           options:[
-            {value:'Very easy', label:{en:'Very easy', ru:'Очень легко', fa:'بسیار آسان'}},
-            {value:'Easy', label:{en:'Easy', ru:'Легко', fa:'آسان'}},
-            {value:'Neutral', label:{en:'Neutral', ru:'Нейтрально', fa:'متوسط'}},
-            {value:'Difficult', label:{en:'Difficult', ru:'Сложно', fa:'دشوار'}},
-            {value:'Very difficult', label:{en:'Very difficult', ru:'Очень сложно', fa:'بسیار دشوار'}}
+            {value:'A. At the top of the flames', label:{en:'At the top of the flames', ru:'В верхнюю часть пламени', fa:'بالای شعله‌ها'}},
+            {value:'B. At the base of the fire', label:{en:'At the base of the fire', ru:'В основание огня', fa:'پایهٔ آتش'}},
+            {value:'C. Above the fire', label:{en:'Above the fire', ru:'Над огнём', fa:'بالای آتش'}},
+            {value:'D. At the nearest wall', label:{en:'At the nearest wall', ru:'В ближайшую стену', fa:'نزدیک‌ترین دیوار'}}
           ]}
       ]
     },
-    { title:{en:'How ready do you feel', ru:'Насколько вы готовы', fa:'چقدر احساس آمادگی می‌کنید'},
+
+    { title:{en:'🆘 Mission 4 — Emergency Challenge', ru:'🆘 Миссия 4 — Экстренная ситуация', fa:'🆘 مأموریت ۴ — چالش اضطراری'},
       questions:[
-        { id:'D1', entry:'entry.1339206774', type:'scale',
-          text:{en:'How confident are you that you could identify a safe evacuation route from the building you use most often?',
-                ru:'Насколько вы уверены, что смогли бы определить безопасный путь эвакуации из здания, где бываете чаще всего?',
-                fa:'چقدر مطمئن هستید که می‌توانید مسیر امن تخلیه را از ساختمانی که بیشتر در آن هستید تشخیص دهید؟'},
+        { id:'Q7', entry:'entry.1692836956', type:'radio', correct:'B. Stop, drop and roll',
+          kicker:{en:'Clothing Catches Fire', ru:'Загорелась одежда', fa:'لباس آتش گرفته'},
+          text:{en:"Your friend's clothing catches fire. Which action is appropriate?",
+                ru:'На вашем друге загорелась одежда. Какое действие правильное?',
+                fa:'لباس دوستتان آتش گرفته است. کدام اقدام درست است؟'},
+          options:[
+            {value:'A. Tell them to run outside', label:{en:'Tell them to run outside', ru:'Сказать ему бежать на улицу', fa:'به او بگویم به بیرون بدود'}},
+            {value:'B. Stop, drop and roll', label:{en:'Stop, drop and roll', ru:'Остановиться, упасть и кататься по земле', fa:'بایستد، روی زمین بیفتد و غلت بزند'}},
+            {value:'C. Tell them to stand still and wait', label:{en:'Tell them to stand still and wait', ru:'Сказать ему стоять на месте и ждать', fa:'به او بگویم بی‌حرکت بایستد و صبر کند'}},
+            {value:'D. Use an elevator to reach help', label:{en:'Use an elevator to reach help', ru:'Спуститься на лифте за помощью', fa:'با آسانسور برای کمک گرفتن برود'}}
+          ]},
+        { id:'Q8', entry:'entry.96129879', type:'radio', correct:'B. Stay in the room with the door closed, call emergency services/report your location, and signal for help if possible',
+          kicker:{en:'Trapped!', ru:'В ловушке!', fa:'گیر افتاده‌اید!'},
+          text:{en:'You are in your dorm room. Smoke and heat in the corridor prevent you from safely reaching an exit. What should you do?',
+                ru:'Вы в своей комнате в общежитии. Дым и жар в коридоре не дают безопасно добраться до выхода. Что делать?',
+                fa:'در اتاقتان در خوابگاه هستید. دود و گرما در راهرو نمی‌گذارد با امنیت به خروجی برسید. چه باید بکنید؟'},
+          options:[
+            {value:'A. Run through the smoke regardless', label:{en:'Run through the smoke anyway', ru:'Всё равно бежать сквозь дым', fa:'به هر حال از میان دود بدوم'}},
+            {value:'B. Stay in the room with the door closed, call emergency services/report your location, and signal for help if possible', label:{en:'Stay in the room with the door closed, call emergency services and give your location, and signal for help if possible', ru:'Остаться в комнате с закрытой дверью, позвонить в экстренные службы, сообщить, где вы, и по возможности подавать сигналы о помощи', fa:'با در بسته در اتاق بمانم، با اورژانس تماس بگیرم و محلم را بگویم و در صورت امکان برای کمک علامت بدهم'}},
+            {value:'C. Hide under the bed', label:{en:'Hide under the bed', ru:'Спрятаться под кроватью', fa:'زیر تخت پنهان شوم'}},
+            {value:'D. Open the door and windows fully to create airflow', label:{en:'Open the door and windows fully to create airflow', ru:'Полностью открыть дверь и окна, чтобы создать поток воздуха', fa:'در و پنجره‌ها را کاملاً باز کنم تا هوا جریان پیدا کند'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🧠 Mission 5 — How Ready Are You?', ru:'🧠 Миссия 5 — Насколько вы готовы?', fa:'🧠 مأموریت ۵ — چقدر آماده‌اید؟'},
+      intro:{en:'No right or wrong answers here. Just be honest!', ru:'Здесь нет правильных и неправильных ответов. Просто отвечайте честно!', fa:'اینجا پاسخ درست یا غلطی وجود ندارد. فقط صادق باشید!'},
+      questions:[
+        { id:'Q9', entry:'entry.281067844', type:'scale',
+          values:['1 — Not at all confident','2 — Slightly confident','3 — Moderately confident','4 — Very confident','5 — Completely confident'],
+          text:{en:'Right now, how confident are you that you could identify a safe evacuation route from the university building you use most often?',
+                ru:'Насколько вы сейчас уверены, что смогли бы найти безопасный путь эвакуации из учебного корпуса, где бываете чаще всего?',
+                fa:'در حال حاضر چقدر مطمئن هستید که می‌توانید مسیر امن تخلیه را در ساختمانی از دانشگاه که بیشتر از همه در آن هستید پیدا کنید؟'},
           low:{en:'Not at all confident', ru:'Совсем не уверен(а)', fa:'اصلاً مطمئن نیستم'},
           high:{en:'Completely confident', ru:'Полностью уверен(а)', fa:'کاملاً مطمئنم'} },
-        { id:'D2', entry:'entry.307130897', type:'scale',
-          text:{en:'How familiar are you with the location of emergency exits in the buildings you regularly use?',
-                ru:'Насколько хорошо вы знаете расположение аварийных выходов в зданиях, которые регулярно посещаете?',
-                fa:'چقدر با موقعیت خروجی‌های اضطراری ساختمان‌هایی که مرتب در آن‌ها هستید آشنا هستید؟'},
+        { id:'Q10', entry:'entry.803739762', type:'scale',
+          values:['1 — Not at all familiar','2 — Slightly familiar','3 — Moderately familiar','4 — Very familiar','5 — Extremely familiar'],
+          text:{en:'How familiar are you with the location of emergency exits in the university and dormitory buildings you regularly use?',
+                ru:'Насколько хорошо вы знаете, где находятся аварийные выходы в учебных корпусах и общежитии, где вы регулярно бываете?',
+                fa:'چقدر با محل خروجی‌های اضطراری در ساختمان‌های دانشگاه و خوابگاهی که مرتب در آن‌ها هستید آشنا هستید؟'},
           low:{en:'Not at all familiar', ru:'Совсем не знаю', fa:'اصلاً آشنا نیستم'},
-          high:{en:'Extremely familiar', ru:'Отлично знаю', fa:'کاملاً آشنا هستم'} },
-        { id:'D3', entry:'entry.2017070341', type:'scale',
+          high:{en:'Extremely familiar', ru:'Знаю отлично', fa:'کاملاً آشنا هستم'} },
+        { id:'Q11', entry:'entry.303679078', type:'scale',
+          values:['1 — Not at all prepared','2 — Slightly prepared','3 — Moderately prepared','4 — Very prepared','5 — Extremely prepared'],
           text:{en:'If a real fire happened at university today, how prepared would you feel to respond appropriately?',
-                ru:'Если бы сегодня в университете произошёл настоящий пожар, насколько подготовленным(ой) вы бы себя чувствовали?',
-                fa:'اگر امروز آتش‌سوزی واقعی در دانشگاه رخ می‌داد، چقدر احساس آمادگی می‌کردید؟'},
-          low:{en:'Not at all prepared', ru:'Совсем не подготовлен(а)', fa:'اصلاً آماده نیستم'},
-          high:{en:'Extremely prepared', ru:'Полностью подготовлен(а)', fa:'کاملاً آماده‌ام'} },
-        { id:'D4', entry:'entry.64232069', type:'scale',
-          text:{en:'If the alarm sounded and you saw no smoke, how likely would you be to follow the evacuation instructions immediately?',
-                ru:'Если бы прозвучала сигнализация, а дыма вы не видели, насколько вероятно вы бы сразу последовали инструкциям по эвакуации?',
-                fa:'اگر آژیر به صدا درمی‌آمد و دودی نمی‌دیدید، چقدر احتمال داشت بلافاصله از دستورالعمل تخلیه پیروی کنید؟'},
-          low:{en:'Very unlikely', ru:'Маловероятно', fa:'بسیار بعید'},
+                ru:'Если бы сегодня в университете случился настоящий пожар, насколько вы были бы готовы действовать правильно?',
+                fa:'اگر امروز در دانشگاه آتش‌سوزی واقعی رخ دهد، چقدر احساس می‌کنید برای واکنش درست آماده‌اید؟'},
+          low:{en:'Not at all prepared', ru:'Совсем не готов(а)', fa:'اصلاً آماده نیستم'},
+          high:{en:'Extremely prepared', ru:'Полностью готов(а)', fa:'کاملاً آماده‌ام'} },
+        { id:'Q12', entry:'entry.1825557300', type:'scale',
+          values:['1 — Very unlikely','2 — Unlikely','3 — Neither likely nor unlikely','4 — Likely','5 — Very likely'],
+          text:{en:"If a fire alarm sounded but you could not see or smell smoke, how likely would you be to follow the university's evacuation instructions immediately?",
+                ru:'Если бы сработала пожарная сигнализация, но вы не видели бы дыма и не чувствовали его запаха, насколько вероятно, что вы сразу выполнили бы инструкции по эвакуации?',
+                fa:'اگر آژیر آتش به صدا درآید ولی دودی نبینید و بویی حس نکنید، چقدر احتمال دارد بلافاصله از دستورالعمل تخلیهٔ دانشگاه پیروی کنید؟'},
+          low:{en:'Very unlikely', ru:'Очень маловероятно', fa:'بسیار بعید'},
           high:{en:'Very likely', ru:'Очень вероятно', fa:'بسیار محتمل'} }
+      ]
+    },
+
+    { title:{en:'⭐ BONUS Mission — Be the Rescuer', ru:'⭐ Бонусная миссия — Стань спасателем', fa:'⭐ مأموریت ویژه — نجات‌دهنده باشید'},
+      intro:{en:'New level unlocked!', ru:'Открыт новый уровень!', fa:'مرحلهٔ جدید باز شد!'},
+      questions:[
+        { id:'Q13', entry:'entry.1856946207', type:'radio', correct:'C. Cool it under cool running water for about 20 minutes',
+          kicker:{en:'Burn Rescue', ru:'Помощь при ожоге', fa:'کمک به سوختگی'},
+          text:{en:'Your friend burned their hand while escaping. What is the best first aid?',
+                ru:'Ваш друг обжёг руку, пока выбирался. Какая первая помощь лучше всего?',
+                fa:'دست دوستتان هنگام فرار سوخته است. بهترین کمک اولیه چیست؟'},
+          options:[
+            {value:'A. Put ice directly on the burn', label:{en:'Put ice directly on the burn', ru:'Приложить лёд прямо к ожогу', fa:'یخ را مستقیم روی سوختگی بگذارم'}},
+            {value:'B. Cover it with butter, oil or toothpaste', label:{en:'Cover it with butter, oil or toothpaste', ru:'Смазать сливочным или растительным маслом либо зубной пастой', fa:'روی آن کره، روغن یا خمیردندان بمالم'}},
+            {value:'C. Cool it under cool running water for about 20 minutes', label:{en:'Cool it under cool running water for about 20 minutes', ru:'Охлаждать под прохладной проточной водой около 20 минут', fa:'حدود ۲۰ دقیقه آن را زیر آب روان خنک بگیرم'}},
+            {value:'D. Pop the blisters to let the heat out', label:{en:'Pop the blisters to let the heat out', ru:'Проколоть пузыри, чтобы вышел жар', fa:'تاول‌ها را بترکانم تا گرما خارج شود'}}
+          ]},
+        { id:'Q14', entry:'entry.1426254289', type:'radio', correct:'A. Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives',
+          kicker:{en:'Smoke Victim', ru:'Пострадавший от дыма', fa:'مصدوم دود'},
+          text:{en:'You helped a classmate get out of a smoky building. Outside, they are coughing, dizzy and confused. What should you do?',
+                ru:'Вы помогли однокурснику выбраться из задымлённого здания. На улице он кашляет, у него кружится голова и путаются мысли. Что делать?',
+                fa:'به هم‌کلاسی‌تان کمک کردید از ساختمانی پر از دود بیرون بیاید. بیرون از ساختمان سرفه می‌کند، سرگیجه دارد و گیج است. چه باید بکنید؟'},
+          options:[
+            {value:'A. Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives', label:{en:'Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives', ru:'Оставаться с ним на свежем воздухе, позвонить 112 (или 103) и следить за дыханием до приезда помощи', fa:'او را در هوای آزاد نگه دارم، با ۱۱۲ (یا ۱۰۳) تماس بگیرم و تا رسیدن کمک تنفسش را زیر نظر بگیرم'}},
+            {value:'B. Give them water and let them go home to rest', label:{en:'Give them water and let them go home to rest', ru:'Дать воды и отпустить домой отдохнуть', fa:'به او آب بدهم و بگذارم برای استراحت به خانه برود'}},
+            {value:'C. Take them back inside to get their belongings', label:{en:'Take them back inside to get their belongings', ru:'Вернуться с ним внутрь за вещами', fa:'او را برای برداشتن وسایلش به داخل برگردانم'}},
+            {value:"D. Do nothing. If they can cough, they're fine", label:{en:"Do nothing — if they can cough, they're fine", ru:'Ничего не делать: раз кашляет, значит, всё в порядке', fa:'کاری نکنم؛ اگر می‌تواند سرفه کند، حالش خوب است'}}
+          ]},
+        { id:'Q15', entry:'entry.1697952356', type:'radio', correct:'D. 112',
+          kicker:{en:'The Magic Number', ru:'Магический номер', fa:'شمارهٔ جادویی'},
+          text:{en:'From a mobile phone in Russia, which ONE number connects you to all emergency services?',
+                ru:'Какой ОДИН номер с мобильного телефона в России соединяет со всеми экстренными службами?',
+                fa:'در روسیه، با تلفن همراه کدام شمارهٔ واحد شما را به همهٔ خدمات اضطراری وصل می‌کند؟'},
+          options:[
+            {value:'A. 100', label:{en:'100', ru:'100', fa:'۱۰۰'}},
+            {value:'B. 115', label:{en:'115', ru:'115', fa:'۱۱۵'}},
+            {value:'C. 122', label:{en:'122', ru:'122', fa:'۱۲۲'}},
+            {value:'D. 112', label:{en:'112', ru:'112', fa:'۱۱۲'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🎬 Final Mission — Rate Our Training', ru:'🎬 Финальная миссия — Оцените наше обучение', fa:'🎬 مأموریت نهایی — آموزش ما را ارزیابی کنید'},
+      questions:[
+        { id:'Q16', type:'grid',
+          text:{en:'How useful was each part?', ru:'Насколько полезной была каждая часть?', fa:'هر بخش چقدر مفید بود؟'},
+          help:{en:'1 = not useful, 5 = very useful', ru:'1 — бесполезно, 5 — очень полезно', fa:'۱ = مفید نبود، ۵ = بسیار مفید'},
+          rows:[
+            {entry:'entry.1091832860', label:{en:'Live session with our team', ru:'Живое занятие с нашей командой', fa:'جلسهٔ حضوری با تیم ما'}},
+            {entry:'entry.1468441134', label:{en:'Evacuation plan videos', ru:'Видео о планах эвакуации', fa:'ویدیوهای طرح تخلیه'}},
+            {entry:'entry.1990757949', label:{en:'Website & database', ru:'Сайт и база данных', fa:'وب‌سایت و پایگاه داده'}},
+            {entry:'entry.380814113',  label:{en:'Chatbot', ru:'Чат-бот', fa:'چت‌بات'}}
+          ],
+          columns:[
+            {value:"Didn't use", label:{en:"Didn't use", ru:'Не пользовался', fa:'استفاده نکردم'}, na:true},
+            {value:'1', label:{en:'1', ru:'1', fa:'۱'}},
+            {value:'2', label:{en:'2', ru:'2', fa:'۲'}},
+            {value:'3', label:{en:'3', ru:'3', fa:'۳'}},
+            {value:'4', label:{en:'4', ru:'4', fa:'۴'}},
+            {value:'5', label:{en:'5', ru:'5', fa:'۵'}}
+          ]},
+        { id:'Q17', entry:'entry.1354005031', type:'checkbox', exclusive:'None of these yet',
+          text:{en:'Since the training, have you…', ru:'После обучения вы…', fa:'از زمان آموزش تاکنون…'},
+          help:{en:'Tick all that apply.', ru:'Отметьте всё подходящее.', fa:'همهٔ موارد مربوط را علامت بزنید.'},
+          options:[
+            {value:'Checked where the nearest emergency exit is', label:{en:'Checked where the nearest emergency exit is', ru:'Проверили, где ближайший аварийный выход', fa:'محل نزدیک‌ترین خروجی اضطراری را بررسی کرده‌ام'}},
+            {value:'Found the nearest fire extinguisher', label:{en:'Found the nearest fire extinguisher', ru:'Нашли ближайший огнетушитель', fa:'نزدیک‌ترین کپسول آتش‌نشانی را پیدا کرده‌ام'}},
+            {value:'Saved 112 / 101 in my phone', label:{en:'Saved 112 / 101 in my phone', ru:'Сохранили 112 / 101 в телефоне', fa:'شماره‌های ۱۱۲ / ۱۰۱ را در گوشی‌ام ذخیره کرده‌ام'}},
+            {value:'Told a friend what I learned', label:{en:'Told a friend what I learned', ru:'Рассказали другу о том, что узнали', fa:'آنچه یاد گرفتم را به یک دوست گفته‌ام'}},
+            {value:'Visited the website again', label:{en:'Visited the website again', ru:'Снова заходили на сайт', fa:'دوباره به وب‌سایت سر زده‌ام'}},
+            {value:'None of these yet', label:{en:'None of these yet', ru:'Пока ничего из этого', fa:'هنوز هیچ‌کدام'}}
+          ]},
+        { id:'Q18', entry:'entry.1399424141', type:'scale',
+          values:['1','2','3','4','5'],
+          text:{en:'The language of our materials was easy to understand', ru:'Язык наших материалов был понятным', fa:'زبان مطالب ما به‌راحتی قابل فهم بود'},
+          low:{en:'Strongly disagree', ru:'Совершенно не согласен(на)', fa:'کاملاً مخالفم'},
+          high:{en:'Strongly agree', ru:'Полностью согласен(на)', fa:'کاملاً موافقم'} },
+        { id:'Q19', entry:'entry.1932267229', type:'scale',
+          values:['0','1','2','3','4','5','6','7','8','9','10'],
+          text:{en:'How likely are you to recommend our training to a new international student?',
+                ru:'Насколько вероятно, что вы порекомендуете наше обучение новому иностранному студенту?',
+                fa:'چقدر احتمال دارد آموزش ما را به یک دانشجوی بین‌المللی تازه‌وارد پیشنهاد کنید؟'},
+          low:{en:'Not at all likely', ru:'Совсем маловероятно', fa:'اصلاً محتمل نیست'},
+          high:{en:'Extremely likely', ru:'Очень вероятно', fa:'بسیار محتمل'} },
+        { id:'Q20', entry:'entry.1100274645', type:'long',
+          text:{en:'Your #1 tip for a friend 💬', ru:'Ваш главный совет другу 💬', fa:'مهم‌ترین توصیهٔ شما به یک دوست 💬'},
+          help:{en:"In one sentence: what's the most important thing you learned?", ru:'Одним предложением: что самое важное вы узнали?', fa:'در یک جمله: مهم‌ترین چیزی که یاد گرفتید چه بود؟'} },
+        { id:'Q21', entry:'entry.293594578', type:'long', optional:true,
+          text:{en:'Help us level up (optional)', ru:'Помогите нам стать лучше (необязательно)', fa:'کمک کنید بهتر شویم (اختیاری)'},
+          help:{en:'What should we add or improve?', ru:'Что нам добавить или улучшить?', fa:'چه چیزی را اضافه یا بهتر کنیم؟'} }
       ]
     }
   ]
 };
 
-let quizState = { section:0, answers:{}, done:false };
+let quizState = { section:0, answers:{}, order:{}, done:false };
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function allQuestions(){
+  return SURVEY.sections.reduce((all, s) => all.concat(s.questions), []);
+}
 
 function renderQuizLaunch(){
   const L = SURVEY.launch[langEl.value] ? langEl.value : 'en';
@@ -863,9 +944,21 @@ function renderQuizLaunch(){
 }
 
 function openQuiz(){
-  quizState = { section:0, answers:{}, done:false };
+  quizState = { section:0, answers:{}, order:{}, done:false };
+  // Shuffle the options of scored questions once per attempt.
+  allQuestions().forEach(q => {
+    if(q.correct && q.shuffle !== false){
+      const idx = q.options.map((o,i) => i);
+      for(let i = idx.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      quizState.order[q.id] = idx;
+    }
+  });
   document.getElementById('infoView').hidden = true;
   document.getElementById('quizView').hidden = false;
+  window.scrollTo(0, 0);
   renderQuizSection();
 }
 
@@ -874,20 +967,41 @@ function closeQuiz(){
   document.getElementById('infoView').hidden = false;
 }
 
+function isAnswered(q){
+  const v = quizState.answers[q.id];
+  if(q.type === 'checkbox') return Array.isArray(v) && v.length > 0;
+  if(q.type === 'grid') return !!v && q.rows.every((r,i) => v[i] !== undefined);
+  return v !== undefined && String(v).trim() !== '';
+}
+
 function renderQuizSection(){
   const L = SURVEY.ui[langEl.value] ? langEl.value : 'en';
   const ui = SURVEY.ui[L];
   const view = document.getElementById('quizView');
 
   if(quizState.done){
-    const correct = SURVEY.sections[2].questions.filter(q => quizState.answers[q.id] === q.correct).length;
+    const scored = allQuestions().filter(q => q.correct);
+    const missed = scored.filter(q => quizState.answers[q.id] !== q.correct);
+    const correct = scored.length - missed.length;
+    const rank = SURVEY.ranks.find(r => correct >= r.min);
+    const review = missed.length ? `
+        <div class="qReview">
+          <p class="qReviewTitle">${ui.reviewTitle}</p>
+          ${missed.map(q => {
+            const right = q.options.find(o => o.value === q.correct);
+            return `<p><b>${(q.kicker && q.kicker[L]) || ''}</b><br>${ui.correctLabel} ${right.label[L]}</p>`;
+          }).join('')}
+        </div>` : '';
     view.innerHTML = `
       <div class="qTop"><button class="qBack" id="qBackBtn" type="button">${ui.back}</button></div>
       <div class="qDone">
         <p style="font-weight:600;font-size:17px;margin:0 0 18px">${ui.doneTitle}</p>
-        <p class="score">${correct}/8</p>
+        <p class="score">${correct}/${scored.length}</p>
         <p class="note" style="margin:0 0 18px">${ui.doneScore}</p>
+        <p class="note" style="margin:0">${ui.rankLabel}</p>
+        <p class="qRank">${rank.label[L]}</p>
         <p class="note">${ui.doneBody}</p>
+        ${review}
       </div>
       <div class="qNav"><button class="qBtn primary" id="qDoneBtn" type="button">${ui.doneBtn}</button></div>`;
     document.getElementById('qBackBtn').onclick = closeQuiz;
@@ -904,57 +1018,99 @@ function renderQuizSection(){
     const val = quizState.answers[q.id];
     let inputHtml = '';
     if(q.type === 'text'){
-      const safe = val ? String(val).replace(/"/g,'&quot;') : '';
-      inputHtml = `<input class="qInput" type="text" data-qid="${q.id}" placeholder="${(q.placeholder && q.placeholder[L]) || ''}" value="${safe}">`;
+      inputHtml = `<input class="qInput" type="text" data-qid="${q.id}" placeholder="${esc((q.placeholder && q.placeholder[L]) || '')}" value="${val ? esc(val) : ''}">`;
+    } else if(q.type === 'long'){
+      inputHtml = `<textarea class="qInput" rows="3" data-qid="${q.id}">${val ? esc(val) : ''}</textarea>`;
     } else if(q.type === 'radio'){
+      const order = quizState.order[q.id] || q.options.map((o,i) => i);
+      inputHtml = order.map(i => q.options[i]).map(o => `
+        <button type="button" class="qOption${val===o.value?' sel':''}" data-qid="${q.id}" data-val="${esc(o.value)}">${o.label[L]}</button>`).join('');
+    } else if(q.type === 'checkbox'){
+      const picked = Array.isArray(val) ? val : [];
       inputHtml = q.options.map(o => `
-        <button type="button" class="qOption${val===o.value?' sel':''}" data-qid="${q.id}" data-val="${o.value.replace(/"/g,'&quot;')}">${o.label[L]}</button>`).join('');
+        <button type="button" class="qOption qCheck${picked.includes(o.value)?' sel':''}" aria-pressed="${picked.includes(o.value)}" data-qid="${q.id}" data-check="${esc(o.value)}">${o.label[L]}</button>`).join('');
     } else if(q.type === 'scale'){
+      const wide = q.values.length > 6 ? ' wide' : '';
       inputHtml = `
-        <div class="qScale">${[1,2,3,4,5].map(n => `<button type="button" class="qScaleBtn${String(val)===String(n)?' sel':''}" data-qid="${q.id}" data-val="${n}">${n}</button>`).join('')}</div>
+        <div class="qScale${wide}">${q.values.map((v,i) => `<button type="button" class="qScaleBtn${val===v?' sel':''}" data-qid="${q.id}" data-val="${esc(v)}">${L==='fa' ? String(v).split(' ')[0].replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : String(v).split(' ')[0]}</button>`).join('')}</div>
         <div class="qScaleLabels"><span>${q.low[L]}</span><span>${q.high[L]}</span></div>`;
+    } else if(q.type === 'grid'){
+      const g = val || {};
+      inputHtml = q.rows.map((r,ri) => `
+        <div class="qGridRow">
+          <p class="qGridLabel">${r.label[L]}</p>
+          <div class="qGridBtns">${q.columns.map(c => `<button type="button" class="qGridBtn${c.na?' na':''}${g[ri]===c.value?' sel':''}" data-qid="${q.id}" data-row="${ri}" data-val="${esc(c.value)}">${c.label[L]}</button>`).join('')}</div>
+        </div>`).join('');
     }
     return `
       <div class="qQuestion">
+        ${q.kicker ? `<p class="qKicker">${q.kicker[L]}</p>` : ''}
         <p class="qText">${q.text[L]}</p>
+        ${q.help ? `<p class="qHelp">${q.help[L]}</p>` : ''}
         ${inputHtml}
-        ${q.help ? `<p class="note" style="margin-top:6px">${q.help[L]}</p>` : ''}
         <p class="qErr" data-qerr="${q.id}" hidden>${ui.required}</p>
       </div>`;
   }).join('');
 
   view.innerHTML = `
     <div class="qTop">
-      <button class="qBack" id="qBackBtn" type="button">${isFirst ? ui.back : '←'}</button>
+      <button class="qBack" id="qBackBtn" type="button">${isFirst ? ui.back : (L==='fa' ? '→' : '←')}</button>
       <div class="qDots">${dots}</div>
     </div>
     <div class="qBody">
       <p class="qSectionTitle">${section.title[L]}</p>
+      ${section.intro ? `<p class="qIntro">${section.intro[L]}</p>` : ''}
       ${qHtml}
     </div>
     <div class="qNav"><button class="qBtn primary" id="qNextBtn" type="button">${isLast ? ui.submit : ui.next}</button></div>`;
 
   document.getElementById('qBackBtn').onclick = () => {
-    if(isFirst){ closeQuiz(); } else { quizState.section--; renderQuizSection(); }
+    if(isFirst){ closeQuiz(); } else { quizState.section--; renderQuizSection(); window.scrollTo(0, 0); }
   };
 
   view.querySelectorAll('.qInput').forEach(el => {
     el.oninput = () => { quizState.answers[el.dataset.qid] = el.value; };
   });
-  view.querySelectorAll('.qOption, .qScaleBtn').forEach(el => {
+  view.querySelectorAll('.qOption[data-val], .qScaleBtn').forEach(el => {
     el.onclick = () => { quizState.answers[el.dataset.qid] = el.dataset.val; renderQuizSection(); };
+  });
+  view.querySelectorAll('.qCheck').forEach(el => {
+    el.onclick = () => {
+      const q = allQuestions().find(x => x.id === el.dataset.qid);
+      let picked = Array.isArray(quizState.answers[q.id]) ? quizState.answers[q.id].slice() : [];
+      const v = el.dataset.check;
+      if(picked.includes(v)){
+        picked = picked.filter(x => x !== v);
+      } else if(v === q.exclusive){
+        picked = [v];
+      } else {
+        picked = picked.filter(x => x !== q.exclusive).concat(v);
+      }
+      // Keep the same order as the Google Form.
+      quizState.answers[q.id] = q.options.map(o => o.value).filter(x => picked.includes(x));
+      renderQuizSection();
+    };
+  });
+  view.querySelectorAll('.qGridBtn').forEach(el => {
+    el.onclick = () => {
+      const g = Object.assign({}, quizState.answers[el.dataset.qid] || {});
+      g[el.dataset.row] = el.dataset.val;
+      quizState.answers[el.dataset.qid] = g;
+      renderQuizSection();
+    };
   });
 
   document.getElementById('qNextBtn').onclick = () => {
-    let ok = true;
+    let ok = true, firstErr = null;
     section.questions.forEach(q => {
-      const has = quizState.answers[q.id] && String(quizState.answers[q.id]).trim() !== '';
       const errEl = view.querySelector(`[data-qerr="${q.id}"]`);
-      if(!has){ ok = false; if(errEl) errEl.hidden = false; }
-      else if(errEl){ errEl.hidden = true; }
+      if(!q.optional && !isAnswered(q)){
+        ok = false;
+        if(errEl){ errEl.hidden = false; if(!firstErr) firstErr = errEl; }
+      } else if(errEl){ errEl.hidden = true; }
     });
-    if(!ok) return;
-    if(isLast){ submitQuiz(); } else { quizState.section++; renderQuizSection(); }
+    if(!ok){ firstErr.parentElement.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+    if(isLast){ submitQuiz(); } else { quizState.section++; renderQuizSection(); window.scrollTo(0, 0); }
   };
 }
 
@@ -963,16 +1119,26 @@ function submitQuiz(){
   if(!navigator.onLine){ alert(SURVEY.ui[L].offline); return; }
 
   const body = new URLSearchParams();
-  SURVEY.sections.forEach(s => s.questions.forEach(q => body.append(q.entry, quizState.answers[q.id] || '')));
+  allQuestions().forEach(q => {
+    const v = quizState.answers[q.id];
+    if(q.type === 'grid'){
+      q.rows.forEach((r,i) => body.append(r.entry, (v && v[i]) || ''));
+    } else if(q.type === 'checkbox'){
+      (v || []).forEach(x => body.append(q.entry, x));
+    } else {
+      body.append(q.entry, v === undefined ? '' : String(v).trim());
+    }
+  });
   body.append('pageHistory', SURVEY.pageHistory);
   body.append('fvv', '1');
 
-  // The response is invisible to us on purpose (cross-origin) — see the
-  // explanation you already have. We show our own thank-you screen either way.
+  // Google does not let the page see its reply (cross-origin), so we show
+  // our own results screen either way.
   fetch(SURVEY.formBase, { method:'POST', mode:'no-cors', body }).catch(() => {});
 
   quizState.done = true;
   renderQuizSection();
+  window.scrollTo(0, 0);
 }
 
 document.getElementById('quizLaunchBtn').onclick = openQuiz;
