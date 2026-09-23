@@ -258,6 +258,10 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
           <video controls playsinline preload="none" poster="evacuation-dormitory.jpg" src="evacuation-dormitory.mp4"></video>
           <figcaption id="vid2"></figcaption>
         </figure>
+        <figure class="vCard">
+          <video controls playsinline preload="none" poster="evacuation-smoke.jpg" src="evacuation-smoke.mp4"></video>
+          <figcaption id="vid3"></figcaption>
+        </figure>
       </div>
     </section>
     <div class="list" id="list"></div>
@@ -287,6 +291,7 @@ const CONTENT = {
     vidSub: "Our team shows the real evacuation routes. Needs internet.",
     vid1: "From the university building",
     vid2: "From the dormitory",
+    vid3: "If there is smoke in the dormitory",
     emTitle: "In an emergency, call",
     emSub: "Free from any phone, including with no SIM card.",
     who112: "All emergencies",
@@ -383,6 +388,7 @@ const CONTENT = {
     vidSub: "Наша команда показывает настоящие пути эвакуации. Нужен интернет.",
     vid1: "Из учебного корпуса",
     vid2: "Из общежития",
+    vid3: "Если в общежитии дым",
     emTitle: "При пожаре звоните",
     emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
     who112: "Единая служба",
@@ -470,6 +476,7 @@ const CONTENT = {
     vidSub: "تیم ما مسیرهای واقعی تخلیه را نشان می‌دهد. به اینترنت نیاز دارد.",
     vid1: "از ساختمان دانشگاه",
     vid2: "از خوابگاه",
+    vid3: "اگر در خوابگاه دود باشد",
     emTitle: "در شرایط اضطراری تماس بگیرید",
     emSub: "تماس رایگان از هر تلفنی، حتی بدون سیم‌کارت.",
     who112: "خدمات اضطراری",
@@ -570,7 +577,7 @@ function render(code){
 
   document.getElementById('appTitle').textContent = c.appTitle;
   document.title = c.appTitle + ' — RNIMU';
-  ['vidTitle','vidSub','vid1','vid2'].forEach(id => {
+  ['vidTitle','vidSub','vid1','vid2','vid3'].forEach(id => {
     document.getElementById(id).textContent = c[id] || CONTENT.en[id];
   });
   document.getElementById('emTitle').textContent = c.emTitle;
