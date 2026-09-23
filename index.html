@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fire Safety — RNIMU</title>
+<title>Fire Safety for International Students — RNIMU</title>
 <meta name="theme-color" content="#00843D">
 
 <!-- This line connects the app to manifest.json, which is what lets a phone
@@ -178,6 +178,14 @@ body.is-offline #offline{display:block}
 .qBtn.primary{background:var(--green);border-color:var(--green);color:#fff}
 .qBtn:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}
 
+/* ---------- videos ---------- */
+.videos{padding:18px 18px 6px;border-bottom:1px solid var(--line)}
+.videos h2{font-size:17px;font-weight:600;margin:0 0 2px}
+.videos .vSub{font-size:14px;color:var(--muted);margin:0 0 12px}
+.vGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vCard{margin:0 0 12px}
+.vCard video{display:block;width:100%;aspect-ratio:9/16;background:#000;border-radius:var(--radius);object-fit:cover}
+.vCard figcaption{font-size:14px;font-weight:600;margin-top:6px;line-height:1.3}
 .qDone{padding:40px 22px;text-align:center}
 .qDone .score{font-size:40px;font-weight:700;color:var(--green-dark);margin:0 0 6px}
 </style>
@@ -187,7 +195,7 @@ body.is-offline #offline{display:block}
 <div class="page">
 
   <div class="bar">
-    <h1>Fire safety
+    <h1><span id="appTitle">Fire Safety for International Students</span>
       <span class="sub" id="buildingLabel">RNIMU — Ostrovityanova 1</span>
     </h1>
     <!-- Add a new <option> here when you add a language below. -->
@@ -214,6 +222,22 @@ body.is-offline #offline{display:block}
   </button>
 
   <div id="infoView">
+    <!-- VIDEOS: to add one, put the .mp4 (and a .jpg preview) in the videos
+         folder, then add a <figure> below and its title in CONTENT (vid1, vid2…). -->
+    <section class="videos">
+      <h2 id="vidTitle"></h2>
+      <p class="vSub" id="vidSub"></p>
+      <div class="vGrid">
+        <figure class="vCard">
+          <video controls playsinline preload="none" poster="videos/evacuation-university.jpg" src="videos/evacuation-university.mp4"></video>
+          <figcaption id="vid1"></figcaption>
+        </figure>
+        <figure class="vCard">
+          <video controls playsinline preload="none" poster="videos/evacuation-dormitory.jpg" src="videos/evacuation-dormitory.mp4"></video>
+          <figcaption id="vid2"></figcaption>
+        </figure>
+      </div>
+    </section>
     <div class="list" id="list"></div>
     <footer id="foot"></footer>
   </div>
@@ -236,6 +260,11 @@ body.is-offline #offline{display:block}
 const CONTENT = {
 
   en: {
+    appTitle: "Fire Safety for International Students",
+    vidTitle: "Watch: how to evacuate",
+    vidSub: "Our team shows the real evacuation routes. Needs internet.",
+    vid1: "From the university building",
+    vid2: "From the dormitory",
     emTitle: "In an emergency, call",
     emSub: "Free from any phone, including with no SIM card.",
     who112: "All emergencies",
@@ -327,6 +356,11 @@ const CONTENT = {
   },
 
   ru: {
+    appTitle: "Пожарная безопасность для иностранных студентов",
+    vidTitle: "Видео: как эвакуироваться",
+    vidSub: "Наша команда показывает настоящие пути эвакуации. Нужен интернет.",
+    vid1: "Из учебного корпуса",
+    vid2: "Из общежития",
     emTitle: "При пожаре звоните",
     emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
     who112: "Единая служба",
@@ -409,6 +443,11 @@ const CONTENT = {
   },
 
   fa: {
+    appTitle: "ایمنی در برابر آتش‌سوزی برای دانشجویان بین‌المللی",
+    vidTitle: "ویدیو: نحوه تخلیه اضطراری",
+    vidSub: "تیم ما مسیرهای واقعی تخلیه را نشان می‌دهد. به اینترنت نیاز دارد.",
+    vid1: "از ساختمان دانشگاه",
+    vid2: "از خوابگاه",
     emTitle: "در شرایط اضطراری تماس بگیرید",
     emSub: "تماس رایگان از هر تلفنی، حتی بدون سیم‌کارت.",
     who112: "خدمات اضطراری",
@@ -507,6 +546,11 @@ function render(code){
   // Persian and Arabic read right to left.
   document.documentElement.dir = (code === 'fa' || code === 'ar') ? 'rtl' : 'ltr';
 
+  document.getElementById('appTitle').textContent = c.appTitle;
+  document.title = c.appTitle + ' — RNIMU';
+  ['vidTitle','vidSub','vid1','vid2'].forEach(id => {
+    document.getElementById(id).textContent = c[id] || CONTENT.en[id];
+  });
   document.getElementById('emTitle').textContent = c.emTitle;
   document.getElementById('emSub').textContent   = c.emSub;
   document.getElementById('who112').textContent  = c.who112;

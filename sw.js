@@ -17,7 +17,7 @@
       new version exists. If you forget, people keep seeing the old one.
    ============================================================ */
 
-const VERSION = 'fire-safety-v3';
+const VERSION = 'fire-safety-v4';
 
 const FILES = [
   './',
@@ -51,6 +51,10 @@ self.addEventListener('activate', event => {
 // must appear instantly and must never depend on a connection.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+
+  // Videos are too big to store on the phone, so they always stream
+  // from the internet and skip the offline copy.
+  if (event.request.url.includes('/videos/')) return;
 
   event.respondWith(
     caches.match(event.request).then(hit => {
