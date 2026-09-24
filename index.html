@@ -27,6 +27,8 @@
   --paper:#FFFFFF;
   --wash:#EFF4F0;         /* section background */
   --line:#CBD8CE;         /* hairlines */
+  --calm:#23707E;         /* breathing exercise only — calm, not a safety colour */
+  --calm-wash:#EAF3F5;
   --radius:10px;
 }
 
@@ -218,6 +220,50 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .plansIcon{flex:none;width:36px;height:36px;border-radius:10px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center}
 .plans .vSub{margin:0 0 14px}
 .plansNote{margin:12px 0 0}
+.breathe{padding:20px 18px 18px;background:var(--calm-wash);border-bottom:1px solid var(--line)}
+.breIcon{background:var(--calm)}
+.breathe .vSub{margin:0 0 14px}
+.breOpen{
+  display:flex;align-items:center;gap:14px;width:100%;padding:12px 16px;
+  background:var(--calm);color:#fff;border:none;border-radius:12px;
+  font:inherit;font-size:16px;font-weight:600;text-align:start;cursor:pointer;
+  box-shadow:0 1px 3px rgba(20,38,28,.12);
+}
+.breOpen:focus-visible{outline:3px solid #174E58;outline-offset:2px}
+.breFlowerMini{flex:none;width:46px;height:46px;animation:breMini 10s ease-in-out infinite}
+.breFlowerMini circle{fill:#BFEFF0;opacity:.55;mix-blend-mode:screen}
+@keyframes breMini{0%{transform:scale(.62) rotate(-30deg)}40%{transform:scale(1) rotate(0)}100%{transform:scale(.62) rotate(-30deg)}}
+.breNote{margin:12px 0 0}
+#breView{
+  position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;
+  background:radial-gradient(120% 80% at 50% 38%,#1F5C66 0%,#123C45 55%,#0B2830 100%);color:#fff;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+#breView[hidden]{display:none}
+.breBar{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;font-weight:600}
+.breBar span{flex:1}
+.breBar button{background:none;border:none;color:#fff;font-size:22px;line-height:1;padding:6px 8px;cursor:pointer}
+.breStage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:0}
+.breFlower{width:min(74vw,40vh,340px);height:auto;overflow:visible}
+.breFlower circle{mix-blend-mode:screen}
+#brePetals circle{fill:url(#brePetal)}
+.breGlow{fill:#7FD8D4;opacity:.12}
+.breCenter{display:flex;flex-direction:column;align-items:center;min-height:86px}
+.brePhase{font-size:24px;font-weight:600;letter-spacing:.01em;min-height:1.3em}
+.breCount{font-size:34px;font-weight:300;line-height:1.1;min-height:1.1em;opacity:.9}
+.breHint{text-align:center;margin:0 18px 6px;min-height:1.5em;font-size:15px;opacity:.85}
+.breControls{padding:6px 18px 18px;max-width:520px;width:100%;margin:0 auto}
+.brePatterns{display:flex;gap:8px;justify-content:center;margin:0 0 6px}
+.brePatterns button{
+  flex:1;padding:9px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.35);
+  background:transparent;color:#fff;font:inherit;font-size:14px;cursor:pointer;
+}
+.brePatterns button[aria-checked="true"]{background:#fff;color:#123C45;border-color:#fff;font-weight:600}
+.breInfo{text-align:center;font-size:13px;opacity:.75;margin:0 0 12px;min-height:1.4em}
+.breGo{width:100%;padding:14px;border:none;border-radius:12px;background:#BFEFF0;color:#0B2830;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.breGo:focus-visible,.brePatterns button:focus-visible,.breBar button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.breFoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:14px;opacity:.8;font-variant-numeric:tabular-nums}
+.breVib{display:flex;align-items:center;gap:6px}
 .floorMaps{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(20,38,28,.08)}
 .mapRow{
   display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;
@@ -318,11 +364,61 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
       <div class="floorMaps" id="floorMaps"></div>
       <p class="note plansNote" id="plansNote"></p>
     </section>
+
+    <!-- BREATHING EXERCISE: the full-screen part is at the bottom of the page. -->
+    <section class="breathe" aria-labelledby="breTitle">
+      <div class="plansHead">
+        <span class="plansIcon breIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg>
+        </span>
+        <h2 id="breTitle"></h2>
+      </div>
+      <p class="vSub" id="breSub"></p>
+      <button type="button" class="breOpen" id="breOpen">
+        <svg class="breFlowerMini" viewBox="0 0 100 100" aria-hidden="true"><g><circle cx="66.0" cy="50.0" r="22"/><circle cx="58.0" cy="63.9" r="22"/><circle cx="42.0" cy="63.9" r="22"/><circle cx="34.0" cy="50.0" r="22"/><circle cx="42.0" cy="36.1" r="22"/><circle cx="58.0" cy="36.1" r="22"/></g></svg>
+        <span id="breBtn"></span>
+      </button>
+      <p class="note breNote" id="breNote"></p>
+    </section>
     <div class="list" id="list"></div>
     <footer id="foot"></footer>
   </div>
 
   <div id="quizView" hidden></div>
+</div>
+
+<!-- Full-screen breathing exercise (filled in by the BREATHING script below). -->
+<div id="breView" hidden role="dialog" aria-modal="true" aria-labelledby="breViewTitle">
+  <div class="breBar">
+    <span id="breViewTitle"></span>
+    <button type="button" id="breClose" aria-label="Close">✕</button>
+  </div>
+  <div class="breStage">
+    <svg class="breFlower" id="breFlower" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <radialGradient id="brePetal" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#B8F2E6" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#4FB3BF" stop-opacity=".55"/>
+        </radialGradient>
+      </defs>
+      <circle class="breGlow" id="breGlow" cx="100" cy="100" r="60"/>
+      <g id="brePetals"></g>
+    </svg>
+    <div class="breCenter" aria-live="polite">
+      <div class="brePhase" id="brePhase"></div>
+      <div class="breCount" id="breCount"></div>
+    </div>
+  </div>
+  <p class="breHint" id="breHint"></p>
+  <div class="breControls">
+    <div class="brePatterns" id="brePatterns" role="radiogroup"></div>
+    <p class="breInfo" id="breInfo"></p>
+    <button type="button" class="breGo" id="breGo"></button>
+    <div class="breFoot">
+      <span id="breTime">0:00</span>
+      <label class="breVib" id="breVibWrap" hidden><input type="checkbox" id="breVib"> <span id="breVibLabel"></span></label>
+    </div>
+  </div>
 </div>
 
 <!-- Full-screen floor plan viewer (filled in by the FLOOR PLANS script below). -->
@@ -365,6 +461,10 @@ const CONTENT = {
     plansTitle: "Floor plans",
     plansSub: "Main building, Ostrovityanova 1. Tap a floor to open its plan, then pinch or use + / − to zoom.",
     plansNote: "These plans show departments and room numbers. In a fire, follow the official evacuation plan (план эвакуации) posted in the corridor on every floor.",
+    breTitle: "Feeling panicked? Breathe with us",
+    breSub: "A 1–2 minute breathing exercise to calm down after an alarm, a drill or a scary moment. Follow the flower: breathe in as it opens, breathe out as it closes.",
+    breBtn: "Start breathing exercise",
+    breNote: "Use it only once you are safe and away from smoke. If someone has chest pain, is short of breath, dizzy or confused after being near smoke, call 112 (ambulance: 103).",
     emTitle: "In an emergency, call",
     emSub: "Free from any phone, including with no SIM card.",
     who112: "All emergencies",
@@ -460,6 +560,10 @@ const CONTENT = {
     plansTitle: "Планы этажей",
     plansSub: "Главный корпус, Островитянова, 1. Нажмите на этаж, чтобы открыть план, и увеличивайте его двумя пальцами или кнопками + / −.",
     plansNote: "На планах показаны кафедры и номера кабинетов. При пожаре ориентируйтесь на официальный план эвакуации, который висит в коридоре на каждом этаже.",
+    breTitle: "Паника? Подышите вместе с нами",
+    breSub: "Дыхательное упражнение на 1–2 минуты, чтобы успокоиться после тревоги, учений или сильного испуга. Следите за цветком: вдох — когда он раскрывается, выдох — когда закрывается.",
+    breBtn: "Начать дыхательное упражнение",
+    breNote: "Делайте его только в безопасном месте, вдали от дыма. Если после контакта с дымом у человека боль в груди, одышка, головокружение или спутанность сознания, звоните 112 (скорая: 103).",
     emTitle: "При пожаре звоните",
     emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
     who112: "Единая служба",
@@ -546,6 +650,10 @@ const CONTENT = {
     plansTitle: "نقشهٔ طبقات",
     plansSub: "ساختمان اصلی، آستروویتیانووا ۱. روی هر طبقه بزنید تا نقشه‌اش باز شود، سپس با دو انگشت یا دکمه‌های + / − بزرگ‌نمایی کنید.",
     plansNote: "این نقشه‌ها دپارتمان‌ها و شمارهٔ اتاق‌ها را نشان می‌دهند. در آتش‌سوزی از نقشهٔ رسمی تخلیه (план эвакуации) که در راهروی هر طبقه نصب شده پیروی کنید.",
+    breTitle: "دچار اضطراب شده‌اید؟ با ما نفس بکشید",
+    breSub: "یک تمرین تنفسی ۱ تا ۲ دقیقه‌ای برای آرام شدن بعد از آژیر، تمرین تخلیه یا یک لحظهٔ ترسناک. همراه گل نفس بکشید: وقتی باز می‌شود دم بگیرید و وقتی بسته می‌شود بازدم کنید.",
+    breBtn: "شروع تمرین تنفس",
+    breNote: "فقط وقتی در جای امن و دور از دود هستید از آن استفاده کنید. اگر کسی بعد از قرار گرفتن در معرض دود درد قفسهٔ سینه، تنگی نفس، سرگیجه یا گیجی دارد، با ۱۱۲ تماس بگیرید (آمبولانس: ۱۰۳).",
     emTitle: "در شرایط اضطراری تماس بگیرید",
     emSub: "تماس رایگان از هر تلفنی، حتی بدون سیم‌کارت.",
     who112: "خدمات اضطراری",
@@ -641,7 +749,7 @@ function render(code){
 
   document.getElementById('appTitle').textContent = c.appTitle;
   document.title = c.appTitle + ' — RNIMU';
-  ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote'].forEach(id => {
+  ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote','breTitle','breSub','breBtn','breNote'].forEach(id => {
     document.getElementById(id).textContent = c[id] || CONTENT.en[id];
   });
   document.getElementById('emTitle').textContent = c.emTitle;
@@ -1478,6 +1586,194 @@ mapScroll.addEventListener('dblclick', e => {
   setMapZoom(mapZoom >= mapMaxZoom * 0.95 ? 1 : mapZoom * 2, e.clientX - r.left, e.clientY - r.top);
 });
 window.addEventListener('resize', () => { if(!mapView.hidden) setMapZoom(mapZoom); });
+
+
+/* ============================================================
+   BREATHING EXERCISE
+
+   A flower that opens as you breathe in and closes as you breathe out.
+   Two patterns: "calm" (4 in, 6 out — a longer breath out) and
+   "box" (4 in, 4 hold, 4 out, 4 hold). Times are in seconds; change
+   them in BREATH_PATTERNS if the team wants a different rhythm.
+   ============================================================ */
+
+const BREATH_PATTERNS = {
+  calm: [ {k:'in', d:4}, {k:'out', d:6} ],
+  box:  [ {k:'in', d:4}, {k:'hold', d:4}, {k:'out', d:4}, {k:'rest', d:4} ]
+};
+const BREATH_UI = {
+  en:{ title:'Breathe', start:'Start', pause:'Pause', resume:'Continue', close:'Close', vib:'Vibrate',
+       in:'Breathe in', out:'Breathe out', hold:'Hold', rest:'Hold',
+       hint:{ in:'Slowly, through your nose', out:'Slowly, through your mouth', hold:'Stay relaxed', rest:'Stay relaxed' },
+       ready:'Tap Start and follow the flower',
+       patterns:{ calm:{ label:'Calm · 4–6', info:'A longer breath out helps your heart rate slow down.' },
+                  box:{ label:'Box · 4–4–4–4', info:'Equal counts help you focus and steady your breathing.' } } },
+  ru:{ title:'Дыхание', start:'Начать', pause:'Пауза', resume:'Продолжить', close:'Закрыть', vib:'Вибрация',
+       in:'Вдох', out:'Выдох', hold:'Задержка', rest:'Задержка',
+       hint:{ in:'Медленно, через нос', out:'Медленно, через рот', hold:'Оставайтесь расслабленными', rest:'Оставайтесь расслабленными' },
+       ready:'Нажмите «Начать» и следуйте за цветком',
+       patterns:{ calm:{ label:'Спокойное · 4–6', info:'Длинный выдох помогает замедлить сердцебиение.' },
+                  box:{ label:'Квадрат · 4–4–4–4', info:'Одинаковый счёт помогает сосредоточиться и выровнять дыхание.' } } },
+  fa:{ title:'تنفس', start:'شروع', pause:'توقف', resume:'ادامه', close:'بستن', vib:'لرزش',
+       in:'دم', out:'بازدم', hold:'نگه دارید', rest:'نگه دارید',
+       hint:{ in:'آرام، از راه بینی', out:'آرام، از راه دهان', hold:'آرام بمانید', rest:'آرام بمانید' },
+       ready:'روی «شروع» بزنید و همراه گل نفس بکشید',
+       patterns:{ calm:{ label:'آرام · ۴–۶', info:'بازدم طولانی‌تر به آرام شدن ضربان قلب کمک می‌کند.' },
+                  box:{ label:'مربعی · ۴–۴–۴–۴', info:'شمارش‌های برابر به تمرکز و منظم شدن تنفس کمک می‌کند.' } } }
+};
+
+const breView = document.getElementById('breView');
+const brePetals = [];
+(function makePetals(){
+  const g = document.getElementById('brePetals');
+  for(let i = 0; i < 6; i++){
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    g.appendChild(c); brePetals.push(c);
+  }
+})();
+const breReduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+let bre = { pattern:'calm', running:false, started:false, i:0, phaseStart:0, pausedAt:0, elapsed:0, runStart:0, p:0.2, lastCount:null, lastSec:-1, wake:null, from:null };
+
+function breL(){ return BREATH_UI[langEl.value] ? langEl.value : 'en'; }
+function breDigits(n){ const s = String(n); return breL() === 'fa' ? s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : s; }
+const breEase = t => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(1, Math.max(0, t)));
+
+function drawFlower(p){
+  bre.p = p;
+  const q = breReduced ? 0.35 + 0.3 * p : p;          // smaller movement if the phone asks for less motion
+  const R = 36 * q, r = 24 + 28 * q, rot = -60 * (1 - q);
+  brePetals.forEach((c, i) => {
+    const a = (i * 60 + rot) * Math.PI / 180;
+    c.setAttribute('cx', (100 + R * Math.cos(a)).toFixed(2));
+    c.setAttribute('cy', (100 + R * Math.sin(a)).toFixed(2));
+    c.setAttribute('r', r.toFixed(2));
+  });
+  const glow = document.getElementById('breGlow');
+  glow.setAttribute('r', (46 + 50 * q).toFixed(2));
+  glow.style.opacity = (0.08 + 0.12 * q).toFixed(3);
+}
+
+function breTexts(){
+  const ui = BREATH_UI[breL()];
+  document.getElementById('breViewTitle').textContent = ui.title;
+  document.getElementById('breClose').setAttribute('aria-label', ui.close);
+  document.getElementById('breVibLabel').textContent = ui.vib;
+  document.getElementById('breGo').textContent = bre.running ? ui.pause : (bre.started ? ui.resume : ui.start);
+  document.getElementById('breInfo').textContent = ui.patterns[bre.pattern].info;
+  const box = document.getElementById('brePatterns');
+  box.innerHTML = Object.keys(BREATH_PATTERNS).map(k =>
+    `<button type="button" role="radio" aria-checked="${k === bre.pattern}" data-pat="${k}">${ui.patterns[k].label}</button>`).join('');
+  box.querySelectorAll('button').forEach(b => { b.onclick = () => breSetPattern(b.dataset.pat); });
+  if(!bre.started){
+    document.getElementById('brePhase').textContent = '';
+    document.getElementById('breCount').textContent = '';
+    document.getElementById('breHint').textContent = ui.ready;
+  }
+}
+
+function breShowPhase(){
+  const ui = BREATH_UI[breL()], ph = BREATH_PATTERNS[bre.pattern][bre.i];
+  document.getElementById('brePhase').textContent = ui[ph.k];
+  document.getElementById('breHint').textContent = ui.hint[ph.k];
+  const vib = document.getElementById('breVib');
+  if(vib.checked && navigator.vibrate) navigator.vibrate(ph.k === 'in' ? 60 : ph.k === 'out' ? [30, 60, 30] : 20);
+}
+
+function breFrame(now){
+  if(!bre.running) return;
+  const pat = BREATH_PATTERNS[bre.pattern];
+  let ph = pat[bre.i], t = (now - bre.phaseStart) / 1000;
+  while(t >= ph.d){
+    bre.phaseStart += ph.d * 1000;
+    bre.i = (bre.i + 1) % pat.length;
+    ph = pat[bre.i];
+    t = (now - bre.phaseStart) / 1000;
+    breShowPhase();
+  }
+  const e = breEase(t / ph.d);
+  drawFlower(ph.k === 'in' ? e : ph.k === 'out' ? 1 - e : ph.k === 'hold' ? 1 : 0);
+  const count = Math.max(1, Math.ceil(ph.d - t));
+  if(count !== bre.lastCount){ bre.lastCount = count; document.getElementById('breCount').textContent = breDigits(count); }
+  const sec = Math.floor((bre.elapsed + now - bre.runStart) / 1000);
+  if(sec !== bre.lastSec){
+    bre.lastSec = sec;
+    document.getElementById('breTime').textContent = breDigits(Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'));
+  }
+  requestAnimationFrame(breFrame);
+}
+
+async function breWake(on){
+  try{
+    if(on && 'wakeLock' in navigator && !bre.wake) bre.wake = await navigator.wakeLock.request('screen');
+    if(!on && bre.wake){ await bre.wake.release(); bre.wake = null; }
+  }catch(e){ bre.wake = null; }
+}
+
+function breStart(){
+  const now = performance.now();
+  if(!bre.started){
+    bre.started = true; bre.i = 0; bre.phaseStart = now; bre.elapsed = 0; bre.lastCount = null;
+    // Begin the first breath in from wherever the flower is resting.
+    bre.phaseStart -= Math.acos(1 - 2 * Math.min(0.99, bre.p)) / Math.PI * BREATH_PATTERNS[bre.pattern][0].d * 1000;
+  } else {
+    bre.phaseStart = now - bre.pausedAt;
+  }
+  bre.running = true; bre.runStart = now;
+  breShowPhase(); breTexts(); breWake(true);
+  requestAnimationFrame(breFrame);
+}
+
+function brePause(){
+  if(!bre.running) return;
+  const now = performance.now();
+  bre.running = false;
+  bre.pausedAt = now - bre.phaseStart;
+  bre.elapsed += now - bre.runStart;
+  breTexts(); breWake(false);
+}
+
+function breReset(){
+  brePause();
+  bre.started = false; bre.i = 0; bre.elapsed = 0; bre.lastSec = -1;
+  document.getElementById('breTime').textContent = breDigits('0:00');
+  breTexts();
+}
+
+function breSetPattern(k){
+  const wasRunning = bre.running;
+  breReset();
+  bre.pattern = k;
+  breTexts();
+  if(wasRunning) breStart();
+}
+
+function openBreath(){
+  bre.from = document.activeElement;
+  breView.hidden = false;
+  document.body.style.overflow = 'hidden';
+  if('vibrate' in navigator) document.getElementById('breVibWrap').hidden = false;
+  breReset();
+  drawFlower(0.2);
+  history.pushState({ breath:true }, '');
+  document.getElementById('breGo').focus();
+}
+
+function hideBreath(){
+  if(breView.hidden) return;
+  breReset();
+  breView.hidden = true;
+  document.body.style.overflow = '';
+  if(bre.from && bre.from.focus) bre.from.focus();
+}
+
+document.getElementById('breOpen').onclick = openBreath;
+document.getElementById('breGo').onclick = () => { if(bre.running) brePause(); else breStart(); };
+document.getElementById('breClose').onclick = () => { if(history.state && history.state.breath) history.back(); else hideBreath(); };
+window.addEventListener('popstate', hideBreath);
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && !breView.hidden) document.getElementById('breClose').click(); });
+// Leaving the app pauses the exercise, so it does not race ahead in the background.
+document.addEventListener('visibilitychange', () => { if(document.hidden) brePause(); });
+drawFlower(0.2);
 
 window.floorMapsReady = true;
 renderFloorMaps(langEl.value);
