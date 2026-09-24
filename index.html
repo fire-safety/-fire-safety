@@ -212,9 +212,15 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .qDone{padding:40px 22px;text-align:center}
 
 /* ---------- floor plans ---------- */
-.floorMaps{margin:0 0 12px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.plans{padding:20px 18px 18px;background:var(--wash);border-bottom:1px solid var(--line)}
+.plansHead{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.plansHead h2{font-size:17px;font-weight:600;margin:0}
+.plansIcon{flex:none;width:36px;height:36px;border-radius:10px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center}
+.plans .vSub{margin:0 0 14px}
+.plansNote{margin:12px 0 0}
+.floorMaps{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(20,38,28,.08)}
 .mapRow{
-  display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;
+  display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;
   background:var(--paper);border:none;border-bottom:1px solid var(--line);
   font:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:start;cursor:pointer;
 }
@@ -223,7 +229,10 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .mapNum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--green);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
 .mapName{flex:1}
-.mapThumb{flex:none;width:130px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--wash)}
+.mapThumb{flex:none;width:120px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--wash)}
+.mapRow::after{content:"";flex:none;width:8px;height:8px;border-top:2px solid var(--muted);border-right:2px solid var(--muted);transform:rotate(45deg);margin-inline-end:4px}
+[dir=rtl] .mapRow::after{transform:rotate(-135deg)}
+.mapRow:active{background:var(--wash)}
 #mapView{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#EEF2EF}
 #mapView[hidden]{display:none}
 .mapBar{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;background:var(--green);color:#fff;font-weight:600}
@@ -296,6 +305,19 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
         </figure>
       </div>
     </section>
+
+    <!-- FLOOR PLANS: the list of floors is filled in from FLOOR_MAPS in the script. -->
+    <section class="plans" aria-labelledby="plansTitle">
+      <div class="plansHead">
+        <span class="plansIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg>
+        </span>
+        <h2 id="plansTitle"></h2>
+      </div>
+      <p class="vSub" id="plansSub"></p>
+      <div class="floorMaps" id="floorMaps"></div>
+      <p class="note plansNote" id="plansNote"></p>
+    </section>
     <div class="list" id="list"></div>
     <footer id="foot"></footer>
   </div>
@@ -340,6 +362,9 @@ const CONTENT = {
     vid1: "From the university building",
     vid2: "From the dormitory",
     vid3: "If there is smoke in the dormitory",
+    plansTitle: "Floor plans",
+    plansSub: "Main building, Ostrovityanova 1. Tap a floor to open its plan, then pinch or use + / − to zoom.",
+    plansNote: "These plans show departments and room numbers. In a fire, follow the official evacuation plan (план эвакуации) posted in the corridor on every floor.",
     emTitle: "In an emergency, call",
     emSub: "Free from any phone, including with no SIM card.",
     who112: "All emergencies",
@@ -412,12 +437,6 @@ const CONTENT = {
           <p>Keep your back to the exit so you can always leave. If the fire does not go out within seconds, leave.</p>`
       },
 
-      { title: "Your building: floor plans",
-        html: `
-          <p>Floor plans of the main building at Ostrovityanova 1. Tap a floor to open it, then pinch or use + / − to zoom.</p>
-          <div class="floorMaps" id="floorMaps"></div>
-          <p class="note">These plans show departments and room numbers. In an emergency, follow the official evacuation plan (план эвакуации) posted in the corridor on every floor.</p>`
-      },
 
       { title: "Not allowed in the dormitory",
         html: `
@@ -438,6 +457,9 @@ const CONTENT = {
     vid1: "Из учебного корпуса",
     vid2: "Из общежития",
     vid3: "Если в общежитии дым",
+    plansTitle: "Планы этажей",
+    plansSub: "Главный корпус, Островитянова, 1. Нажмите на этаж, чтобы открыть план, и увеличивайте его двумя пальцами или кнопками + / −.",
+    plansNote: "На планах показаны кафедры и номера кабинетов. При пожаре ориентируйтесь на официальный план эвакуации, который висит в коридоре на каждом этаже.",
     emTitle: "При пожаре звоните",
     emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
     who112: "Единая служба",
@@ -503,12 +525,6 @@ const CONTENT = {
           </ol>
           <p>Стойте спиной к выходу, чтобы всегда можно было уйти. Не погасло за несколько секунд — уходите.</p>`
       },
-      { title: "Ваш корпус: планы этажей",
-        html: `
-          <p>Планы этажей главного корпуса (Островитянова, 1). Нажмите на этаж, чтобы открыть план, и увеличивайте его двумя пальцами или кнопками + / −.</p>
-          <div class="floorMaps" id="floorMaps"></div>
-          <p class="note">На этих планах показаны кафедры и номера кабинетов. При пожаре ориентируйтесь на официальный план эвакуации, который висит в коридоре на каждом этаже.</p>`
-      },
       { title: "Запрещено в общежитии",
         html: `
           <div class="never"><b>Запрещены в комнатах:</b> микроволновые печи, электроплиты, стиральные машины, масляные радиаторы, зарядка электросамокатов и велосипедов.</div>
@@ -527,6 +543,9 @@ const CONTENT = {
     vid1: "از ساختمان دانشگاه",
     vid2: "از خوابگاه",
     vid3: "اگر در خوابگاه دود باشد",
+    plansTitle: "نقشهٔ طبقات",
+    plansSub: "ساختمان اصلی، آستروویتیانووا ۱. روی هر طبقه بزنید تا نقشه‌اش باز شود، سپس با دو انگشت یا دکمه‌های + / − بزرگ‌نمایی کنید.",
+    plansNote: "این نقشه‌ها دپارتمان‌ها و شمارهٔ اتاق‌ها را نشان می‌دهند. در آتش‌سوزی از نقشهٔ رسمی تخلیه (план эвакуации) که در راهروی هر طبقه نصب شده پیروی کنید.",
     emTitle: "در شرایط اضطراری تماس بگیرید",
     emSub: "تماس رایگان از هر تلفنی، حتی بدون سیم‌کارت.",
     who112: "خدمات اضطراری",
@@ -592,12 +611,6 @@ const CONTENT = {
           </ol>
           <p>پشت شما به سمت خروجی باشد. اگر ظرف چند ثانیه خاموش نشد، خارج شوید.</p>`
       },
-      { title: "ساختمان شما: نقشهٔ طبقات",
-        html: `
-          <p>نقشهٔ طبقات ساختمان اصلی (آستروویتیانووا ۱). روی هر طبقه بزنید تا نقشه باز شود، سپس با دو انگشت یا دکمه‌های + / − بزرگ‌نمایی کنید.</p>
-          <div class="floorMaps" id="floorMaps"></div>
-          <p class="note">این نقشه‌ها دپارتمان‌ها و شمارهٔ اتاق‌ها را نشان می‌دهند. در شرایط اضطراری از نقشهٔ رسمی تخلیه (план эвакуации) که در راهروی هر طبقه نصب شده پیروی کنید.</p>`
-      },
       { title: "ممنوع در خوابگاه",
         html: `
           <div class="never"><b>ممنوع در اتاق‌ها:</b> مایکروویو، اجاق برقی، ماشین لباسشویی، شوفاژ روغنی، شارژ اسکوتر و دوچرخه برقی.</div>
@@ -628,7 +641,7 @@ function render(code){
 
   document.getElementById('appTitle').textContent = c.appTitle;
   document.title = c.appTitle + ' — RNIMU';
-  ['vidTitle','vidSub','vid1','vid2','vid3'].forEach(id => {
+  ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote'].forEach(id => {
     document.getElementById(id).textContent = c[id] || CONTENT.en[id];
   });
   document.getElementById('emTitle').textContent = c.emTitle;
@@ -1358,7 +1371,7 @@ function renderFloorMaps(code){
     <button type="button" class="mapRow" data-map="${i}">
       <span class="mapNum">${m.num[L]}</span>
       <span class="mapName">${m.label[L]}</span>
-      <img class="mapThumb" src="${m.file}-small.webp" alt="" loading="lazy" width="130" height="38">
+      <img class="mapThumb" src="${m.file}-small.webp" alt="" loading="lazy" width="120" height="38">
     </button>`).join('');
   box.querySelectorAll('.mapRow').forEach(b => { b.onclick = () => openMap(+b.dataset.map); });
 }
