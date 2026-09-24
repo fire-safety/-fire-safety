@@ -130,6 +130,7 @@ body.is-offline #offline{display:block}
   padding:14px 16px;font:inherit;font-size:15px;font-weight:600;
   text-align:start;cursor:pointer;
 }
+.quizLaunch + .quizLaunch{margin-top:-6px}
 .quizLaunch:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}
 .quizLaunch .sub{display:block;font-weight:400;font-size:13px;opacity:.85;margin-top:2px}
 
@@ -238,9 +239,14 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
     <a class="call" href="tel:+74954345192"><span class="num">+7 495 434-51-92</span><span class="who" id="whoDuty"></span></a>
   </section>
 
-  <button class="quizLaunch" id="quizLaunchBtn" type="button">
-    <span id="quizLaunchTitle"></span>
-    <span class="sub" id="quizLaunchSub"></span>
+  <!-- One button per questionnaire level (SURVEYS in the script, in this order). -->
+  <button class="quizLaunch" id="quizLaunchBtn0" type="button">
+    <span id="quizLaunchTitle0"></span>
+    <span class="sub" id="quizLaunchSub0"></span>
+  </button>
+  <button class="quizLaunch" id="quizLaunchBtn1" type="button">
+    <span id="quizLaunchTitle1"></span>
+    <span class="sub" id="quizLaunchSub1"></span>
   </button>
 
   <div id="infoView">
@@ -643,14 +649,14 @@ if('serviceWorker' in navigator){
    place; what gets saved does not change.
    ============================================================ */
 
-const SURVEY = {
+const SURVEY_L2 = {
   formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSf_svd6mQLiYpY33ueWK2xlbyIje8pBpTzmrGUjJPYYITXnQw/formResponse',
   pageHistory: '0',
 
   launch: {
-    en: { title: '🔥 Fire Safety Quest — Level 2', sub: 'About 6 minutes · anonymous · see your score and rank at the end' },
-    ru: { title: '🔥 Квест по пожарной безопасности — уровень 2', sub: 'Около 6 минут · анонимно · в конце — ваш результат и звание' },
-    fa: { title: '🔥 کوئست ایمنی آتش‌سوزی — مرحلهٔ ۲', sub: 'حدود ۶ دقیقه · ناشناس · در پایان امتیاز و رتبهٔ خود را می‌بینید' }
+    en: { title: '🔥 Fire Safety Quest — Level 2', sub: 'After our training · about 6 minutes · see your score and rank' },
+    ru: { title: '🔥 Квест по пожарной безопасности — уровень 2', sub: 'После обучения · около 6 минут · ваш результат и звание' },
+    fa: { title: '🔥 کوئست ایمنی آتش‌سوزی — مرحلهٔ ۲', sub: 'پس از آموزش · حدود ۶ دقیقه · امتیاز و رتبهٔ شما' }
   },
 
   ui: {
@@ -694,10 +700,10 @@ const SURVEY = {
           ]},
         { id:'code', entry:'entry.1943426309', type:'text',
           text:{en:'Your secret agent code', ru:'Ваш секретный код агента', fa:'کد مخفی مأمور شما'},
-          help:{en:"Same code as last time: the first 2 letters of your mother's first name + the day you were born (2 digits).",
-                ru:'Тот же код, что и в прошлый раз: первые 2 буквы имени вашей матери + день вашего рождения (2 цифры).',
-                fa:'همان کد دفعهٔ قبل: دو حرف اول نام مادرتان + روز تولدتان (دو رقم).'},
-          placeholder:{en:'e.g. MA07', ru:'например, МА07', fa:'مثلاً MA07'} }
+          help:{en:'Same code as in Level 1: the first 2 letters of your first name + the day you were born (2 digits).',
+                ru:'Тот же код, что и на уровне 1: первые 2 буквы вашего имени + день вашего рождения (2 цифры).',
+                fa:'همان کد مرحلهٔ ۱: دو حرف اول نام خودتان + روز تولدتان (دو رقم).'},
+          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} }
       ]
     },
 
@@ -934,10 +940,131 @@ const SURVEY = {
   ]
 };
 
+/* ============================================================
+   LEVEL 1 — Fire Safety Questionnaire (the first check)
+
+   This feeds the Google Form "Fire Safety Questionnaire — Level 1".
+   Questions 1–12 are the same scenarios as in Level 2, so they reuse
+   the Level 2 wording below; only the entry numbers (and, for 9–12,
+   the saved option text) are different in this form.
+   ============================================================ */
+
+function level1Copy(id, entry, values){
+  const q = SURVEY_L2.sections.reduce((all, s) => all.concat(s.questions), []).find(x => x.id === id);
+  const copy = Object.assign({}, q, { entry });
+  if(values) copy.values = values;
+  return copy;
+}
+const LETTERS = ['A','B','C','D','E'];
+const lettered = values => values.map((v,i) => LETTERS[i] + '. ' + v);
+
+const SURVEY_L1 = {
+  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSepkaxmYe7RNx2QZOQ2XFiyOus4SfCyyxuzCEgKQ99o3DtrTQ/formResponse',
+  pageHistory: '0,1',
+
+  launch: {
+    en: { title: '📝 Fire Safety Questionnaire — Level 1', sub: 'Start here · about 5 minutes · anonymous' },
+    ru: { title: '📝 Опрос по пожарной безопасности — уровень 1', sub: 'Начните отсюда · около 5 минут · анонимно' },
+    fa: { title: '📝 پرسشنامهٔ ایمنی آتش‌سوزی — مرحلهٔ ۱', sub: 'از اینجا شروع کنید · حدود ۵ دقیقه · ناشناس' }
+  },
+
+  ui: {
+    en: Object.assign({}, SURVEY_L2.ui.en, { doneTitle:'Thank you!', doneScore:'correct answers on the knowledge questions',
+          doneBody:'Your answers help the team understand what to teach first. Remember your code — you will need it for Level 2.' }),
+    ru: Object.assign({}, SURVEY_L2.ui.ru, { doneTitle:'Спасибо!', doneScore:'правильных ответов в вопросах на знание',
+          doneBody:'Ваши ответы помогут команде понять, чему учить в первую очередь. Запомните свой код — он понадобится для уровня 2.' }),
+    fa: Object.assign({}, SURVEY_L2.ui.fa, { doneTitle:'سپاسگزاریم!', doneScore:'پاسخ درست در سؤالات دانشی',
+          doneBody:'پاسخ‌های شما به تیم کمک می‌کند بداند اول چه چیزی را آموزش دهد. کدتان را به خاطر بسپارید — برای مرحلهٔ ۲ لازم است.' })
+  },
+
+  ranks: null,   // Level 1 shows the score only; ranks are a Level 2 thing.
+
+  sections: [
+    { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
+      intro:{en:'This questionnaire is part of a university project on students’ fire safety knowledge, awareness and preparedness. Read each question carefully and choose the answer that best matches what you know or think.',
+             ru:'Этот опрос — часть университетского проекта о знаниях, осведомлённости и готовности студентов в вопросах пожарной безопасности. Внимательно прочитайте каждый вопрос и выберите ответ, который лучше всего отражает ваши знания или мнение.',
+             fa:'این پرسشنامه بخشی از یک پروژهٔ دانشگاهی دربارهٔ دانش، آگاهی و آمادگی دانشجویان در زمینهٔ ایمنی آتش‌سوزی است. هر سؤال را با دقت بخوانید و پاسخی را انتخاب کنید که بهتر از همه دانش یا نظر شما را نشان می‌دهد.'},
+      questions:[
+        { id:'code', entry:'entry.2146882345', type:'text',
+          text:{en:'Your secret code', ru:'Ваш секретный код', fa:'کد مخفی شما'},
+          help:{en:'The first 2 letters of your first name + the day you were born (2 digits). Remember it — you will use the same code in Level 2.',
+                ru:'Первые 2 буквы вашего имени + день вашего рождения (2 цифры). Запомните его — этот же код понадобится на уровне 2.',
+                fa:'دو حرف اول نام خودتان + روز تولدتان (دو رقم). آن را به خاطر بسپارید — همین کد را در مرحلهٔ ۲ هم وارد می‌کنید.'},
+          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} },
+        { id:'year', entry:'entry.375323732', type:'scale',
+          values:['0','1','2','3','4','5','6'],
+          text:{en:'Which year of study are you in?', ru:'На каком вы курсе?', fa:'در چه سال تحصیلی هستید؟'} },
+        { id:'lang', entry:'entry.1074753464', type:'radio',
+          text:{en:'In which language are you studying?', ru:'На каком языке вы учитесь?', fa:'به چه زبانی تحصیل می‌کنید؟'},
+          options:[
+            {value:'Russian', label:{en:'Russian', ru:'На русском', fa:'روسی'}},
+            {value:'English', label:{en:'English', ru:'На английском', fa:'انگلیسی'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🌐 Language background', ru:'🌐 Знание языков', fa:'🌐 سابقهٔ زبانی'},
+      questions:[
+        { id:'ruLevel', entry:'entry.211887207', type:'radio',
+          text:{en:'How would you rate your Russian language level?', ru:'Как вы оцениваете свой уровень русского языка?', fa:'سطح زبان روسی خود را چگونه ارزیابی می‌کنید؟'},
+          options:[
+            {value:'Beginner', label:{en:'Beginner', ru:'Начальный', fa:'مبتدی'}},
+            {value:'B. Elementary', label:{en:'Elementary', ru:'Элементарный', fa:'ابتدایی'}},
+            {value:'C. Intermediate', label:{en:'Intermediate', ru:'Средний', fa:'متوسط'}},
+            {value:'D. Upper-intermediate', label:{en:'Upper-intermediate', ru:'Выше среднего', fa:'متوسط رو به بالا'}},
+            {value:'E. Advanced', label:{en:'Advanced', ru:'Продвинутый', fa:'پیشرفته'}},
+            {value:'F. Native speaker', label:{en:'Native speaker', ru:'Родной язык', fa:'زبان مادری'}}
+          ]},
+        { id:'enLevel', entry:'entry.54818124', type:'radio',
+          text:{en:'How would you rate your English language level?', ru:'Как вы оцениваете свой уровень английского языка?', fa:'سطح زبان انگلیسی خود را چگونه ارزیابی می‌کنید؟'},
+          options:[
+            {value:'A. Beginner', label:{en:'Beginner', ru:'Начальный', fa:'مبتدی'}},
+            {value:'B. Elementary', label:{en:'Elementary', ru:'Элементарный', fa:'ابتدایی'}},
+            {value:'C. Intermediate', label:{en:'Intermediate', ru:'Средний', fa:'متوسط'}},
+            {value:'D. Upper-intermediate', label:{en:'Upper-intermediate', ru:'Выше среднего', fa:'متوسط رو به بالا'}},
+            {value:'E. Advanced', label:{en:'Advanced', ru:'Продвинутый', fa:'پیشرفته'}},
+            {value:'F. Native speaker', label:{en:'Native speaker', ru:'Родной язык', fa:'زبان مادری'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🚨 Part 1 — React', ru:'🚨 Часть 1 — Действуй', fa:'🚨 بخش ۱ — واکنش'},
+      questions:[ level1Copy('Q1','entry.1336571634'), level1Copy('Q2','entry.846596018') ] },
+
+    { title:{en:'🚪 Part 2 — Find Your Way Out', ru:'🚪 Часть 2 — Найди выход', fa:'🚪 بخش ۲ — راه خروج را پیدا کن'},
+      questions:[ level1Copy('Q3','entry.1070910590'), level1Copy('Q4','entry.723732615') ] },
+
+    { title:{en:'🧯 Part 3 — Fire Extinguisher Challenge', ru:'🧯 Часть 3 — Испытание огнетушителем', fa:'🧯 بخش ۳ — چالش کپسول آتش‌نشانی'},
+      questions:[ level1Copy('Q5','entry.1003113519'), level1Copy('Q6','entry.447040427') ] },
+
+    { title:{en:'🚨 Part 4 — Emergency Challenge', ru:'🚨 Часть 4 — Экстренная ситуация', fa:'🚨 بخش ۴ — چالش اضطراری'},
+      questions:[ level1Copy('Q7','entry.1799551098'), level1Copy('Q8','entry.1509669983') ] },
+
+    { title:{en:'⭐ Part 5 — How Ready Are You?', ru:'⭐ Часть 5 — Насколько вы готовы?', fa:'⭐ بخش ۵ — چقدر آماده‌اید؟'},
+      intro:SURVEY_L2.sections[5].intro,
+      questions:[
+        level1Copy('Q9',  'entry.444632080',  lettered(['1 — Not at all confident','2 — Slightly confident','3 — Moderately confident','4 — Very confident','5 — Completely confident'])),
+        level1Copy('Q10', 'entry.119735555',  lettered(['1 — Not at all familiar','2 — Slightly familiar','3 — Moderately familiar','4 — Very familiar','5 — Extremely familiar'])),
+        level1Copy('Q11', 'entry.1001957961', lettered(['1 — Not at all prepared','2 — Slightly prepared','3 — Moderately prepared','4 — Very prepared','5 — Extremely prepared'])),
+        level1Copy('Q12', 'entry.1785860480', lettered(['1 — Very unlikely','2 — Unlikely','3 — Neither likely nor unlikely','4 — Likely','5 — Very likely']))
+      ]
+    }
+  ]
+};
+
+const SURVEYS = [SURVEY_L1, SURVEY_L2];
+let SURVEY = SURVEY_L2;   // whichever level is open right now
+
 let quizState = { section:0, answers:{}, order:{}, done:false };
 
 function esc(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// "A. 1 — Not at all confident" -> "1" (in Persian digits for fa)
+function scaleNum(v, L){
+  const n = (String(v).match(/\d+/) || [String(v)])[0];
+  return L === 'fa' ? n.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : n;
 }
 
 function allQuestions(){
@@ -945,12 +1072,15 @@ function allQuestions(){
 }
 
 function renderQuizLaunch(){
-  const L = SURVEY.launch[langEl.value] ? langEl.value : 'en';
-  document.getElementById('quizLaunchTitle').textContent = SURVEY.launch[L].title;
-  document.getElementById('quizLaunchSub').textContent = SURVEY.launch[L].sub;
+  SURVEYS.forEach((sv, i) => {
+    const L = sv.launch[langEl.value] ? langEl.value : 'en';
+    document.getElementById('quizLaunchTitle' + i).textContent = sv.launch[L].title;
+    document.getElementById('quizLaunchSub' + i).textContent = sv.launch[L].sub;
+  });
 }
 
-function openQuiz(){
+function openQuiz(level){
+  SURVEY = SURVEYS[level];
   quizState = { section:0, answers:{}, order:{}, done:false };
   // Shuffle the options of scored questions once per attempt.
   allQuestions().forEach(q => {
@@ -990,7 +1120,7 @@ function renderQuizSection(){
     const scored = allQuestions().filter(q => q.correct);
     const missed = scored.filter(q => quizState.answers[q.id] !== q.correct);
     const correct = scored.length - missed.length;
-    const rank = SURVEY.ranks.find(r => correct >= r.min);
+    const rank = SURVEY.ranks ? SURVEY.ranks.find(r => correct >= r.min) : null;
     const review = missed.length ? `
         <div class="qReview">
           <p class="qReviewTitle">${ui.reviewTitle}</p>
@@ -1005,8 +1135,8 @@ function renderQuizSection(){
         <p style="font-weight:600;font-size:17px;margin:0 0 18px">${ui.doneTitle}</p>
         <p class="score">${correct}/${scored.length}</p>
         <p class="note" style="margin:0 0 18px">${ui.doneScore}</p>
-        <p class="note" style="margin:0">${ui.rankLabel}</p>
-        <p class="qRank">${rank.label[L]}</p>
+        ${rank ? `<p class="note" style="margin:0">${ui.rankLabel}</p>
+        <p class="qRank">${rank.label[L]}</p>` : ''}
         <p class="note">${ui.doneBody}</p>
         ${review}
       </div>
@@ -1039,8 +1169,8 @@ function renderQuizSection(){
     } else if(q.type === 'scale'){
       const wide = q.values.length > 6 ? ' wide' : '';
       inputHtml = `
-        <div class="qScale${wide}">${q.values.map((v,i) => `<button type="button" class="qScaleBtn${val===v?' sel':''}" data-qid="${q.id}" data-val="${esc(v)}">${L==='fa' ? String(v).split(' ')[0].replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : String(v).split(' ')[0]}</button>`).join('')}</div>
-        <div class="qScaleLabels"><span>${q.low[L]}</span><span>${q.high[L]}</span></div>`;
+        <div class="qScale${wide}">${q.values.map((v,i) => `<button type="button" class="qScaleBtn${val===v?' sel':''}" data-qid="${q.id}" data-val="${esc(v)}">${scaleNum(v, L)}</button>`).join('')}</div>
+        ${q.low ? `<div class="qScaleLabels"><span>${q.low[L]}</span><span>${q.high[L]}</span></div>` : '<div style="height:12px"></div>'}`;
     } else if(q.type === 'grid'){
       const g = val || {};
       inputHtml = q.rows.map((r,ri) => `
@@ -1148,7 +1278,7 @@ function submitQuiz(){
   window.scrollTo(0, 0);
 }
 
-document.getElementById('quizLaunchBtn').onclick = openQuiz;
+SURVEYS.forEach((sv, i) => { document.getElementById('quizLaunchBtn' + i).onclick = () => openQuiz(i); });
 
 // Everything above is defined by now, so it is safe to fill the quiz card.
 renderQuizLaunch();
