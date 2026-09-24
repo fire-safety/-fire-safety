@@ -17,7 +17,7 @@
       new version exists. If you forget, people keep seeing the old one.
    ============================================================ */
 
-const VERSION = 'fire-safety-v10';
+const VERSION = 'fire-safety-v11';
 
 const FILES = [
   './',
@@ -36,7 +36,9 @@ const FILES = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(VERSION)
-      .then(cache => cache.addAll(FILES))
+      // cache:'reload' skips the browser's own short-term cache, so a new
+      // version always saves the newest files, not a copy from minutes ago.
+      .then(cache => cache.addAll(FILES.map(f => new Request(f, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
   );
 });
