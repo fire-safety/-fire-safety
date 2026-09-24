@@ -232,6 +232,7 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .mapScroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;position:relative;background:#fff}
 .mapScroll img{display:block;max-width:none;height:auto;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .mapLoading{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px}
+.mapLoading[hidden]{display:none}
 .mapZoom{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
 .mapZoom button{width:48px;height:48px;border-radius:50%;border:none;background:var(--green);color:#fff;font-size:26px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
 .mapZoom button:focus-visible,.mapBar button:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}

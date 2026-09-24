@@ -17,7 +17,7 @@
       new version exists. If you forget, people keep seeing the old one.
    ============================================================ */
 
-const VERSION = 'fire-safety-v9';
+const VERSION = 'fire-safety-v10';
 
 const FILES = [
   './',
