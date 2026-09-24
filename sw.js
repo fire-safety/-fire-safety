@@ -17,14 +17,19 @@
       new version exists. If you forget, people keep seeing the old one.
    ============================================================ */
 
-const VERSION = 'fire-safety-v8';
+const VERSION = 'fire-safety-v9';
 
 const FILES = [
   './',
   'index.html',
   'manifest.json',
   'icon-192.png',
-  'icon-512.png'
+  'icon-512.png',
+  'maps/floor-4-small.webp',
+  'maps/floor-3-small.webp',
+  'maps/floor-2-small.webp',
+  'maps/floor-1-small.webp',
+  'maps/floor-0-small.webp'
 ];
 
 // Save everything the first time.
@@ -55,6 +60,20 @@ self.addEventListener('fetch', event => {
   // Videos are too big to store on the phone, so they always stream
   // from the internet and skip the offline copy.
   if (event.request.url.includes('/videos/')) return;
+
+  // Full floor plans are big, so they are not saved up front. Each one is
+  // saved the first time someone opens it, and works offline after that.
+  if (event.request.url.includes('/maps/')) {
+    event.respondWith(
+      caches.open(VERSION).then(cache =>
+        cache.match(event.request).then(hit => hit || fetch(event.request).then(res => {
+          if (res.ok) cache.put(event.request, res.clone());
+          return res;
+        }))
+      )
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then(hit => {

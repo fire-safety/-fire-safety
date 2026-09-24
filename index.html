@@ -210,6 +210,31 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .vCard video{display:block;width:100%;aspect-ratio:9/16;background:#000;border-radius:var(--radius);object-fit:cover}
 .vCard figcaption{font-size:14px;font-weight:600;margin-top:6px;line-height:1.3}
 .qDone{padding:40px 22px;text-align:center}
+
+/* ---------- floor plans ---------- */
+.floorMaps{margin:0 0 12px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mapRow{
+  display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;
+  background:var(--paper);border:none;border-bottom:1px solid var(--line);
+  font:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:start;cursor:pointer;
+}
+.mapRow:last-child{border-bottom:none}
+.mapRow:focus-visible{outline:3px solid var(--green);outline-offset:-3px}
+.mapNum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+.mapName{flex:1}
+.mapThumb{flex:none;width:130px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--wash)}
+#mapView{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#EEF2EF}
+#mapView[hidden]{display:none}
+.mapBar{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;background:var(--green);color:#fff;font-weight:600}
+.mapBar span{flex:1}
+.mapBar button{background:none;border:none;color:#fff;font-size:22px;line-height:1;padding:6px 8px;cursor:pointer}
+.mapScroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;position:relative;background:#fff}
+.mapScroll img{display:block;max-width:none;height:auto;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.mapLoading{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px}
+.mapZoom{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
+.mapZoom button{width:48px;height:48px;border-radius:50%;border:none;background:var(--green);color:#fff;font-size:26px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+.mapZoom button:focus-visible,.mapBar button:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}
 .qDone .score{font-size:40px;font-weight:700;color:var(--green-dark);margin:0 0 6px}
 </style>
 </head>
@@ -275,6 +300,22 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
   </div>
 
   <div id="quizView" hidden></div>
+</div>
+
+<!-- Full-screen floor plan viewer (filled in by the FLOOR PLANS script below). -->
+<div id="mapView" hidden role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+  <div class="mapBar">
+    <span id="mapTitle"></span>
+    <button type="button" id="mapClose" aria-label="Close">✕</button>
+  </div>
+  <div class="mapScroll" id="mapScroll">
+    <p class="mapLoading" id="mapLoading"></p>
+    <img id="mapImg" alt="">
+  </div>
+  <div class="mapZoom">
+    <button type="button" id="mapOut" aria-label="Zoom out">−</button>
+    <button type="button" id="mapIn" aria-label="Zoom in">+</button>
+  </div>
 </div>
 
 <script>
@@ -370,10 +411,11 @@ const CONTENT = {
           <p>Keep your back to the exit so you can always leave. If the fire does not go out within seconds, leave.</p>`
       },
 
-      { title: "Your building",
+      { title: "Your building: floor plans",
         html: `
-          <p>Add the evacuation plan for each floor here as an image, and mark the assembly point.</p>
-          <p class="note">Photograph the official план эвакуации posted in the corridor, or ask the fire safety department for the file. Nothing in this section should differ from the plan on the wall.</p>`
+          <p>Floor plans of the main building at Ostrovityanova 1. Tap a floor to open it, then pinch or use + / − to zoom.</p>
+          <div class="floorMaps" id="floorMaps"></div>
+          <p class="note">These plans show departments and room numbers. In an emergency, follow the official evacuation plan (план эвакуации) posted in the corridor on every floor.</p>`
       },
 
       { title: "Not allowed in the dormitory",
@@ -460,10 +502,11 @@ const CONTENT = {
           </ol>
           <p>Стойте спиной к выходу, чтобы всегда можно было уйти. Не погасло за несколько секунд — уходите.</p>`
       },
-      { title: "Ваш корпус",
+      { title: "Ваш корпус: планы этажей",
         html: `
-          <p>Сюда добавьте планы эвакуации по этажам и отметьте сборный пункт.</p>
-          <p class="note">Сфотографируйте официальный план эвакуации в коридоре или запросите файл в отделе пожарной безопасности. Ничего в этом разделе не должно расходиться с планом на стене.</p>`
+          <p>Планы этажей главного корпуса (Островитянова, 1). Нажмите на этаж, чтобы открыть план, и увеличивайте его двумя пальцами или кнопками + / −.</p>
+          <div class="floorMaps" id="floorMaps"></div>
+          <p class="note">На этих планах показаны кафедры и номера кабинетов. При пожаре ориентируйтесь на официальный план эвакуации, который висит в коридоре на каждом этаже.</p>`
       },
       { title: "Запрещено в общежитии",
         html: `
@@ -548,10 +591,11 @@ const CONTENT = {
           </ol>
           <p>پشت شما به سمت خروجی باشد. اگر ظرف چند ثانیه خاموش نشد، خارج شوید.</p>`
       },
-      { title: "ساختمان شما",
+      { title: "ساختمان شما: نقشهٔ طبقات",
         html: `
-          <p>نقشه تخلیه هر طبقه را اینجا اضافه کنید و نقطه تجمع را مشخص کنید.</p>
-          <p class="note">از نقشه رسمی نصب‌شده در راهرو عکس بگیرید یا فایل آن را از اداره ایمنی بخواهید. محتوای این بخش نباید با نقشه روی دیوار تفاوت داشته باشد.</p>`
+          <p>نقشهٔ طبقات ساختمان اصلی (آستروویتیانووا ۱). روی هر طبقه بزنید تا نقشه باز شود، سپس با دو انگشت یا دکمه‌های + / − بزرگ‌نمایی کنید.</p>
+          <div class="floorMaps" id="floorMaps"></div>
+          <p class="note">این نقشه‌ها دپارتمان‌ها و شمارهٔ اتاق‌ها را نشان می‌دهند. در شرایط اضطراری از نقشهٔ رسمی تخلیه (план эвакуации) که در راهروی هر طبقه نصب شده پیروی کنید.</p>`
       },
       { title: "ممنوع در خوابگاه",
         html: `
@@ -598,6 +642,8 @@ function render(code){
       <summary>${s.title}</summary>
       <div class="body">${s.html}</div>
     </details>`).join('');
+  // Floor plans are filled in by the FLOOR PLANS script further down, once it has loaded.
+  if(window.floorMapsReady) renderFloorMaps(code);
 
   try{ localStorage.setItem('lang', code); }catch(e){}
 }
@@ -1277,6 +1323,150 @@ function submitQuiz(){
   renderQuizSection();
   window.scrollTo(0, 0);
 }
+
+
+/* ============================================================
+   FLOOR PLANS
+
+   The images live in the "maps" folder: floor-N.webp is the full plan
+   (opened on tap, then saved on the phone for offline use) and
+   floor-N-small.webp is the little preview in the list.
+   To add a floor or a building, make both files and add a line below.
+   ============================================================ */
+
+const FLOOR_MAPS = [
+  { file:'maps/floor-4', num:{en:'4', ru:'4', fa:'۴'}, label:{en:'4th floor', ru:'4 этаж', fa:'طبقهٔ چهارم'} },
+  { file:'maps/floor-3', num:{en:'3', ru:'3', fa:'۳'}, label:{en:'3rd floor', ru:'3 этаж', fa:'طبقهٔ سوم'} },
+  { file:'maps/floor-2', num:{en:'2', ru:'2', fa:'۲'}, label:{en:'2nd floor', ru:'2 этаж', fa:'طبقهٔ دوم'} },
+  { file:'maps/floor-1', num:{en:'1', ru:'1', fa:'۱'}, label:{en:'1st floor', ru:'1 этаж', fa:'طبقهٔ اول'} },
+  { file:'maps/floor-0', num:{en:'LG', ru:'Ц', fa:'ز'}, label:{en:'Lower ground floor', ru:'Цокольный этаж', fa:'طبقهٔ زیرزمین'} }
+];
+const MAP_UI = {
+  en:{ loading:'Loading the plan…', offline:'This plan has not been saved yet. Open it once with internet, then it works offline.', close:'Close', zoomIn:'Zoom in', zoomOut:'Zoom out' },
+  ru:{ loading:'Загружаем план…', offline:'Этот план ещё не сохранён. Откройте его один раз с интернетом — потом он будет работать без сети.', close:'Закрыть', zoomIn:'Увеличить', zoomOut:'Уменьшить' },
+  fa:{ loading:'در حال بارگذاری نقشه…', offline:'این نقشه هنوز ذخیره نشده است. یک بار با اینترنت بازش کنید تا بعداً بدون اینترنت هم کار کند.', close:'بستن', zoomIn:'بزرگ‌نمایی', zoomOut:'کوچک‌نمایی' }
+};
+
+function mapLang(){ return MAP_UI[langEl.value] ? langEl.value : 'en'; }
+
+function renderFloorMaps(code){
+  const L = MAP_UI[code] ? code : 'en';
+  const box = document.getElementById('floorMaps');
+  if(!box) return;
+  box.innerHTML = FLOOR_MAPS.map((m,i) => `
+    <button type="button" class="mapRow" data-map="${i}">
+      <span class="mapNum">${m.num[L]}</span>
+      <span class="mapName">${m.label[L]}</span>
+      <img class="mapThumb" src="${m.file}-small.webp" alt="" loading="lazy" width="130" height="38">
+    </button>`).join('');
+  box.querySelectorAll('.mapRow').forEach(b => { b.onclick = () => openMap(+b.dataset.map); });
+}
+
+const mapView = document.getElementById('mapView');
+const mapScroll = document.getElementById('mapScroll');
+const mapImg = document.getElementById('mapImg');
+let mapZoom = 1, mapMaxZoom = 8, mapOpenedFrom = null;
+
+// zoom = 1 means "the whole plan fits the screen width"
+function setMapZoom(z, cx, cy){
+  if(!mapImg.naturalWidth) return;
+  const W = mapScroll.clientWidth, H = mapScroll.clientHeight;
+  if(cx === undefined){ cx = W / 2; cy = H / 2; }
+  z = Math.max(1, Math.min(mapMaxZoom, z));
+  const oldW = mapImg.offsetWidth || W, oldH = mapImg.offsetHeight || W;
+  const fx = (mapScroll.scrollLeft + cx) / oldW;
+  const fy = (mapScroll.scrollTop + cy) / oldH;
+  mapZoom = z;
+  mapImg.style.width = Math.round(W * z) + 'px';
+  mapScroll.scrollLeft = fx * mapImg.offsetWidth - cx;
+  mapScroll.scrollTop = fy * mapImg.offsetHeight - cy;
+}
+
+function openMap(i){
+  const m = FLOOR_MAPS[i], L = mapLang(), ui = MAP_UI[L];
+  mapOpenedFrom = document.activeElement;
+  document.getElementById('mapTitle').textContent = m.label[L];
+  document.getElementById('mapClose').setAttribute('aria-label', ui.close);
+  document.getElementById('mapIn').setAttribute('aria-label', ui.zoomIn);
+  document.getElementById('mapOut').setAttribute('aria-label', ui.zoomOut);
+  const loading = document.getElementById('mapLoading');
+  loading.textContent = ui.loading;
+  loading.hidden = false;
+  mapImg.style.visibility = 'hidden';
+  mapImg.alt = m.label[L];
+  mapView.hidden = false;
+  document.body.style.overflow = 'hidden';
+  history.pushState({ floorMap:i }, '');
+  mapImg.onload = () => {
+    loading.hidden = true;
+    mapImg.style.visibility = '';
+    const W = mapScroll.clientWidth, H = mapScroll.clientHeight;
+    mapMaxZoom = Math.max(2, mapImg.naturalWidth / W);
+    mapImg.style.width = W + 'px';
+    mapZoom = 1;
+    // On a tall phone screen, start zoomed in so the plan fills the height.
+    setMapZoom(Math.min(3, H * (mapImg.naturalWidth / mapImg.naturalHeight) / W), W / 2, 0);
+    mapScroll.scrollTop = 0;
+  };
+  mapImg.onerror = () => { loading.textContent = navigator.onLine ? ui.loading : ui.offline; };
+  mapImg.removeAttribute('src');
+  mapImg.src = m.file + '.webp';
+  document.getElementById('mapClose').focus();
+}
+
+function hideMap(){
+  if(mapView.hidden) return;
+  mapView.hidden = true;
+  document.body.style.overflow = '';
+  if(mapOpenedFrom && mapOpenedFrom.focus) mapOpenedFrom.focus();
+}
+// The phone's back button closes the plan instead of leaving the site.
+window.addEventListener('popstate', hideMap);
+document.getElementById('mapClose').onclick = () => { if(history.state && history.state.floorMap !== undefined) history.back(); else hideMap(); };
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && !mapView.hidden) document.getElementById('mapClose').click(); });
+document.getElementById('mapIn').onclick = () => setMapZoom(mapZoom * 1.6);
+document.getElementById('mapOut').onclick = () => setMapZoom(mapZoom / 1.6);
+
+// Two-finger pinch to zoom around the fingers.
+let pinch = null, lastTap = 0;
+const touchDist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+mapScroll.addEventListener('touchstart', e => {
+  if(e.touches.length === 2){ pinch = { d: touchDist(e.touches[0], e.touches[1]), z: mapZoom }; }
+}, { passive:true });
+mapScroll.addEventListener('touchmove', e => {
+  if(!pinch || e.touches.length !== 2) return;
+  e.preventDefault();
+  const [a, b] = e.touches, r = mapScroll.getBoundingClientRect();
+  setMapZoom(pinch.z * touchDist(a, b) / pinch.d, (a.clientX + b.clientX) / 2 - r.left, (a.clientY + b.clientY) / 2 - r.top);
+}, { passive:false });
+mapScroll.addEventListener('touchend', e => {
+  if(e.touches.length < 2) pinch = null;
+  // Double-tap: zoom in, or back out when already fully zoomed.
+  if(e.touches.length === 0 && e.changedTouches.length === 1){
+    const now = Date.now(), t = e.changedTouches[0], r = mapScroll.getBoundingClientRect();
+    if(now - lastTap < 300){
+      setMapZoom(mapZoom >= mapMaxZoom * 0.95 ? 1 : mapZoom * 2, t.clientX - r.left, t.clientY - r.top);
+      lastTap = 0;
+    } else lastTap = now;
+  }
+});
+// iPhone Safari: stop the whole page from zooming instead of the plan.
+['gesturestart','gesturechange'].forEach(ev => mapScroll.addEventListener(ev, e => e.preventDefault()));
+// Computer: Ctrl + mouse wheel (or trackpad pinch) zooms, double-click zooms in.
+mapScroll.addEventListener('wheel', e => {
+  if(!e.ctrlKey) return;
+  e.preventDefault();
+  const r = mapScroll.getBoundingClientRect();
+  setMapZoom(mapZoom * Math.exp(-e.deltaY / 300), e.clientX - r.left, e.clientY - r.top);
+}, { passive:false });
+mapScroll.addEventListener('dblclick', e => {
+  const r = mapScroll.getBoundingClientRect();
+  setMapZoom(mapZoom >= mapMaxZoom * 0.95 ? 1 : mapZoom * 2, e.clientX - r.left, e.clientY - r.top);
+});
+window.addEventListener('resize', () => { if(!mapView.hidden) setMapZoom(mapZoom); });
+
+window.floorMapsReady = true;
+renderFloorMaps(langEl.value);
 
 SURVEYS.forEach((sv, i) => { document.getElementById('quizLaunchBtn' + i).onclick = () => openQuiz(i); });
 
