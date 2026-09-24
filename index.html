@@ -292,6 +292,253 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .mapZoom button{width:48px;height:48px;border-radius:50%;border:none;background:var(--green);color:#fff;font-size:26px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
 .mapZoom button:focus-visible,.mapBar button:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}
 .qDone .score{font-size:40px;font-weight:700;color:var(--green-dark);margin:0 0 6px}
+
+/* ---------- jump-to row ---------- */
+.jump{display:flex;gap:8px;overflow-x:auto;padding:4px 18px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.jump::-webkit-scrollbar{display:none}
+.jump a,.jump button{
+  flex:none;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;
+  border:1px solid var(--line);border-radius:999px;background:var(--paper);
+  font:inherit;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;cursor:pointer;
+}
+.jump svg{flex:none;color:var(--green)}
+.jump a:focus-visible,.jump button:focus-visible{outline:3px solid var(--green);outline-offset:1px}
+#guide,#first-aid,#plans,#videos,#breathe{scroll-margin-top:8px}
+.list details{scroll-margin-top:8px}
+
+/* ---------- install card ---------- */
+.install{display:flex;align-items:center;gap:10px;margin:0 18px 14px;padding:10px 10px 10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--wash)}
+.install[hidden]{display:none}
+.installTxt{flex:1;min-width:0;font-size:13px;line-height:1.35;color:var(--muted)}
+.installTxt b{display:block;font-size:14px;color:var(--ink)}
+.installBtn{flex:none;padding:8px 14px;border:none;border-radius:999px;background:var(--green);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.installBtn[hidden]{display:none}
+.installX{flex:none;background:none;border:none;color:var(--muted);font-size:18px;line-height:1;padding:6px;cursor:pointer}
+
+/* ---------- "what to say" button in the green emergency block ---------- */
+.sayOpen{
+  display:flex;align-items:center;gap:10px;width:100%;margin-top:2px;padding:11px 14px;
+  border:1px dashed rgba(255,255,255,.6);border-radius:var(--radius);background:transparent;
+  color:#fff;font:inherit;font-size:15px;font-weight:600;text-align:start;cursor:pointer;
+}
+.sayOpen svg{flex:none}
+.sayOpen:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* ---------- section headings for the guide ---------- */
+.guideHead{padding:20px 18px 2px}
+.guideHead h2{font-size:17px;font-weight:600;margin:0}
+.guideIcon{background:var(--ink)}
+#guide .list{padding:4px 0 8px}
+
+/* ---------- first aid ---------- */
+.aid{padding:20px 18px 26px}
+.aid .vSub{font-size:14px;color:var(--muted);margin:0 0 14px}
+.aidFirstTitle{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--green-dark);margin:0 0 6px}
+.aidFirst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 14px;padding:0;list-style:none;counter-reset:first}
+.aidFirst li{position:relative;margin:0;padding:30px 10px 10px;border-radius:10px;background:var(--wash);font-size:13px;line-height:1.35}
+.aidFirst li::before{
+  counter-increment:first;content:counter(first);position:absolute;top:8px;inset-inline-start:10px;
+  width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.aidFirst b{display:block;font-size:14px;margin-bottom:1px}
+html[lang="fa"] .aidFirst li::before{content:counter(first,persian)}
+html[lang="fa"] .body ol{list-style-type:persian}
+.nw{white-space:nowrap}
+.aidList{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);box-shadow:0 1px 3px rgba(20,38,28,.08)}
+.aidList details:last-child{border-bottom:none}
+.aidList summary{justify-content:flex-start;padding:12px 14px}
+.aidIco{flex:none;width:38px;height:38px;border-radius:10px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center}
+.aidHead{flex:1;min-width:0;display:flex;flex-direction:column}
+.aidName{font-size:16px;font-weight:600;line-height:1.3}
+.aidTag{font-size:13px;font-weight:400;color:var(--muted);line-height:1.35;margin-top:1px}
+.aidList .body{padding:0 14px 16px}
+.aidList details{scroll-margin-top:8px}
+.aidNote{margin:12px 0 0}
+.body ul ul,.body ol ul{margin:6px 0 4px;padding-inline-start:18px;list-style:disc}
+.body a{color:var(--green-dark);font-weight:600}
+.why{display:block;margin-top:3px;font-size:13.5px;line-height:1.45;color:var(--muted)}
+/* A yellow rule means "warning / watch for this" — like a yellow warning sign. */
+.warn{border-inline-start:4px solid #E0A400;background:#FFF7DE;padding:12px 14px;border-radius:0 var(--radius) var(--radius) 0;margin:0 0 12px}
+.warn b{color:#6A4B00}
+.aidTool{
+  display:flex;align-items:center;gap:12px;width:100%;margin:2px 0 14px;padding:11px 14px;
+  border:none;border-radius:12px;background:var(--green-dark);color:#fff;
+  font:inherit;text-align:start;cursor:pointer;box-shadow:0 1px 3px rgba(20,38,28,.15);
+}
+.aidTool.cool{background:#1D5F86}
+.aidTool svg{flex:none}
+.aidToolTxt{flex:1;min-width:0}
+.aidToolTxt b{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.aidToolTxt small{display:block;font-size:12.5px;font-weight:400;opacity:.85;margin-top:1px}
+.aidTool:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+
+/* ---------- first aid pictures ----------
+   Each picture is a small drawing (SVG) moved with CSS. Phones that ask
+   for less motion get the still picture (see prefers-reduced-motion above). */
+.aidArt{margin:2px 0 14px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#F3F7F4}
+.aidArt svg{display:block;width:100%;height:auto}
+.aa text{font-family:inherit;font-weight:700}
+.aa .fb{transform-box:fill-box;transform-origin:center}
+.aa-flow{animation:aa-flow .7s linear infinite}
+@keyframes aa-flow{to{stroke-dashoffset:-28}}
+.aa-wind{animation:aa-wind 2.4s linear infinite}
+@keyframes aa-wind{to{stroke-dashoffset:-56}}
+.aa-go{animation:aa-go .9s linear infinite}
+@keyframes aa-go{to{stroke-dashoffset:-14}}
+.aa-burn{animation:aa-burn 6s ease-in-out infinite}
+@keyframes aa-burn{0%,8%{opacity:.95}85%{opacity:.28}100%{opacity:.95}}
+.aa-sp{animation:aa-sp1 .9s ease-out infinite both}
+.aa-sp2{animation-name:aa-sp2;animation-delay:.22s}
+.aa-sp3{animation-name:aa-sp3;animation-delay:.45s}
+.aa-sp4{animation-name:aa-sp4;animation-delay:.67s}
+@keyframes aa-sp1{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(-17px,-9px);opacity:0}}
+@keyframes aa-sp2{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(15px,-11px);opacity:0}}
+@keyframes aa-sp3{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(-7px,-15px);opacity:0}}
+@keyframes aa-sp4{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(19px,-4px);opacity:0}}
+.aa-drip{animation:aa-drip 1s linear infinite both}
+.aa-drip2{animation-delay:.35s}
+.aa-drip3{animation-delay:.7s}
+@keyframes aa-drip{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(24px);opacity:0}}
+.aa-heat{animation:aa-heat 2.4s ease-out infinite both}
+.aa-heat2{animation-delay:.8s}
+.aa-heat3{animation-delay:1.6s}
+@keyframes aa-heat{0%{transform:translateY(4px);opacity:0}30%{opacity:.9}100%{transform:translateY(-13px);opacity:0}}
+.aa-ring{animation:aa-ring 10s linear infinite}
+@keyframes aa-ring{from{stroke-dashoffset:0}to{stroke-dashoffset:125.7}}
+.aa-hand{transform-box:fill-box;transform-origin:50% 100%;animation:aa-spin 10s linear infinite}
+@keyframes aa-spin{to{transform:rotate(360deg)}}
+.aa-puff{transform-box:fill-box;transform-origin:center;animation:aa-puff 4.5s ease-out infinite both}
+.aa-puff2{animation-delay:1.5s}
+.aa-puff3{animation-delay:3s}
+@keyframes aa-puff{0%{transform:translate(0,0) scale(.55);opacity:0}15%{opacity:.95}100%{transform:translate(24px,-46px) scale(1.5);opacity:0}}
+.aa-co{animation:aa-co 5s ease-in-out infinite both}
+.aa-co2{animation-delay:2.5s}
+@keyframes aa-co{0%{transform:translate(0,0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translate(10px,-34px);opacity:0}}
+.aa-breathe{transform-box:fill-box;transform-origin:50% 100%;animation:aa-breathe 3.6s ease-in-out infinite}
+@keyframes aa-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.aa-wave{animation:aa-wave 1.6s ease-out infinite both}
+.aa-wave2{animation-delay:.3s}
+@keyframes aa-wave{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+.aa-rise{transform-box:fill-box;transform-origin:50% 100%;animation:aa-rise 3.6s ease-in-out infinite}
+@keyframes aa-rise{0%,100%{transform:scale(1)}50%{transform:scale(1.02,1.07)}}
+.aa-breath{animation:aa-breath 3.6s ease-out infinite both}
+.aa-breath2{animation-delay:.25s}
+@keyframes aa-breath{0%,45%{transform:translate(0,0);opacity:0}60%{opacity:.9}100%{transform:translate(4px,-6px);opacity:0}}
+/* CPR: 110 pushes a minute = one every 0.545 s */
+.aa-push{animation:aa-push .545s ease-in-out infinite}
+@keyframes aa-push{0%,100%{transform:translateY(0)}45%{transform:translateY(4.5px)}}
+.aa-beat{animation:aa-beat .545s ease-out infinite}
+@keyframes aa-beat{0%,100%{opacity:0}40%{opacity:.8}}
+.aa-fall{animation:aa-fall 1.1s linear infinite both}
+.aa-fall2{animation-delay:.37s}
+.aa-fall3{animation-delay:.74s}
+@keyframes aa-fall{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(30px);opacity:0}}
+/* electric shock: 1) sparks + "do not touch", 2) plug pulled out, 3) now help */
+.aa-plug{animation:aa-plug 7s ease-in-out infinite}
+@keyframes aa-plug{0%,34%{transform:translateX(0)}48%,94%{transform:translateX(26px)}100%{transform:translateX(0)}}
+.aa-zap{animation:aa-zap 7s steps(1) infinite}
+@keyframes aa-zap{0%{opacity:1}5%{opacity:.2}10%{opacity:1}15%{opacity:.4}20%{opacity:1}25%{opacity:.2}30%{opacity:1}38%,100%{opacity:0}}
+.aa-stop{animation:aa-stop 7s ease-in-out infinite}
+@keyframes aa-stop{0%,44%{opacity:1;transform:scale(1)}52%,100%{opacity:0;transform:scale(.6)}}
+.aa-ok{opacity:0;animation:aa-ok 7s ease-in-out infinite}
+@keyframes aa-ok{0%,50%{opacity:0;transform:scale(.6)}58%,94%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.aa-press{animation:aa-press 1.8s ease-in-out infinite}
+@keyframes aa-press{0%,100%{transform:translateY(0)}50%{transform:translateY(2.5px)}}
+.aa-arrow{animation:aa-arrow 1.8s ease-in-out infinite}
+@keyframes aa-arrow{0%,100%{transform:translateY(-3px);opacity:.5}50%{transform:translateY(2px);opacity:1}}
+.aa-bleed{opacity:0;animation:aa-bleed 6s linear infinite}
+.aa-bleed2{animation-delay:.6s}
+@keyframes aa-bleed{0%{transform:translateY(0);opacity:0}4%{opacity:1}16%{transform:translateY(26px);opacity:0}100%{opacity:0}}
+.aa-stain{transform-box:fill-box;transform-origin:center;animation:aa-stain 6s ease-out infinite}
+@keyframes aa-stain{0%{transform:scale(.7)}40%,100%{transform:scale(1)}}
+
+/* ---------- full-screen tools (cooling timer, CPR coach, what to say) ---------- */
+.toolView{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;color:#fff;padding-bottom:env(safe-area-inset-bottom);overflow:hidden}
+.toolView[hidden]{display:none}
+.toolBar{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;font-weight:600}
+.toolBar span{flex:1}
+.toolBar button{background:none;border:none;color:inherit;font-size:22px;line-height:1;padding:6px 8px;cursor:pointer}
+.toolBar button:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+.toolStage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center}
+.toolMsg{text-align:center;margin:0 18px 8px;min-height:1.5em;font-size:16px;font-weight:600}
+.toolControls{padding:6px 18px 18px;max-width:520px;width:100%;margin:0 auto}
+.toolGo{width:100%;padding:14px;border:none;border-radius:12px;background:#fff;color:#0B2830;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.toolGhost{width:100%;margin-top:8px;padding:11px;border:1px solid rgba(255,255,255,.4);border-radius:12px;background:transparent;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.toolGhost[hidden]{display:none}
+.toolGo:focus-visible,.toolGhost:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+#coolView{background:radial-gradient(120% 80% at 50% 35%,#236C96 0%,#154C6D 55%,#0C3148 100%)}
+.coolDial{width:min(66vw,36vh,280px);height:auto;overflow:visible}
+.coolCenter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.coolTime{font-size:clamp(40px,11vw,60px);font-weight:300;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.coolLeft{font-size:14px;opacity:.8;margin-top:6px}
+.coolDrop{margin-bottom:8px;opacity:.9}
+#coolView.run .coolDrop{animation:coolDrop 1.4s ease-in-out infinite}
+@keyframes coolDrop{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.coolTips{list-style:none;margin:0 auto 6px;padding:0 18px;max-width:520px;width:100%;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.coolTips li{font-size:13px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.12)}
+
+#cprView{background:radial-gradient(120% 80% at 50% 40%,#17402D 0%,#0F2C1F 55%,#091B13 100%)}
+.cprCall{display:flex;align-items:baseline;justify-content:center;gap:10px;width:calc(100% - 36px);max-width:484px;margin:0 auto;padding:10px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+.cprCall:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.cprCall .num{font-size:22px;font-weight:700;direction:ltr;unicode-bidi:isolate}
+.cprPulse{position:relative;width:min(62vw,34vh,250px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 45%,rgba(52,199,123,.28),rgba(52,199,123,.08) 70%);border:3px solid rgba(52,199,123,.55);transition:transform .09s ease-out,border-color .09s}
+.cprPulse.hit{transform:scale(.93);border-color:#7EF0B0}
+.cprPulse.breath{border-color:#8FD6FF;background:radial-gradient(circle at 50% 45%,rgba(143,214,255,.25),rgba(143,214,255,.06) 70%)}
+.cprPulse svg{opacity:.95}
+.cprCount{font-size:clamp(34px,10vw,54px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums;min-height:1.05em}
+.cprSwap{position:absolute;top:8px;left:18px;right:18px;margin:0 auto;max-width:480px;padding:10px 14px;border-radius:12px;background:#FFF7DE;color:#3D2E00;font-size:14px;font-weight:600;text-align:center}
+.cprSwap[hidden]{display:none}
+
+#sayView{background:var(--paper);color:var(--ink)}
+#sayView .toolBar{background:var(--green);color:#fff}
+.sayScroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sayInner{max-width:520px;margin:0 auto;padding:14px 18px 32px}
+.sayEn{margin:0 0 16px;padding:10px 12px;border-radius:10px;background:var(--wash);font-size:14px}
+.sayInner h3{font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--green-dark);margin:18px 0 8px}
+.sayOpts{display:flex;flex-direction:column;gap:6px}
+.sayOpt,.sayChip{
+  display:block;width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--paper);font:inherit;font-size:15px;color:var(--ink);text-align:start;cursor:pointer;
+}
+.sayOpt[aria-checked="true"],.sayChip[aria-pressed="true"]{border-color:var(--green);background:#EAF5EF;font-weight:600}
+.sayOpt:focus-visible,.sayChip:focus-visible{outline:3px solid var(--green);outline-offset:1px}
+.sayChips{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sayChip{padding:10px 12px;font-size:14px}
+.sayHouses{display:flex;gap:6px;margin:0 0 4px}
+.sayHouses button{flex:1;padding:9px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);font:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer}
+.sayHouses button[aria-checked="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.sayHouses[hidden],.sayOther[hidden]{display:none}
+.sayOther{margin:0 0 4px}
+.sayRow{display:flex;gap:8px;margin-top:8px}
+.sayRow label{flex:1;font-size:13px;color:var(--muted)}
+.sayRow input:focus-visible,.sayOther:focus-visible{outline:3px solid var(--green);outline-offset:1px}
+.sayRow input,.sayOther{display:block;width:100%;margin-top:3px;padding:10px 12px;font:inherit;font-size:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);color:var(--ink)}
+.sayOut{margin-top:18px;padding:14px;border-radius:12px;background:#10261B;color:#fff}
+.sayOut .sayLbl{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;opacity:.75}
+.sayRu{margin:0;font-size:20px;font-weight:600;line-height:1.4}
+.sayTr{margin:6px 0 0;font-size:14px;opacity:.75;line-height:1.4}
+.sayBtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.sayBtns button,.sayBtns a{flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font:inherit;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;white-space:nowrap}
+.sayBtns a{background:var(--green);border-color:var(--green)}
+.sayBtns [hidden]{display:none}
+.sayNoVoice{margin:10px 0 0;font-size:13px;opacity:.8}
+.sayNoVoice[hidden]{display:none}
+.sayPh{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sayPh:last-child{border-bottom:none}
+.sayPhTxt{flex:1;min-width:0}
+.sayPhTxt .ru{display:block;font-weight:600;font-size:16px}
+.sayPhTxt .tr{display:block;font-size:13px;color:var(--muted)}
+.sayPhTxt .mean{display:block;font-size:14px;margin-top:2px}
+.sayPlay{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--green-dark);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sayPlay[hidden]{display:none}
+.sayPlay:focus-visible{outline:3px solid var(--green);outline-offset:1px}
+#sayBig{position:fixed;inset:0;z-index:70;background:#FFF;color:#000;display:flex;flex-direction:column;justify-content:center;padding:24px;cursor:pointer}
+#sayBig[hidden]{display:none}
+#sayBig p{margin:0;font-size:clamp(28px,8.5vw,60px);font-weight:700;line-height:1.25}
+#sayBig small{display:block;margin-top:24px;font-size:14px;color:#555}
 </style>
 </head>
 
@@ -318,6 +565,11 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
     <a class="call" href="tel:112"><span class="num">112</span><span class="who" id="who112"></span></a>
     <a class="call" href="tel:101"><span class="num">101</span><span class="who" id="who101"></span></a>
     <a class="call" href="tel:+74954345192"><span class="num">+7 495 434-51-92</span><span class="who" id="whoDuty"></span></a>
+    <!-- Opens the "what to say when you call 112" helper (CALL HELPER in the script). -->
+    <button type="button" class="sayOpen" id="sayOpen">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+      <span id="sayOpenLbl"></span>
+    </button>
   </section>
 
   <!-- One button per questionnaire level (SURVEYS in the script, in this order). -->
@@ -331,9 +583,26 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
   </button>
 
   <div id="infoView">
+    <!-- QUICK LINKS to each part of the page (words in NAV_UI in the script). -->
+    <nav class="jump" id="jump" aria-label="Go to">
+      <a href="#guide" data-nav="fire"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/></svg><span></span></a>
+      <a href="#first-aid" data-nav="aid"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"/></svg><span></span></a>
+      <button type="button" data-nav="say"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span></span></button>
+      <a href="#plans" data-nav="plans"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg><span></span></a>
+      <a href="#videos" data-nav="videos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2l5 2.8-5 2.8z"/></svg><span></span></a>
+      <a href="#breathe" data-nav="breathe"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg><span></span></a>
+    </nav>
+
+    <!-- "Install this guide" card: only shown when the phone can install it. -->
+    <div class="install" id="installCard" hidden>
+      <div class="installTxt"><b id="instTitle"></b><span id="instSub"></span></div>
+      <button type="button" class="installBtn" id="instBtn" hidden></button>
+      <button type="button" class="installX" id="instX" aria-label="Hide">✕</button>
+    </div>
+
     <!-- VIDEOS: to add one, put the .mp4 (and a .jpg preview) in the videos
          folder, then add a <figure> below and its title in CONTENT (vid1, vid2…). -->
-    <section class="videos">
+    <section class="videos" id="videos">
       <h2 id="vidTitle"></h2>
       <p class="vSub" id="vidSub"></p>
       <div class="vGrid">
@@ -353,7 +622,7 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
     </section>
 
     <!-- FLOOR PLANS: the list of floors is filled in from FLOOR_MAPS in the script. -->
-    <section class="plans" aria-labelledby="plansTitle">
+    <section class="plans" id="plans" aria-labelledby="plansTitle">
       <div class="plansHead">
         <span class="plansIcon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg>
@@ -366,7 +635,7 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
     </section>
 
     <!-- BREATHING EXERCISE: the full-screen part is at the bottom of the page. -->
-    <section class="breathe" aria-labelledby="breTitle">
+    <section class="breathe" id="breathe" aria-labelledby="breTitle">
       <div class="plansHead">
         <span class="plansIcon breIcon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg>
@@ -380,7 +649,27 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
       </button>
       <p class="note breNote" id="breNote"></p>
     </section>
-    <div class="list" id="list"></div>
+    <!-- IN A FIRE: the cards are filled in from CONTENT (sections) in the script. -->
+    <section id="guide" aria-labelledby="guideTitle">
+      <div class="plansHead guideHead">
+        <span class="plansIcon guideIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/></svg></span>
+        <h2 id="guideTitle"></h2>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <!-- FIRST AID: words from CONTENT (aid), pictures from AID_ART in the script. -->
+    <section class="aid" id="first-aid" aria-labelledby="aidTitle">
+      <div class="plansHead">
+        <span class="plansIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"/></svg></span>
+        <h2 id="aidTitle"></h2>
+      </div>
+      <p class="vSub" id="aidSub"></p>
+      <p class="aidFirstTitle" id="aidFirstTitle"></p>
+      <ol class="aidFirst" id="aidFirst"></ol>
+      <div class="aidList" id="aidList"></div>
+      <p class="note aidNote" id="aidNote"></p>
+    </section>
     <footer id="foot"></footer>
   </div>
 
@@ -437,6 +726,58 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
   </div>
 </div>
 
+<!-- Full-screen cooling timer for burns (COOLING TIMER in the script). -->
+<div id="coolView" class="toolView" hidden role="dialog" aria-modal="true" aria-labelledby="coolTitle">
+  <div class="toolBar"><span id="coolTitle"></span><button type="button" id="coolClose" aria-label="Close">✕</button></div>
+  <div class="toolStage">
+    <svg class="coolDial" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="12"/>
+      <circle id="coolRing" cx="100" cy="100" r="86" fill="none" stroke="#9BDCFF" stroke-width="12" stroke-linecap="round" stroke-dasharray="540.35" transform="rotate(-90 100 100)"/>
+    </svg>
+    <div class="coolCenter">
+      <svg class="coolDrop" viewBox="0 0 24 24" width="26" height="26" fill="#9BDCFF" aria-hidden="true"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/></svg>
+      <div class="coolTime" id="coolTime">20:00</div>
+      <div class="coolLeft" id="coolLeft"></div>
+    </div>
+  </div>
+  <p class="toolMsg" id="coolMsg" aria-live="polite"></p>
+  <ul class="coolTips" id="coolTips"></ul>
+  <div class="toolControls">
+    <button type="button" class="toolGo" id="coolGo"></button>
+    <button type="button" class="toolGhost" id="coolReset" hidden></button>
+  </div>
+</div>
+
+<!-- Full-screen CPR rhythm coach (CPR RHYTHM COACH in the script). -->
+<div id="cprView" class="toolView" hidden role="dialog" aria-modal="true" aria-labelledby="cprTitle">
+  <div class="toolBar"><span id="cprTitle"></span><button type="button" id="cprClose" aria-label="Close">✕</button></div>
+  <a class="cprCall" href="tel:112"><span class="num">112</span><span id="cprCallLbl"></span></a>
+  <div class="toolStage">
+    <div class="cprSwap" id="cprSwap" hidden></div>
+    <div class="cprPulse" id="cprPulse">
+      <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M5.5 12h3l1.5-2.5 2 5 1.5-2.5h5"/></svg>
+      <div class="cprCount" id="cprCount"></div>
+    </div>
+  </div>
+  <p class="toolMsg" id="cprMsg" aria-live="polite"></p>
+  <div class="toolControls">
+    <div class="brePatterns" id="cprModes" role="radiogroup"></div>
+    <p class="breInfo" id="cprInfo"></p>
+    <button type="button" class="toolGo" id="cprGo"></button>
+    <div class="breFoot">
+      <span id="cprTime">0:00</span>
+      <label class="breVib"><input type="checkbox" id="cprSound" checked> <span id="cprSoundLbl"></span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Full-screen "what to say when you call 112" helper (CALL HELPER in the script). -->
+<div id="sayView" class="toolView" hidden role="dialog" aria-modal="true" aria-labelledby="sayTitle">
+  <div class="toolBar"><span id="sayTitle"></span><button type="button" id="sayClose" aria-label="Close">✕</button></div>
+  <div class="sayScroll"><div class="sayInner" id="sayInner"></div></div>
+</div>
+<div id="sayBig" hidden role="dialog" aria-modal="true" lang="ru" dir="ltr"><p id="sayBigText"></p><small id="sayBigHint" dir="auto"></small></div>
+
 <script>
 /* ============================================================
    THE ONLY PART YOU NEED TO EDIT
@@ -470,6 +811,134 @@ const CONTENT = {
     who112: "All emergencies",
     who101: "Fire service",
     whoDuty: "RNIMU duty dispatcher",
+    guideTitle: "In a fire: what to do",
+    aidTitle: "First aid",
+    aidSub: "What to do for the injuries a fire can cause, until the ambulance arrives. Tap a topic.",
+    aidFirstTitle: "Always first",
+    aidFirst: [
+      "<b>Safe?</b> Never go into smoke or fire.",
+      "<b>Talk to them.</b> Tap their shoulders.",
+      "<b>Call 112.</b> Put it on speaker."
+    ],
+    aidNote: "Based on: Russian Ministry of Health Order No. 220n (2024) on first aid, the 2025 guidelines of the European Resuscitation Council and Resuscitation Council UK, and NHS advice. This page does not replace a first aid course.",
+    aid: [
+
+      { id: "burns", title: "Burns", tag: "Cool under running water for 20 minutes",
+        html: `
+          <p><strong>Cool the burn, warm the person.</strong></p>
+          <ol>
+            <li>Stop the burning: get away from the heat. Clothes on fire? <a href="#fire-clothing">Stop, drop and roll.</a></li>
+            <li>Hold the burn under <strong>cool running water for 20 minutes</strong>. Start as soon as you can — it still helps up to 3 hours later.
+              <span class="why">Heat keeps damaging deeper skin after the flames are gone. Cooling makes the burn less deep and less painful.</span></li>
+            <li>While cooling, take off rings, watches and clothes near the burn — but leave anything that is stuck to the skin.
+              <span class="why">Burned skin swells quickly. A ring can cut off the blood supply to a finger.</span></li>
+            <li>Keep the rest of the body warm with a coat or blanket.
+              <span class="why">Cold water on a big burn can make a person dangerously cold, especially outside in winter.</span></li>
+            <li>Cover it loosely: lay cling film over the burn (do not wrap it round), or use a clean cloth that does not leave fluff.</li>
+          </ol>
+          <div data-tool="cool"></div>
+          <div class="never"><b>Never put on</b> ice, butter, oil, sour cream or yoghurt, toothpaste, egg white or creams. <b>Do not</b> pop blisters or pull off stuck clothing.</div>
+          <div class="warn"><b>Call 103 or 112 if the burn</b> is bigger than the person's hand · is deep (white, brown or black, or painless) · is on the face, hands, feet, groin or a joint · goes all the way round an arm or leg · was caused by chemicals or electricity. Also call if the person breathed in smoke.</div>`
+      },
+
+      { id: "smoke", title: "Smoke and toxic fumes", tag: "Fresh air, sit them up, call 112",
+        html: `
+          <p>Fire smoke contains carbon monoxide and cyanide. You cannot see or smell these poisons, and they can quickly make a person confused, sleepy or unconscious.</p>
+          <ol>
+            <li>Do not go into smoke to rescue someone. Call 112 and tell the firefighters where the person is.
+              <span class="why">A few breaths of thick smoke can knock you out too.</span></li>
+            <li>Move the person into fresh air, away from the smoke — only if you can do it safely.</li>
+            <li>Call 112 (or 103), even if they seem to be getting better.
+              <span class="why">Swelling in the throat and the poisoning can get worse over the next hours. Doctors treat it with oxygen.</span></li>
+            <li>If they are awake, help them sit up. Loosen tight clothing — collar, tie, belt. Keep them calm and warm.
+              <span class="why">Breathing is easier sitting up.</span></li>
+            <li>Stay with them and watch their breathing. Unresponsive but breathing normally → <a href="#aid-recovery">put them on their side</a>. Not breathing normally → <a href="#aid-cpr">start CPR</a>.</li>
+          </ol>
+          <div class="warn"><b>Danger signs — tell the operator:</b> soot around the nose or mouth · burnt eyebrows or nose hair · hoarse voice or noisy breathing · shortness of breath or chest pain · headache, dizziness, vomiting · confusion or sleepiness.</div>
+          <div class="never"><b>Do not</b> let them go home alone or "sleep it off". <b>A normal pulse oximeter reading does not rule out</b> carbon monoxide poisoning — the device cannot tell carbon monoxide from oxygen.</div>`
+      },
+
+      { id: "recovery", title: "Unresponsive but breathing", tag: "Put them on their side (recovery position)",
+        html: `
+          <ol>
+            <li>Check: shout to them and gently shake their shoulders. No answer? Call 112 and put the phone on speaker.</li>
+            <li>Open the airway: one hand on the forehead, tilt the head back, lift the chin with two fingers.</li>
+            <li>Look, listen and feel for normal breathing — for no more than 10 seconds.</li>
+            <li>Breathing normally → turn them onto their side:
+              <ul>
+                <li>Kneel beside them. Put the arm nearest you out at a right angle.</li>
+                <li>Bring the far arm across the chest and hold the back of their hand against the cheek nearest you.</li>
+                <li>Bend the far knee up. Pull on that knee to roll them towards you.</li>
+                <li>Tilt the head back so the mouth points slightly down.</li>
+              </ul>
+              <span class="why">On the back, the tongue can block the throat and vomit can be breathed in. On the side, the airway stays open.</span></li>
+            <li>Stay with them and keep checking their breathing until help arrives.</li>
+          </ol>
+          <div class="warn"><b>Gasping is not normal breathing.</b> If breathing stops, or turns into rare gasps, <a href="#aid-cpr">start CPR</a> straight away.</div>`
+      },
+
+      { id: "cpr", title: "Not breathing: CPR", tag: "Push hard and fast, 100–120 a minute",
+        html: `
+          <p>Unresponsive and not breathing normally? Their heart has probably stopped. Every minute without CPR lowers their chance of survival.</p>
+          <ol>
+            <li>Call 112 and put the phone on speaker. Send someone to bring a defibrillator (AED).</li>
+            <li>Kneel beside them. Put the heel of one hand in the centre of the chest, the other hand on top. Keep your arms straight, shoulders over your hands.</li>
+            <li>Push hard: 5–6 cm deep, 100–120 times a minute. Let the chest come all the way back up after each push.</li>
+            <li>Trained in rescue breaths? Give 2 breaths after every 30 pushes. If not, just keep pushing without stopping.
+              <span class="why">Breaths matter most for people who collapsed because of smoke. But pushing alone is far better than doing nothing.</span></li>
+            <li>When the AED arrives, switch it on and follow its voice. Anyone can use one.</li>
+            <li>Keep going until paramedics take over or the person starts breathing normally. Swap with someone every 2 minutes if you can.
+              <span class="why">Pushes get weaker as you tire, often without you noticing.</span></li>
+          </ol>
+          <div data-tool="cpr"></div>
+          <p class="note">Don't be afraid to push hard. Cracked ribs heal — but without CPR, a person whose heart has stopped will die.</p>`
+      },
+
+      { id: "chemical", title: "Chemical burns and eyes", tag: "Rinse with lots of water, for a long time",
+        html: `
+          <p>From lab reagents, strong cleaning products or battery liquid.</p>
+          <ol>
+            <li>Protect yourself: put on gloves if you have them.</li>
+            <li>Brush off any dry powder first. Take off clothing and jewellery the chemical touched.</li>
+            <li>Rinse the skin under plenty of cool or lukewarm running water for at least 20 minutes — longer is better.</li>
+            <li><strong>Eyes:</strong> hold the eye open and rinse it with a gentle stream of lukewarm water for at least 20 minutes. Tilt the head so the injured eye is lower, and pour from the nose side outwards.
+              <span class="why">So the chemical does not run into the other eye.</span></li>
+            <li>Take out contact lenses if they come out easily. Do not rub the eye.</li>
+            <li>Call 103 or 112. Keep the bottle or label so doctors know what it was.</li>
+          </ol>
+          <div class="never"><b>Never try to neutralise</b> an acid with soda, or an alkali with vinegar — the reaction makes heat and deepens the burn. No creams either.</div>
+          <p class="note">In a lab, use the eyewash station and safety shower if there is one.</p>`
+      },
+
+      { id: "electric", title: "Electric shock", tag: "Switch off the power before you touch",
+        html: `
+          <ol>
+            <li><strong>Do not touch the person</strong> while they are still in contact with the electricity.</li>
+            <li>Switch off the power: pull out the plug, or turn off the switch or the fuse box (электрощиток).</li>
+            <li>Cannot switch it off? Stand on something dry that does not conduct — a rubber mat, dry wood, a pile of books — and push the source away with a dry wooden or plastic object, like a broom handle.</li>
+            <li>Call 103 or 112. Not breathing normally → <a href="#aid-cpr">start CPR</a> and send someone for an AED.</li>
+            <li>Cool any burns under running water — only after the power is off — and cover them.</li>
+          </ol>
+          <div class="never"><b>Never go near a fallen power line</b> or high-voltage equipment. Stay far away and call 112.</div>
+          <div class="warn"><b>Anyone who got a shock from mains electricity should see a doctor</b>, even if they feel fine: electricity can burn deep inside the body and upset the heart rhythm.</div>`
+      },
+
+      { id: "bleeding", title: "Heavy bleeding", tag: "Press firmly and keep pressing",
+        html: `
+          <p>For example, from broken glass during an escape.</p>
+          <ol>
+            <li>Protect your hands with gloves or a plastic bag if you can.</li>
+            <li>Press firmly on the wound with a clean cloth, a bandage or your hand. Keep pressing — do not lift it to look.</li>
+            <li>Blood soaking through? Put more cloth on top and press harder. Do not remove the first layer.</li>
+            <li>Call 103 or 112 if the bleeding is heavy or does not stop.</li>
+            <li>Glass stuck in the wound? Do not pull it out — press around it.</li>
+            <li>Let the person lie down and keep them warm.
+              <span class="why">Losing a lot of blood can lead to shock. Lying down and staying warm helps.</span></li>
+          </ol>
+          <p class="note">Life-threatening bleeding from an arm or leg that pressure cannot stop: if you have a tourniquet (жгут) and know how to use it, put it on 5–7 cm above the wound, not over a joint, and note the time.</p>`
+      }
+
+    ],
     sections: [
 
       { title: "The alarm sounds",
@@ -569,6 +1038,134 @@ const CONTENT = {
     who112: "Единая служба",
     who101: "Пожарная охрана",
     whoDuty: "Дежурный диспетчер РНИМУ",
+    guideTitle: "При пожаре: что делать",
+    aidTitle: "Первая помощь",
+    aidSub: "Что делать при травмах, которые бывают при пожаре, пока едет скорая. Выберите тему.",
+    aidFirstTitle: "Всегда сначала",
+    aidFirst: [
+      "<b>Безопасно?</b> Не заходите в дым и огонь.",
+      "<b>Окликните.</b> Потормошите за плечи.",
+      "<b>Звоните 112.</b> Включите громкую связь."
+    ],
+    aidNote: "Основано на: приказе Минздрава России № 220н от 03.05.2024 «Об утверждении Порядка оказания первой помощи», рекомендациях Европейского совета по реанимации и Resuscitation Council UK 2025 года, рекомендациях NHS. Эта страница не заменяет курс первой помощи.",
+    aid: [
+
+      { id: "burns", title: "Ожоги", tag: "Охлаждайте под проточной водой 20 минут",
+        html: `
+          <p><strong>Ожог — охлаждать, человека — согревать.</strong></p>
+          <ol>
+            <li>Прекратите действие огня: отведите человека от источника жара. Горит одежда — <a href="#fire-clothing">остановись, упади, катись</a>.</li>
+            <li>Держите ожог под <strong>прохладной проточной водой 20 минут</strong>. Начните как можно раньше — охлаждение помогает даже спустя 3 часа.
+              <span class="why">Жар продолжает повреждать глубокие слои кожи и после того, как пламя погасло. Охлаждение уменьшает глубину ожога и боль.</span></li>
+            <li>Во время охлаждения снимите кольца, часы и одежду рядом с ожогом — но не отрывайте то, что прилипло к коже.
+              <span class="why">Обожжённая кожа быстро отекает, и кольцо может пережать палец.</span></li>
+            <li>Остальное тело держите в тепле — укройте курткой или одеялом.
+              <span class="why">Холодная вода на большом ожоге может сильно переохладить человека, особенно зимой на улице.</span></li>
+            <li>Накройте свободно: положите сверху пищевую плёнку (не обматывайте) или чистую ткань без ворса.</li>
+          </ol>
+          <div data-tool="cool"></div>
+          <div class="never"><b>Нельзя</b> прикладывать лёд, мазать маслом, сметаной, зубной пастой, яичным белком или кремами. <b>Не вскрывайте</b> пузыри и не отрывайте прилипшую одежду.</div>
+          <div class="warn"><b>Звоните 103 или 112, если ожог</b> больше ладони пострадавшего · глубокий (белый, коричневый или чёрный, или не болит) · на лице, кистях, стопах, в паху или на суставе · охватывает руку или ногу по кругу · химический или от электричества. Звоните и тогда, когда человек надышался дымом.</div>`
+      },
+
+      { id: "smoke", title: "Дым и ядовитые газы", tag: "Свежий воздух, усадить, звонить 112",
+        html: `
+          <p>В дыме пожара есть угарный газ и цианиды. Эти яды не видны и не пахнут, а отравление быстро вызывает спутанность, сонливость и потерю сознания.</p>
+          <ol>
+            <li>Не заходите в дым, чтобы кого-то спасти. Позвоните 112 и скажите пожарным, где человек.
+              <span class="why">Несколько вдохов густого дыма могут лишить сознания и вас.</span></li>
+            <li>Выведите человека на свежий воздух, подальше от дыма, — только если это безопасно.</li>
+            <li>Позвоните 112 (или 103), даже если человеку становится лучше.
+              <span class="why">Отёк дыхательных путей и отравление могут усиливаться в следующие несколько часов. В больнице это лечат кислородом.</span></li>
+            <li>Если человек в сознании — помогите ему сесть. Расстегните воротник, галстук, ремень. Успокойте и согрейте.
+              <span class="why">Сидя дышать легче.</span></li>
+            <li>Оставайтесь рядом и следите за дыханием. Без сознания, но дышит нормально → <a href="#aid-recovery">положите на бок</a>. Не дышит нормально → <a href="#aid-cpr">начинайте СЛР</a>.</li>
+          </ol>
+          <div class="warn"><b>Опасные признаки — сообщите диспетчеру:</b> копоть вокруг носа или рта · опалённые брови или волосы в носу · осипший голос или шумное дыхание · одышка или боль в груди · головная боль, головокружение, рвота · спутанность сознания или сонливость.</div>
+          <div class="never"><b>Не отпускайте</b> человека домой одного и не давайте «отоспаться». <b>Нормальные показания пульсоксиметра не исключают</b> отравление угарным газом — прибор не отличает угарный газ от кислорода.</div>`
+      },
+
+      { id: "recovery", title: "Без сознания, но дышит", tag: "Устойчивое боковое положение",
+        html: `
+          <ol>
+            <li>Проверьте сознание: громко окликните и осторожно потормошите за плечи. Не отвечает — звоните 112 и включите громкую связь.</li>
+            <li>Откройте дыхательные пути: одну руку на лоб, запрокиньте голову, двумя пальцами другой руки поднимите подбородок.</li>
+            <li>Посмотрите, послушайте и почувствуйте дыхание — не дольше 10 секунд.</li>
+            <li>Дышит нормально → переведите в устойчивое боковое положение:
+              <ul>
+                <li>Встаньте на колени сбоку. Ближнюю к вам руку положите под прямым углом к телу.</li>
+                <li>Дальнюю руку переложите через грудь и прижмите тыльной стороной кисти к щеке, обращённой к вам.</li>
+                <li>Согните дальнюю ногу в колене. Потяните за колено и поверните человека к себе на бок.</li>
+                <li>Слегка запрокиньте голову, чтобы рот был направлен немного вниз.</li>
+              </ul>
+              <span class="why">На спине язык может перекрыть горло, а рвотные массы — попасть в дыхательные пути. На боку дыхательные пути остаются открытыми.</span></li>
+            <li>Будьте рядом и следите за дыханием до приезда помощи.</li>
+          </ol>
+          <div class="warn"><b>Редкие судорожные вдохи — это не нормальное дыхание.</b> Если дыхание остановилось или стало таким, сразу <a href="#aid-cpr">начинайте СЛР</a>.</div>`
+      },
+
+      { id: "cpr", title: "Не дышит: сердечно-лёгочная реанимация", tag: "Сильно и быстро, 100–120 нажатий в минуту",
+        html: `
+          <p>Нет сознания и нет нормального дыхания — скорее всего, сердце остановилось. Каждая минута без СЛР уменьшает шанс выжить.</p>
+          <ol>
+            <li>Звоните 112 и включите громкую связь. Попросите кого-нибудь принести дефибриллятор (АНД).</li>
+            <li>Встаньте на колени сбоку. Основание ладони — в центр грудной клетки, вторую ладонь — сверху. Руки прямые, плечи над ладонями.</li>
+            <li>Давите сильно: на глубину 5–6 см, 100–120 раз в минуту. После каждого нажатия дайте грудной клетке полностью подняться.</li>
+            <li>Умеете делать искусственное дыхание? После каждых 30 нажатий сделайте 2 вдоха. Не умеете — просто давите без остановки.
+              <span class="why">Вдохи особенно важны, если человек потерял сознание из-за дыма. Но даже одни нажатия намного лучше, чем ничего.</span></li>
+            <li>Когда принесут АНД, включите его и выполняйте голосовые подсказки. Им может пользоваться любой человек.</li>
+            <li>Продолжайте, пока не приедет скорая или человек не начнёт нормально дышать. Если есть помощник, меняйтесь каждые 2 минуты.
+              <span class="why">От усталости нажатия становятся слабее — часто незаметно для вас самих.</span></li>
+          </ol>
+          <div data-tool="cpr"></div>
+          <p class="note">Не бойтесь давить сильно. Сломанные рёбра срастутся, а без СЛР человек с остановкой сердца погибнет.</p>`
+      },
+
+      { id: "chemical", title: "Химические ожоги и глаза", tag: "Промывать большим количеством воды, долго",
+        html: `
+          <p>Реактивы в лаборатории, сильные чистящие средства, жидкость из батареек.</p>
+          <ol>
+            <li>Защитите себя: наденьте перчатки, если они есть.</li>
+            <li>Сначала стряхните сухой порошок. Снимите одежду и украшения, на которые попало вещество.</li>
+            <li>Промывайте кожу большим количеством прохладной или тёплой проточной воды не меньше 20 минут — чем дольше, тем лучше.</li>
+            <li><strong>Глаза:</strong> держите веки открытыми и промывайте мягкой струёй тёплой воды не меньше 20 минут. Наклоните голову так, чтобы поражённый глаз был ниже, и лейте от носа к виску.
+              <span class="why">Так вещество не попадёт во второй глаз.</span></li>
+            <li>Снимите контактные линзы, если они легко снимаются. Не трите глаз.</li>
+            <li>Звоните 103 или 112. Сохраните флакон или этикетку, чтобы врачи знали, что это было.</li>
+          </ol>
+          <div class="never"><b>Не пытайтесь нейтрализовать</b> кислоту содой, а щёлочь — уксусом: реакция выделяет тепло и углубляет ожог. Кремы тоже нельзя.</div>
+          <p class="note">В лаборатории используйте фонтанчик для промывания глаз и аварийный душ, если они есть.</p>`
+      },
+
+      { id: "electric", title: "Удар током", tag: "Сначала обесточьте, потом прикасайтесь",
+        html: `
+          <ol>
+            <li><strong>Не прикасайтесь к человеку</strong>, пока он под действием тока.</li>
+            <li>Обесточьте: выньте вилку из розетки, выключите выключатель или автомат в электрощитке.</li>
+            <li>Обесточить нельзя? Встаньте на сухой материал, не проводящий ток, — резиновый коврик, сухую доску, стопку книг — и отодвиньте источник тока сухим деревянным или пластиковым предметом, например черенком швабры.</li>
+            <li>Звоните 103 или 112. Нет нормального дыхания → <a href="#aid-cpr">начинайте СЛР</a> и попросите принести АНД.</li>
+            <li>Ожоги охладите проточной водой — только после отключения тока — и накройте.</li>
+          </ol>
+          <div class="never"><b>Не приближайтесь к оборванному проводу</b> линии электропередачи и к высоковольтному оборудованию. Держитесь подальше и звоните 112.</div>
+          <div class="warn"><b>После удара током от электросети нужен врач</b>, даже если человек чувствует себя хорошо: ток может обжечь ткани глубоко внутри и нарушить ритм сердца.</div>`
+      },
+
+      { id: "bleeding", title: "Сильное кровотечение", tag: "Прижмите рану и не отпускайте",
+        html: `
+          <p>Например, от разбитого стекла во время эвакуации.</p>
+          <ol>
+            <li>Защитите руки перчатками или пакетом, если есть возможность.</li>
+            <li>Сильно прижмите рану чистой тканью, бинтом или ладонью. Держите — не поднимайте, чтобы посмотреть.</li>
+            <li>Кровь пропитала ткань? Положите сверху ещё и прижмите сильнее. Первый слой не снимайте.</li>
+            <li>Звоните 103 или 112, если кровотечение сильное или не останавливается.</li>
+            <li>В ране застряло стекло? Не вынимайте — прижимайте вокруг него.</li>
+            <li>Уложите человека и согрейте.
+              <span class="why">Большая потеря крови может привести к шоку. Лёжа и в тепле организму легче.</span></li>
+          </ol>
+          <p class="note">Опасное для жизни кровотечение из руки или ноги, которое не останавливается давлением: если есть жгут и вы умеете им пользоваться, наложите его на 5–7 см выше раны, не на сустав, и запишите время.</p>`
+      }
+
+    ],
     sections: [
       { title: "Сработала сигнализация",
         html: `
@@ -659,6 +1256,134 @@ const CONTENT = {
     who112: "خدمات اضطراری",
     who101: "آتش‌نشانی",
     whoDuty: "افسر کشیک دانشگاه",
+    guideTitle: "هنگام آتش‌سوزی: چه باید کرد",
+    aidTitle: "کمک‌های اولیه",
+    aidSub: "برای آسیب‌هایی که در آتش‌سوزی پیش می‌آید، تا رسیدن آمبولانس چه کنیم. یک موضوع را انتخاب کنید.",
+    aidFirstTitle: "همیشه اول",
+    aidFirst: [
+      "<b>امن است؟</b> هرگز وارد دود یا آتش نشوید.",
+      "<b>صدایش کنید.</b> شانه‌هایش را تکان دهید.",
+      "<b>با ۱۱۲ تماس بگیرید.</b> بلندگو را روشن کنید."
+    ],
+    aidNote: "بر پایهٔ: دستور شمارهٔ ۲۲۰н وزارت بهداشت روسیه (۲۰۲۴) دربارهٔ روش ارائهٔ کمک‌های اولیه، راهنماهای ۲۰۲۵ شورای احیای اروپا و شورای احیای بریتانیا، و توصیه‌های NHS. این صفحه جای دورهٔ آموزش کمک‌های اولیه را نمی‌گیرد.",
+    aid: [
+
+      { id: "burns", title: "سوختگی", tag: "۲۰ دقیقه زیر آب روان خنک",
+        html: `
+          <p><strong>سوختگی را خنک کنید، خود فرد را گرم نگه دارید.</strong></p>
+          <ol>
+            <li>سوختن را متوقف کنید: فرد را از منبع گرما دور کنید. لباس آتش گرفته؟ <a href="#fire-clothing">بایست، بیفت، بغلت.</a></li>
+            <li>سوختگی را <strong>۲۰ دقیقه زیر آب روان خنک</strong> نگه دارید. هر چه زودتر شروع کنید — تا ۳ ساعت بعد هم مفید است.
+              <span class="why">گرما حتی پس از خاموش شدن شعله به لایه‌های عمیق‌تر پوست آسیب می‌زند. خنک کردن عمق سوختگی و درد را کم می‌کند.</span></li>
+            <li>هنگام خنک کردن، انگشتر، ساعت و لباس‌های نزدیک سوختگی را درآورید — اما چیزی را که به پوست چسبیده جدا نکنید.
+              <span class="why">پوست سوخته زود ورم می‌کند و انگشتر می‌تواند جریان خون انگشت را قطع کند.</span></li>
+            <li>بقیهٔ بدن را با کاپشن یا پتو گرم نگه دارید.
+              <span class="why">آب سرد روی سوختگی بزرگ می‌تواند بدن را به‌شدت سرد کند، به‌ویژه در زمستان و بیرون از ساختمان.</span></li>
+            <li>روی سوختگی را آزادانه بپوشانید: سلفون را روی آن بگذارید (دورش نپیچید) یا از پارچهٔ تمیز بدون پرز استفاده کنید.</li>
+          </ol>
+          <div data-tool="cool"></div>
+          <div class="never"><b>هرگز</b> یخ، کره، روغن، ماست یا خامه، خمیردندان، سفیدهٔ تخم‌مرغ یا کرم نزنید. تاول‌ها را <b>نترکانید</b> و لباس چسبیده را جدا نکنید.</div>
+          <div class="warn"><b>با ۱۰۳ یا ۱۱۲ تماس بگیرید اگر سوختگی</b> بزرگ‌تر از کف دست خود مصدوم است · عمیق است (سفید، قهوه‌ای یا سیاه، یا بدون درد) · روی صورت، دست‌ها، پاها، کشالهٔ ران یا مفصل است · دور تا دور دست یا پا را گرفته · شیمیایی یا ناشی از برق است. اگر فرد دود هم تنفس کرده، حتماً تماس بگیرید.</div>`
+      },
+
+      { id: "smoke", title: "دود و گازهای سمی", tag: "هوای تازه، نشاندن، تماس با ۱۱۲",
+        html: `
+          <p>دود آتش حاوی مونوکسید کربن و سیانید است. این سم‌ها دیده نمی‌شوند و بو ندارند و می‌توانند خیلی زود باعث گیجی، خواب‌آلودگی یا بیهوشی شوند.</p>
+          <ol>
+            <li>برای نجات کسی وارد دود نشوید. با ۱۱۲ تماس بگیرید و به آتش‌نشانان بگویید فرد کجاست.
+              <span class="why">چند نفس دود غلیظ می‌تواند شما را هم بیهوش کند.</span></li>
+            <li>فرد را به هوای تازه و دور از دود ببرید — فقط اگر این کار امن است.</li>
+            <li>با ۱۱۲ (یا ۱۰۳) تماس بگیرید، حتی اگر حالش بهتر به نظر می‌رسد.
+              <span class="why">تورم راه هوایی و مسمومیت ممکن است در چند ساعت بعد بدتر شود. در بیمارستان با اکسیژن درمانش می‌کنند.</span></li>
+            <li>اگر هوشیار است، کمکش کنید بنشیند. یقه، کراوات و کمربند را شل کنید. آرام و گرمش نگه دارید.
+              <span class="why">در حالت نشسته نفس کشیدن آسان‌تر است.</span></li>
+            <li>کنارش بمانید و تنفسش را زیر نظر بگیرید. بی‌پاسخ است ولی عادی نفس می‌کشد ← <a href="#aid-recovery">به پهلو بخوابانید</a>. عادی نفس نمی‌کشد ← <a href="#aid-cpr">احیا را شروع کنید</a>.</li>
+          </ol>
+          <div class="warn"><b>نشانه‌های خطر — به اپراتور بگویید:</b> دوده دور بینی یا دهان · ابرو یا موی بینی سوخته · صدای گرفته یا تنفس پرصدا · تنگی نفس یا درد قفسهٔ سینه · سردرد، سرگیجه، استفراغ · گیجی یا خواب‌آلودگی.</div>
+          <div class="never"><b>نگذارید</b> تنها به خانه برود یا «بخوابد تا خوب شود». <b>عدد طبیعی پالس‌اکسیمتر مسمومیت با مونوکسید کربن را رد نمی‌کند</b> — این دستگاه مونوکسید کربن را از اکسیژن تشخیص نمی‌دهد.</div>`
+      },
+
+      { id: "recovery", title: "بی‌پاسخ ولی نفس می‌کشد", tag: "به پهلو بخوابانید (وضعیت بهبود)",
+        html: `
+          <ol>
+            <li>بررسی کنید: بلند صدایش کنید و شانه‌هایش را آرام تکان دهید. جواب نمی‌دهد؟ با ۱۱۲ تماس بگیرید و بلندگو را روشن کنید.</li>
+            <li>راه هوایی را باز کنید: یک دست روی پیشانی، سر را به عقب خم کنید و با دو انگشت چانه را بالا بیاورید.</li>
+            <li>حداکثر ۱۰ ثانیه نگاه کنید، گوش دهید و حس کنید که آیا عادی نفس می‌کشد.</li>
+            <li>عادی نفس می‌کشد ← او را به پهلو بخوابانید:
+              <ul>
+                <li>کنارش زانو بزنید. دستِ نزدیک به خودتان را با زاویهٔ قائمه نسبت به بدنش بگذارید.</li>
+                <li>دستِ دورتر را از روی سینه بیاورید و پشت دستش را به گونهٔ سمت شما بچسبانید.</li>
+                <li>زانوی پای دورتر را خم کنید. زانو را بکشید و او را به سمت خودتان به پهلو بچرخانید.</li>
+                <li>سر را کمی به عقب خم کنید تا دهان کمی رو به پایین باشد.</li>
+              </ul>
+              <span class="why">در حالت طاق‌باز زبان ممکن است راه گلو را ببندد و استفراغ وارد ریه شود. به پهلو، راه هوایی باز می‌ماند.</span></li>
+            <li>کنارش بمانید و تا رسیدن کمک تنفسش را بررسی کنید.</li>
+          </ol>
+          <div class="warn"><b>نفس‌های بریده‌بریده و گاه‌به‌گاه تنفس عادی نیست.</b> اگر تنفس قطع شد یا این‌طور شد، فوراً <a href="#aid-cpr">احیا را شروع کنید</a>.</div>`
+      },
+
+      { id: "cpr", title: "نفس نمی‌کشد: احیای قلبی‌ریوی", tag: "محکم و سریع، ۱۰۰ تا ۱۲۰ بار در دقیقه",
+        html: `
+          <p>بی‌پاسخ است و عادی نفس نمی‌کشد؟ احتمالاً قلبش ایستاده است. هر دقیقه بدون احیا، شانس زنده ماندن را کم می‌کند.</p>
+          <ol>
+            <li>با ۱۱۲ تماس بگیرید و بلندگو را روشن کنید. از کسی بخواهید دستگاه شوک خودکار (AED) بیاورد.</li>
+            <li>کنارش زانو بزنید. پاشنهٔ یک دست را وسط قفسهٔ سینه و دست دیگر را روی آن بگذارید. دست‌ها صاف، شانه‌ها بالای دست‌ها.</li>
+            <li>محکم فشار دهید: ۵ تا ۶ سانتی‌متر عمق، ۱۰۰ تا ۱۲۰ بار در دقیقه. بعد از هر فشار بگذارید قفسهٔ سینه کاملاً بالا بیاید.</li>
+            <li>تنفس نجات را یاد گرفته‌اید؟ بعد از هر ۳۰ فشار، ۲ تنفس بدهید. اگر نه، فقط بدون توقف فشار دهید.
+              <span class="why">تنفس برای کسی که به خاطر دود از هوش رفته اهمیت بیشتری دارد. اما فقط فشار دادن هم خیلی بهتر از هیچ کاری نکردن است.</span></li>
+            <li>وقتی AED رسید، روشنش کنید و طبق راهنمای صوتی‌اش عمل کنید. هر کسی می‌تواند از آن استفاده کند.</li>
+            <li>ادامه دهید تا امدادگران کار را به دست بگیرند یا فرد عادی نفس بکشد. اگر کسی هست، هر ۲ دقیقه جایتان را عوض کنید.
+              <span class="why">با خستگی، فشارها ضعیف‌تر می‌شوند — اغلب بی‌آنکه متوجه شوید.</span></li>
+          </ol>
+          <div data-tool="cpr"></div>
+          <p class="note">از فشار محکم نترسید. دنده‌های ترک‌خورده جوش می‌خورند، اما بدون احیا کسی که قلبش ایستاده زنده نمی‌ماند.</p>`
+      },
+
+      { id: "chemical", title: "سوختگی شیمیایی و چشم", tag: "با آب فراوان و به مدت طولانی بشویید",
+        html: `
+          <p>مواد آزمایشگاهی، شوینده‌های قوی یا مایع باتری.</p>
+          <ol>
+            <li>از خودتان محافظت کنید: اگر دستکش دارید بپوشید.</li>
+            <li>اول پودر خشک را بتکانید. لباس و زیورآلاتی را که ماده به آن رسیده درآورید.</li>
+            <li>پوست را دست‌کم ۲۰ دقیقه زیر آب روان خنک یا ولرم فراوان بشویید — هر چه بیشتر، بهتر.</li>
+            <li><strong>چشم:</strong> پلک‌ها را باز نگه دارید و دست‌کم ۲۰ دقیقه با جریان ملایم آب ولرم بشویید. سر را طوری خم کنید که چشم آسیب‌دیده پایین‌تر باشد و آب را از سمت بینی به بیرون بریزید.
+              <span class="why">تا ماده وارد چشم دیگر نشود.</span></li>
+            <li>اگر لنز تماسی به‌راحتی درمی‌آید، درش بیاورید. چشم را نمالید.</li>
+            <li>با ۱۰۳ یا ۱۱۲ تماس بگیرید. بطری یا برچسب را نگه دارید تا پزشکان بدانند چه ماده‌ای بوده.</li>
+          </ol>
+          <div class="never"><b>هرگز سعی نکنید</b> اسید را با جوش‌شیرین یا قلیا را با سرکه خنثی کنید: واکنش گرما تولید می‌کند و سوختگی را عمیق‌تر می‌کند. کرم هم نزنید.</div>
+          <p class="note">در آزمایشگاه، اگر چشم‌شوی اضطراری و دوش ایمنی هست، از آن‌ها استفاده کنید.</p>`
+      },
+
+      { id: "electric", title: "برق‌گرفتگی", tag: "اول برق را قطع کنید، بعد دست بزنید",
+        html: `
+          <ol>
+            <li>تا وقتی فرد با جریان برق در تماس است <strong>به او دست نزنید</strong>.</li>
+            <li>برق را قطع کنید: دوشاخه را از پریز بکشید یا کلید یا فیوز تابلو برق (электрощиток) را قطع کنید.</li>
+            <li>نمی‌توانید قطع کنید؟ روی چیزی خشک و نارسانا بایستید — زیرپایی لاستیکی، چوب خشک، دسته‌ای کتاب — و منبع برق را با یک وسیلهٔ خشک چوبی یا پلاستیکی، مثل دستهٔ جارو، دور کنید.</li>
+            <li>با ۱۰۳ یا ۱۱۲ تماس بگیرید. اگر عادی نفس نمی‌کشد ← <a href="#aid-cpr">احیا را شروع کنید</a> و کسی را دنبال AED بفرستید.</li>
+            <li>سوختگی‌ها را — فقط پس از قطع برق — زیر آب روان خنک کنید و بپوشانید.</li>
+          </ol>
+          <div class="never"><b>هرگز به سیم برق افتاده</b> یا تجهیزات فشار قوی نزدیک نشوید. فاصله بگیرید و با ۱۱۲ تماس بگیرید.</div>
+          <div class="warn"><b>هر کس از برق شهری شوک گرفته باید پزشک ببیند</b>، حتی اگر حالش خوب است: برق می‌تواند بافت‌های عمقی را بسوزاند و ریتم قلب را به هم بزند.</div>`
+      },
+
+      { id: "bleeding", title: "خونریزی شدید", tag: "محکم فشار دهید و رها نکنید",
+        html: `
+          <p>مثلاً از شیشهٔ شکسته هنگام فرار.</p>
+          <ol>
+            <li>اگر می‌توانید با دستکش یا کیسهٔ پلاستیکی از دست‌هایتان محافظت کنید.</li>
+            <li>با پارچهٔ تمیز، باند یا کف دست محکم روی زخم فشار دهید. فشار را ادامه دهید — برای نگاه کردن برندارید.</li>
+            <li>خون از پارچه بیرون زد؟ پارچهٔ دیگری رویش بگذارید و محکم‌تر فشار دهید. لایهٔ اول را برندارید.</li>
+            <li>اگر خونریزی شدید است یا بند نمی‌آید، با ۱۰۳ یا ۱۱۲ تماس بگیرید.</li>
+            <li>شیشه در زخم مانده؟ بیرونش نکشید — اطرافش را فشار دهید.</li>
+            <li>فرد را بخوابانید و گرم نگه دارید.
+              <span class="why">از دست دادن خون زیاد می‌تواند به شوک منجر شود. دراز کشیدن و گرم ماندن کمک می‌کند.</span></li>
+          </ol>
+          <p class="note">خونریزی خطرناک از دست یا پا که با فشار بند نمی‌آید: اگر تورنیکه (жгут) دارید و بلدید، آن را ۵ تا ۷ سانتی‌متر بالای زخم، نه روی مفصل، ببندید و ساعتش را یادداشت کنید.</p>`
+      }
+
+    ],
     sections: [
       { title: "آژیر به صدا درآمد",
         html: `
@@ -739,6 +1464,10 @@ const CONTENT = {
 const listEl = document.getElementById('list');
 const langEl = document.getElementById('lang');
 
+// Address of each "In a fire" card, in order, so a link like …/#fire-clothing
+// opens it (a section can also set its own: { id:"...", title:"...", html:`...` }).
+const GUIDE_IDS = ['fire-alarm','fire-see','fire-smoke','fire-trapped','fire-clothing','fire-extinguisher','fire-banned'];
+
 function render(code){
   const c = CONTENT[code];
   if(!c) return;
@@ -749,7 +1478,8 @@ function render(code){
 
   document.getElementById('appTitle').textContent = c.appTitle;
   document.title = c.appTitle + ' — RNIMU';
-  ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote','breTitle','breSub','breBtn','breNote'].forEach(id => {
+  ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote','breTitle','breSub','breBtn','breNote',
+   'guideTitle','aidTitle','aidSub','aidFirstTitle','aidNote'].forEach(id => {
     document.getElementById(id).textContent = c[id] || CONTENT.en[id];
   });
   document.getElementById('emTitle').textContent = c.emTitle;
@@ -759,13 +1489,20 @@ function render(code){
   document.getElementById('whoDuty').textContent = c.whoDuty;
   document.getElementById('foot').innerHTML      = c.foot;
 
-  listEl.innerHTML = c.sections.map(s => `
-    <details>
+  const wasOpen = openDetails(listEl);
+  listEl.innerHTML = c.sections.map((s, i) => {
+    const id = s.id || GUIDE_IDS[i];
+    return `
+    <details${id ? ` id="${id}"` : ''}>
       <summary>${s.title}</summary>
       <div class="body">${s.html}</div>
-    </details>`).join('');
+    </details>`;
+  }).join('');
+  reopenDetails(listEl, wasOpen);
   // Floor plans are filled in by the FLOOR PLANS script further down, once it has loaded.
   if(window.floorMapsReady) renderFloorMaps(code);
+  // So are the first aid cards, the quick links and the tools.
+  if(window.aidReady) renderExtras(code);
 
   try{ localStorage.setItem('lang', code); }catch(e){}
 }
@@ -1775,6 +2512,956 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape' && !breView.hi
 document.addEventListener('visibilitychange', () => { if(document.hidden) brePause(); });
 drawFlower(0.2);
 
+
+/* ============================================================
+   FIRST AID — pictures, icons and the tools
+
+   The WORDS for each first aid topic live in CONTENT (aid: [...]) in
+   every language, like the rest of the guide. The PICTURES below are
+   shared by all languages: each one is a small drawing (SVG) that
+   moves with CSS (see "first aid pictures" in the style section).
+
+   To add a topic: add it to CONTENT.aid in every language, then add a
+   picture to AID_ART and an icon to AID_ICONS under the same id.
+   Pictures are optional — a topic without one simply shows no picture.
+   ============================================================ */
+
+const AID_ART = {
+
+burns: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#E4F1F9"/>
+<path d="M0 36H320M0 72H320M0 108H320M46 0V122M112 0V122M178 0V122M244 0V122M310 0V122" stroke="#D2E6F2" stroke-width="1.5"/>
+<rect y="122" width="320" height="38" fill="#fff"/><rect y="122" width="320" height="4" fill="#D6E7F1"/>
+<ellipse cx="124" cy="141" rx="80" ry="10" fill="#D3E5F0"/><ellipse cx="124" cy="143" rx="68" ry="6" fill="#BDD6E6"/>
+<path d="M-6 30H102Q122 30 122 48" fill="none" stroke="#A9B7C1" stroke-width="12" stroke-linecap="round"/>
+<path d="M-6 26.5H102Q116 26.5 118 38" fill="none" stroke="#D8E1E7" stroke-width="3" stroke-linecap="round"/>
+<rect x="52" y="12" width="12" height="14" rx="2" fill="#A9B7C1"/><rect x="40" y="7" width="36" height="7" rx="3.5" fill="#8C9BA6"/>
+<rect x="114" y="46" width="16" height="6" rx="2.5" fill="#8C9BA6"/>
+<rect x="116" y="51" width="12" height="42" rx="5" fill="#74BEEA" opacity=".9"/>
+<path class="aa-flow" d="M122 54V91" stroke="#D2EDFC" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 9"/>
+<path d="M334 116L250 108" stroke="#E9A23B" stroke-width="34"/><path d="M250 91L247 125" stroke="#CF8A25" stroke-width="3"/>
+<path d="M250 108L150 102" stroke="#C68B59" stroke-width="22" stroke-linecap="round"/>
+<path d="M156 92C140 90 116 91 102 95C95 97 95 104 102 106C116 110 140 112 156 112Z" fill="#C68B59"/>
+<ellipse cx="146" cy="111" rx="10" ry="4.5" fill="#B27749"/>
+<path d="M100 99.5q6 1 12 .5M100.5 103.5q6 .8 11 .2" fill="none" stroke="#A86F42" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
+<ellipse class="aa-burn" cx="128" cy="96" rx="18" ry="5.4" fill="#EF7B59"/>
+<path d="M100 96Q122 88 152 92" fill="none" stroke="#8FD0F2" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+<g fill="#8FD0F2"><circle class="aa-sp" cx="122" cy="90" r="2.3"/><circle class="aa-sp aa-sp2" cx="122" cy="90" r="1.9"/><circle class="aa-sp aa-sp3" cx="122" cy="90" r="2.1"/><circle class="aa-sp aa-sp4" cx="122" cy="90" r="1.7"/></g>
+<g fill="#74BEEA"><ellipse class="aa-drip" cx="104" cy="108" rx="1.8" ry="2.6"/><ellipse class="aa-drip aa-drip2" cx="124" cy="112" rx="1.8" ry="2.6"/><ellipse class="aa-drip aa-drip3" cx="114" cy="110" rx="1.6" ry="2.4"/></g>
+<g fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round"><path class="aa-heat" d="M166 86q4-4 0-8t0-8"/><path class="aa-heat aa-heat2" d="M184 86q4-4 0-8t0-8"/><path class="aa-heat aa-heat3" d="M202 88q4-4 0-8t0-8"/></g>
+<g transform="translate(274 46)">
+<rect x="-4" y="-35" width="8" height="7" rx="2" fill="#14261C"/><rect x="15" y="-28" width="7" height="5" rx="1.5" fill="#14261C" transform="rotate(45 18.5 -25.5)"/>
+<circle r="27" fill="#fff" stroke="#C9DEEA" stroke-width="2"/><circle r="20" fill="none" stroke="#E2EEF5" stroke-width="5"/>
+<circle class="aa-ring" r="20" fill="none" stroke="#00843D" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.7" transform="rotate(-90)"/>
+<path class="aa-hand" d="M0 0V-13" stroke="#14261C" stroke-width="2.5" stroke-linecap="round"/><circle r="2.6" fill="#14261C"/>
+</g>
+</svg>`,
+
+smoke: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#E7F4EC"/><circle cx="298" cy="22" r="11" fill="#FAD06C"/>
+<rect y="128" width="320" height="32" fill="#CDE5D4"/>
+<rect width="98" height="160" fill="#D9D1C5"/><rect x="94" width="5" height="160" fill="#C6BCAE"/>
+<rect x="20" y="44" width="54" height="42" rx="3" fill="#41474B" stroke="#F1EBE2" stroke-width="4"/>
+<rect x="20" y="104" width="54" height="40" rx="3" fill="#9FB6C2" stroke="#F1EBE2" stroke-width="4"/><path d="M47 104V144M20 124H74" stroke="#F1EBE2" stroke-width="3"/>
+<g fill="#737D81"><circle cx="30" cy="44" r="11"/><circle cx="47" cy="40" r="13"/><circle cx="64" cy="44" r="11"/></g>
+<g class="aa-puff"><circle cx="36" cy="30" r="12" fill="#7E888C"/><circle cx="52" cy="26" r="14" fill="#8E979B"/><circle cx="66" cy="31" r="10" fill="#7E888C"/></g>
+<g class="aa-puff aa-puff2"><circle cx="36" cy="30" r="12" fill="#8E979B"/><circle cx="52" cy="26" r="14" fill="#A1A9AC"/><circle cx="66" cy="31" r="10" fill="#8E979B"/></g>
+<g class="aa-puff aa-puff3"><circle cx="36" cy="30" r="12" fill="#7E888C"/><circle cx="52" cy="26" r="14" fill="#949DA1"/><circle cx="66" cy="31" r="10" fill="#7E888C"/></g>
+<g class="aa-co"><g transform="translate(76 60)"><circle r="7" fill="#374151"/><circle cx="11" r="7" fill="#8B97A3"/><text y="2.8" text-anchor="middle" font-size="8" fill="#fff">C</text><text x="11" y="2.8" text-anchor="middle" font-size="8" fill="#fff">O</text></g></g>
+<g class="aa-co aa-co2"><g transform="translate(70 92)"><circle r="7" fill="#374151"/><circle cx="11" r="7" fill="#8B97A3"/><text y="2.8" text-anchor="middle" font-size="8" fill="#fff">C</text><text x="11" y="2.8" text-anchor="middle" font-size="8" fill="#fff">O</text></g></g>
+<path class="aa-go" d="M106 146H146" stroke="#00843D" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 7"/><path d="M146 139.5l9 6.5-9 6.5z" fill="#00843D"/>
+<g fill="none" stroke="#8CC7E6" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="20 8"><path class="aa-wind" d="M316 40Q288 32 262 38T208 48"/><path class="aa-wind" style="animation-delay:-1.2s" d="M318 62Q300 56 280 60"/></g>
+<path d="M148 134Q180 116 212 134Q198 145 180 143Q162 145 148 134Z" fill="#3D5A80"/>
+<ellipse cx="170" cy="140" rx="8" ry="4" fill="#2B2B2B"/><ellipse cx="190" cy="140" rx="8" ry="4" fill="#2B2B2B"/>
+<g class="aa-breathe">
+<path d="M163 86Q180 79 197 86L199 126Q180 131 161 126Z" fill="#5B8DB8"/>
+<rect x="175" y="71" width="10" height="12" fill="#9C6644"/><path d="M173 82L180 93L187 82Z" fill="#9C6644"/>
+<path d="M171 81L180 93L176 80ZM189 81L180 93L184 80Z" fill="#EAF1F7"/>
+<path d="M165 90Q155 108 167 121M195 90Q205 108 193 121" fill="none" stroke="#5B8DB8" stroke-width="10" stroke-linecap="round"/>
+<circle cx="169" cy="122" r="5" fill="#9C6644"/><circle cx="191" cy="122" r="5" fill="#9C6644"/>
+<circle cx="180" cy="61" r="14" fill="#9C6644"/>
+<path d="M166 60Q166 44 180 45Q194 44 194 60Q190 52 180 53Q170 52 166 60Z" fill="#1E1916"/>
+<path d="M172.5 62q3 2 6 0M181.5 62q3 2 6 0" fill="none" stroke="#1E1916" stroke-width="1.6" stroke-linecap="round"/>
+<ellipse cx="180" cy="69.5" rx="2.6" ry="2.1" fill="#4A2618"/>
+<circle cx="176.5" cy="66.5" r="1.4" fill="#3F4650" opacity=".75"/><circle cx="184" cy="66" r="1.2" fill="#3F4650" opacity=".75"/>
+</g>
+<path d="M256 116L258 139L286 141M250 116L228 118L226 139" fill="none" stroke="#2F3E4E" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="221" cy="141" rx="8" ry="4" fill="#F5F5F5" stroke="#CFD6D2"/><ellipse cx="290" cy="141" rx="6" ry="4" fill="#F5F5F5" stroke="#CFD6D2"/>
+<path d="M240 84Q252 76 264 84L268 122H236Z" fill="#fff" stroke="#D3DCD7" stroke-width="1.5"/>
+<path d="M244 88Q222 92 203 88" fill="none" stroke="#D3DCD7" stroke-width="9.5" stroke-linecap="round"/><path d="M244 88Q222 92 203 88" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+<circle cx="201" cy="88" r="4.5" fill="#F2C4A0"/>
+<rect x="247" y="70" width="10" height="10" fill="#F2C4A0"/><circle cx="252" cy="64" r="12.5" fill="#F2C4A0"/>
+<path d="M239.5 64Q239 49 253 50Q265 51 265 64Q259 57 251 57Q244 57 239.5 64Z" fill="#2A2320"/><path d="M263 56q13 5 8 22q-9-8-8-18Z" fill="#2A2320"/>
+<circle cx="245.5" cy="65" r="1.5" fill="#2A2320"/><path d="M244 71q2.5 1.5 5 0" fill="none" stroke="#9C5A40" stroke-width="1.3" stroke-linecap="round"/>
+<path d="M260 86Q270 76 261 67" fill="none" stroke="#D3DCD7" stroke-width="9.5" stroke-linecap="round"/><path d="M260 86Q270 76 261 67" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+<rect x="256.5" y="55" width="7" height="13" rx="2" fill="#14261C"/><circle cx="260" cy="67" r="4" fill="#F2C4A0"/>
+<g fill="none" stroke="#00843D" stroke-width="2" stroke-linecap="round"><path class="aa-wave" d="M269 51q5 5 0 10"/><path class="aa-wave aa-wave2" d="M274 47q9 9 0 18"/></g>
+</svg>`,
+
+recovery: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#F2F5F2"/><rect y="112" width="320" height="48" fill="#DCE8DF"/><rect y="110" width="320" height="3" fill="#C9DACE"/>
+<ellipse cx="170" cy="138" rx="128" ry="6" fill="#C6D8CB"/>
+<path d="M136 64Q158 54 180 64L184 106H132Z" fill="#fff" stroke="#D3DCD7" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M152 58L158 71L164 58" fill="none" stroke="#D3DCD7" stroke-width="1.6"/>
+<rect x="153" y="49" width="10" height="9" fill="#D69B6D"/>
+<circle cx="158" cy="40" r="12.5" fill="#D69B6D"/>
+<path d="M145.5 40Q145 27 158 27Q171 27 170.5 40Q166 32 158 32Q150 32 145.5 40Z" fill="#2A2320"/><circle cx="158" cy="22" r="6" fill="#2A2320"/>
+<circle cx="153.5" cy="42.5" r="1.5" fill="#2A2320"/><circle cx="161.5" cy="42.5" r="1.5" fill="#2A2320"/><path d="M155.5 47.5q2.5 1.4 5 0" fill="none" stroke="#9C5A40" stroke-width="1.3" stroke-linecap="round"/>
+<path d="M178 66Q192 54 173 43" fill="none" stroke="#D3DCD7" stroke-width="10.5" stroke-linecap="round"/><path d="M178 66Q192 54 173 43" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<rect x="167.5" y="31" width="7" height="13" rx="2" fill="#14261C"/><circle cx="172" cy="43.5" r="4" fill="#D69B6D"/>
+<g fill="none" stroke="#00843D" stroke-width="2" stroke-linecap="round"><path class="aa-wave" d="M180 27q5 5 0 10"/><path class="aa-wave aa-wave2" d="M185 23q9 9 0 18"/></g>
+<path d="M178 124L270 127" stroke="#3D5A80" stroke-width="18" stroke-linecap="round"/><path d="M276 118q9 1 10 9q-1 7-10 7z" fill="#2B2B2B"/>
+<g class="aa-rise"><path d="M84 100Q132 92 180 104L182 136Q132 140 84 136Z" fill="#C0704F"/></g>
+<path d="M168 112L186 134L240 132" fill="none" stroke="#34506F" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M246 124q9 1 10 8q-1 6-10 6z" fill="#2B2B2B"/>
+<ellipse cx="66" cy="136" rx="11" ry="4.5" fill="#E7B48D"/>
+<circle cx="64" cy="117" r="16.5" fill="#F2C4A0"/>
+<path d="M58 101A16.5 16.5 0 0 0 58 133Q50 126 50 117Q50 108 58 101Z" fill="#2A2320"/>
+<path d="M60 110q2.5 2.5 1 5.5M60 121q2.5 2.5 1 5.5" fill="none" stroke="#2A2320" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M75 114.5q1.5 2.5 0 5" fill="none" stroke="#B5705B" stroke-width="2" stroke-linecap="round"/>
+<path d="M78 117h6" stroke="#F2C4A0" stroke-width="9" stroke-linecap="round"/>
+<path d="M92 106L106 132L74 135" fill="none" stroke="#A95A40" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M139 67Q124 84 116 99" fill="none" stroke="#D3DCD7" stroke-width="10.5" stroke-linecap="round"/><path d="M139 67Q124 84 116 99" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<circle cx="114" cy="101" r="5" fill="#D69B6D"/>
+<g fill="none" stroke="#6FB1D6" stroke-width="2" stroke-linecap="round"><path class="aa-breath" d="M82 104q2-5 7-5"/><path class="aa-breath aa-breath2" d="M86 98q3-6 9-6"/></g>
+</svg>`,
+
+cpr: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#F6F0E6"/><rect y="132" width="320" height="28" fill="#E6DCCB"/><rect y="131" width="320" height="2.5" fill="#D5C7B1"/>
+<path d="M156 96L148 127L206 129" fill="none" stroke="#2F3E4E" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="aa-push">
+<path d="M124 49Q140 50 166 88L162 104Q151 110 141 104L106 70Q106 55 124 49Z" fill="#fff" stroke="#D3DCD7" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M119 62L114 99" stroke="#D3DCD7" stroke-width="13.5" stroke-linecap="round"/><path d="M119 62L114 99" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+<rect x="101" y="99" width="24" height="9" rx="4.5" fill="#D69B6D"/><rect x="103" y="95" width="20" height="7" rx="3.5" fill="#C98C5E"/>
+<rect x="100" y="48" width="11" height="12" fill="#D69B6D" transform="rotate(-30 105 54)"/>
+<circle cx="101" cy="42" r="12.5" fill="#D69B6D"/>
+<path d="M91 37Q97 26 109 30Q116 34 114 45Q109 37 101 36Q95 35 91 37Z" fill="#2A2320"/><circle cx="114" cy="30" r="6" fill="#2A2320"/>
+<circle cx="96.5" cy="45" r="1.5" fill="#2A2320"/>
+</g>
+<path d="M162 120L262 122" stroke="#3D5A80" stroke-width="18" stroke-linecap="round"/><path d="M262 113q8-7 10 2q1 8-10 9z" fill="#2B2B2B"/>
+<rect x="64" y="108" width="102" height="24" rx="11" fill="#7A9E7E"/>
+<path class="aa-push" d="M88 110Q113 102 138 110Z" fill="#7A9E7E"/>
+<path d="M76 125L150 128" stroke="#6C8F70" stroke-width="9" stroke-linecap="round"/><circle cx="153" cy="128" r="4.8" fill="#F2C4A0"/>
+<rect x="56" y="114" width="12" height="10" fill="#F2C4A0"/>
+<circle cx="50" cy="119" r="13" fill="#F2C4A0"/><path d="M45 107q3-5 7 0Z" fill="#F2C4A0"/>
+<path d="M37 119A13 13 0 0 0 57 131Q46 128 41 119Z" fill="#2A2320"/>
+<path d="M52 112q3 1.5 5 0" fill="none" stroke="#2A2320" stroke-width="1.5" stroke-linecap="round"/>
+<g fill="none" stroke="#14261C" stroke-width="2" stroke-linecap="round" opacity=".55"><path class="aa-beat" d="M96 99q-5 1-8 6"/><path class="aa-beat" d="M130 99q5 1 8 6"/></g>
+<rect x="196" y="138" width="26" height="9" rx="2.5" fill="#14261C"/><rect x="199" y="140" width="20" height="5" rx="1.5" fill="#3E6E8E"/>
+<g fill="none" stroke="#00843D" stroke-width="2.2" stroke-linecap="round"><path class="aa-wave" d="M203 132q6-5 12 0"/><path class="aa-wave aa-wave2" d="M198 127q11-8 22 0"/></g>
+<g transform="translate(280 98)"><path d="M9 2H25" stroke="#00632E" stroke-width="5" stroke-linecap="round"/><rect y="4" width="34" height="30" rx="5" fill="#00843D"/>
+<path d="M17 29l-8-8a4.6 4.6 0 0 1 8-5.4a4.6 4.6 0 0 1 8 5.4z" fill="#fff"/><path d="M18.6 13l-4 6.5h3.5l-2.5 6 6-7.5h-3.5l2.5-5z" fill="#00843D"/></g>
+</svg>`,
+
+chemical: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#E5F1F5"/>
+<ellipse cx="66" cy="148" rx="40" ry="6" fill="#CFE07A" opacity=".9"/>
+<g transform="translate(46 138) rotate(-100)"><path d="M-6-18H6V-5L17 14H-17L-6-5Z" fill="#F3FAFC" stroke="#9FC6D4" stroke-width="2" stroke-linejoin="round"/><path d="M-12 6H12L17 14H-17Z" fill="#CFE07A"/></g>
+<path d="M32 94L50 126H14Z" fill="#F2B705" stroke="#14261C" stroke-width="2.2" stroke-linejoin="round"/><path d="M32 105V115" stroke="#14261C" stroke-width="2.8" stroke-linecap="round"/><circle cx="32" cy="120.5" r="1.6" fill="#14261C"/>
+<g transform="translate(206 96) rotate(16)">
+<circle cx="-44" r="7" fill="#C28654"/><circle cx="44" r="7" fill="#C28654"/>
+<circle r="44" fill="#D69B6D"/>
+<path d="M-44-4Q-46-48 0-50Q46-48 44-4Q40-30 20-36Q0-42-20-36Q-40-30-44-4Z" fill="#2A2320"/>
+<path d="M-27-15q8-5 16-1M10-19q9-6 18 0" fill="none" stroke="#2A2320" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-25-2q6 3.5 12 0" fill="none" stroke="#2A2320" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="18" cy="-1" rx="11" ry="7.5" fill="#fff"/><circle cx="17" cy="-1" r="4.4" fill="#3B2A20"/><circle cx="18.3" cy="-2.3" r="1.2" fill="#fff"/>
+<path d="M7-1q11-10 22 0" fill="none" stroke="#2A2320" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M-1 1q-4 10 0 12q3 1 5-1" fill="none" stroke="#B87A4B" stroke-width="2" stroke-linecap="round"/>
+<path d="M-9 26q9-6 18 0" fill="none" stroke="#7A3E28" stroke-width="2.2" stroke-linecap="round"/>
+</g>
+<g transform="translate(168 38) rotate(28)">
+<path d="M-38-14L-110-58" stroke="#D3DCD7" stroke-width="15.5" stroke-linecap="round"/><path d="M-38-14L-110-58" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+<rect x="-62" y="-13" width="50" height="26" rx="9" fill="#D9F0FA" stroke="#97CBE3" stroke-width="2"/><rect x="-14" y="-6" width="14" height="12" rx="3" fill="#D9F0FA" stroke="#97CBE3" stroke-width="2"/>
+<rect x="-56" y="-2" width="40" height="11" rx="5" fill="#A7DAF1"/>
+<rect x="-50" y="-17" width="20" height="34" rx="9" fill="#4F8FD8"/><path d="M-45-9h10M-45-2h10M-45 5h10" stroke="#3B74B8" stroke-width="1.6" stroke-linecap="round"/>
+</g>
+<path d="M170 40Q208 50 215 93" fill="none" stroke="#74BEEA" stroke-width="5.5" stroke-linecap="round"/>
+<path class="aa-flow" d="M172 41Q207 51 214 90" fill="none" stroke="#D2EDFC" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 9"/>
+<path d="M214 96Q225 97 234 101Q243 110 240 133" fill="none" stroke="#8FD0F2" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>
+<path class="aa-flow" d="M215 96Q225 97 234 101Q243 110 240 132" fill="none" stroke="#E4F5FD" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="5 9"/>
+<g fill="#74BEEA"><ellipse class="aa-fall" cx="240" cy="137" rx="2" ry="2.8"/><ellipse class="aa-fall aa-fall2" cx="240" cy="137" rx="1.8" ry="2.6"/><ellipse class="aa-fall aa-fall3" cx="240" cy="137" rx="2" ry="2.8"/></g>
+</svg>`,
+
+electric: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#F3EEE4"/><rect y="116" width="320" height="44" fill="#E4DAC8"/><rect y="112" width="320" height="6" fill="#FBF8F2"/>
+<g class="aa-plug"><rect x="58" y="71" width="16" height="3.4" rx="1.2" fill="#B9C0C6"/><rect x="58" y="81.6" width="16" height="3.4" rx="1.2" fill="#B9C0C6"/></g>
+<rect x="36" y="56" width="44" height="44" rx="9" fill="#fff" stroke="#D8D0C2" stroke-width="2"/><circle cx="58" cy="78" r="15" fill="#EEE8DE"/>
+<circle cx="58" cy="72.7" r="2.3" fill="#7D7468"/><circle cx="58" cy="83.3" r="2.3" fill="#7D7468"/>
+<path d="M214 126L152 128" stroke="#3D5A80" stroke-width="16" stroke-linecap="round"/><path d="M146 119q-8 1-8 9q0 7 8 7z" fill="#2B2B2B"/>
+<rect x="210" y="114" width="68" height="24" rx="10" fill="#8B6BB1"/>
+<rect x="276" y="121" width="8" height="10" fill="#8D5A3B"/><circle cx="292" cy="126" r="12" fill="#8D5A3B"/>
+<path d="M304 126A12 12 0 0 1 286 137Q296 134 300 126Z" fill="#1E1916"/>
+<path d="M288 119q2.5 2 5 0" fill="none" stroke="#1E1916" stroke-width="1.5" stroke-linecap="round"/>
+<g class="aa-plug">
+<path d="M98 78C126 78 120 128 150 146C166 154 196 155 334 155" fill="none" stroke="#34414F" stroke-width="4" stroke-linecap="round"/>
+<path d="M194 154.8h11" stroke="#D97706" stroke-width="5" stroke-linecap="round"/>
+<rect x="74" y="66" width="26" height="24" rx="6" fill="#34414F"/><path d="M81 70V86M87 70V86M93 70V86" stroke="#4A5868" stroke-width="2"/>
+<path d="M40-10L80 50" stroke="#D3DCD7" stroke-width="17.5" stroke-linecap="round"/><path d="M40-10L80 50" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+<path d="M70 42l16 10" stroke="#E4EAE7" stroke-width="4" stroke-linecap="round"/>
+<rect x="74" y="52" width="24" height="18" rx="7" fill="#F2C4A0"/><path d="M80 60h14M80 65h13" stroke="#DDA57E" stroke-width="1.6" stroke-linecap="round"/>
+</g>
+<path d="M262 132L206 151" stroke="#8B6BB1" stroke-width="9" stroke-linecap="round"/><circle cx="203" cy="152" r="5" fill="#8D5A3B"/>
+<g class="aa-zap" fill="#FACC15" stroke="#B45309" stroke-width=".8" stroke-linejoin="round">
+<path d="M192 137l-5 7h4l-3 6 8-9h-4l3-4z"/><path d="M214 139l5 6h-4l4 5-9-7h4l-3-4z"/><path d="M106 58l-6 6h4l-4 6 9-8h-4l4-4z"/>
+</g>
+<g class="aa-stop fb">
+<circle cx="246" cy="62" r="21" fill="#fff" stroke="#C8102E" stroke-width="5"/>
+<g fill="#14261C"><rect x="238.5" y="61" width="15" height="14" rx="4"/><rect x="238.5" y="51" width="3.4" height="13" rx="1.7"/><rect x="242.4" y="49" width="3.4" height="14" rx="1.7"/><rect x="246.3" y="50" width="3.4" height="13" rx="1.7"/><rect x="250.1" y="53" width="3.4" height="11" rx="1.7"/><rect x="252.5" y="60" width="3.4" height="10" rx="1.7" transform="rotate(35 254.2 65)"/></g>
+<path d="M231.5 47.5L260.5 76.5" stroke="#C8102E" stroke-width="5"/>
+</g>
+<g class="aa-ok fb"><rect x="226" y="42" width="40" height="40" rx="7" fill="#00843D"/><path d="M241 47h10v10h10v10h-10v10h-10v-10h-10v-10h10z" fill="#fff"/></g>
+</svg>`,
+
+bleeding: `<svg viewBox="0 0 320 160" class="aa" aria-hidden="true" focusable="false">
+<rect width="320" height="160" fill="#F5EFEA"/><rect y="118" width="320" height="42" fill="#E8DDD3"/>
+<g fill="#D6E7EF" stroke="#9DBBCB" stroke-width="1.2" stroke-linejoin="round"><path d="M22 150l14-12 6 16z"/><path d="M50 152l8-9 5 11z"/><path d="M280 150l10-10 3 14z"/></g>
+<path d="M-6 104L84 102" stroke="#5B8DB8" stroke-width="30"/><path d="M84 88V116" stroke="#4E7DA6" stroke-width="3"/>
+<path d="M84 102L230 100" stroke="#8D5A3B" stroke-width="24" stroke-linecap="round"/>
+<path d="M232 89C248 87 266 89 276 93C283 96 283 103 276 105C266 108 248 111 232 111Z" fill="#8D5A3B"/>
+<path d="M250 110q10 4 16 0" fill="none" stroke="#7A4A2E" stroke-width="5" stroke-linecap="round"/>
+<path d="M262 94.5h12M262 99h14M262 103.5h12" stroke="#7A4A2E" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+<g fill="#A11D2E"><path class="aa-bleed" d="M140 113q-3.5 4.5 0 7q3.5-2.5 0-7z"/><path class="aa-bleed aa-bleed2" d="M156 114q-3.5 4.5 0 7q3.5-2.5 0-7z"/></g>
+<rect x="114" y="82" width="64" height="21" rx="5" fill="#fff" stroke="#DCD3CB" stroke-width="1.5"/>
+<ellipse class="aa-stain" cx="146" cy="96" rx="14" ry="4.4" fill="#B8323F" opacity=".5"/>
+<g class="aa-press">
+<path d="M318-14L184 62M330 6L196 74" stroke="#D3DCD7" stroke-width="17.5" stroke-linecap="round"/><path d="M318-14L184 62M330 6L196 74" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+<path d="M188 70C172 66 140 66 124 72C116 75 116 83 124 85C140 88 172 88 188 84Z" fill="#4F8FD8"/>
+<path d="M186 60C170 56 146 56 132 61C125 64 125 71 132 73C146 76 170 76 186 72Z" fill="#3F7CC4"/>
+<path d="M134 63.5h16M134 68h18M127 76h14M127 81h16" stroke="#2F66A8" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+</g>
+<g class="aa-arrow" fill="none" stroke="#14261C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M92 38v20M85 52l7 8 7-8"/><path d="M152 18v20M145 32l7 8 7-8"/></g>
+</svg>`
+
+};
+
+const AID_ICONS = {
+  burns:    '<path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/>',
+  smoke:    '<path d="M7.5 15.5h9a3.6 3.6 0 0 0 .4-7.2 5 5 0 0 0-9.6 1.4 2.9 2.9 0 0 0 .2 5.8z"/><path d="M6 19.5c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0"/>',
+  recovery: '<path d="M12 4v7.5M12 11.5c-1.4 0-2.4.9-3.2 2.1M12 11.5c1.4 0 2.4.9 3.2 2.1"/><path d="M8.3 6.8C5.9 7.2 4 11 4 15.4c0 2 .9 3.1 2.4 3.1 1.6 0 2.6-1.1 2.6-3.1V8.6c0-1.1-.3-1.9-.7-1.8zM15.7 6.8c2.4.4 4.3 4.2 4.3 8.6 0 2-.9 3.1-2.4 3.1-1.6 0-2.6-1.1-2.6-3.1V8.6c0-1.1.3-1.9.7-1.8z"/>',
+  cpr:      '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M5.5 12h3l1.5-2.5 2 5 1.5-2.5h5"/>',
+  chemical: '<path d="M9.5 3h5M10.5 3v5.5L5 18.2A1.9 1.9 0 0 0 6.7 21h10.6a1.9 1.9 0 0 0 1.7-2.8L13.5 8.5V3"/><path d="M7.5 14.5h9"/>',
+  electric: '<path d="M13 2 5 13.5h6L10 22l9-12h-6.2L13 2z"/>',
+  bleeding: '<path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2.5 2.5"/>'
+};
+
+/* Words for the quick links, the tools and the install card. */
+const NAV_UI = {
+  en:{ label:'Go to', fire:'In a fire', aid:'First aid', say:'What to say', plans:'Floor plans', videos:'Videos', breathe:'Breathe' },
+  ru:{ label:'Разделы', fire:'При пожаре', aid:'Первая помощь', say:'Что сказать', plans:'Планы этажей', videos:'Видео', breathe:'Дыхание' },
+  fa:{ label:'بخش‌ها', fire:'هنگام آتش‌سوزی', aid:'کمک‌های اولیه', say:'چه بگوییم', plans:'نقشهٔ طبقات', videos:'ویدیوها', breathe:'تنفس' }
+};
+
+const INSTALL_UI = {
+  en:{ title:'Keep this guide on your phone', sub:'Install it once — it opens instantly and works with no internet.', ios:'On iPhone: tap Share, then “Add to Home Screen”. It will then work with no internet.', btn:'Install', close:'Hide' },
+  ru:{ title:'Сохраните гид на телефоне', sub:'Установите один раз — он будет открываться сразу и работать без интернета.', ios:'На iPhone: нажмите «Поделиться», затем «На экран „Домой“». Гид будет работать без интернета.', btn:'Установить', close:'Скрыть' },
+  fa:{ title:'این راهنما را روی گوشی نگه دارید', sub:'یک بار نصبش کنید — فوراً باز می‌شود و بدون اینترنت کار می‌کند.', ios:'در آیفون: دکمهٔ Share را بزنید، سپس «Add to Home Screen». بعد از آن بدون اینترنت هم کار می‌کند.', btn:'نصب', close:'پنهان کردن' }
+};
+
+const COOL_UI = {
+  en:{ title:'Cooling timer', btn:'Start the 20-minute cooling timer', btnSub:'Counts the time and keeps the screen on',
+       btnRun:'Cooling: {t} left', btnRunSub:'Tap to open the timer', btnDone:'20 minutes done', btnDoneSub:'Now cover the burn loosely',
+       go:'Start', pause:'Pause', resume:'Continue', again:'Start again', reset:'Reset', close:'Close', left:'left',
+       ready:'Put the burn under cool running water, then tap Start.',
+       running:'Keep the burn under cool running water.',
+       paused:'Paused — put the burn back under the water.',
+       done:'20 minutes done. Now cover the burn loosely with cling film or a clean cloth.',
+       tips:['Cool water, not ice','Keep the rest of the body warm','Rings and watches off'] },
+  ru:{ title:'Таймер охлаждения', btn:'Запустить таймер охлаждения на 20 минут', btnSub:'Считает время и не даёт экрану погаснуть',
+       btnRun:'Охлаждение: осталось {t}', btnRunSub:'Нажмите, чтобы открыть таймер', btnDone:'20 минут прошло', btnDoneSub:'Теперь свободно накройте ожог',
+       go:'Старт', pause:'Пауза', resume:'Продолжить', again:'Заново', reset:'Сбросить', close:'Закрыть', left:'осталось',
+       ready:'Подставьте ожог под прохладную проточную воду и нажмите «Старт».',
+       running:'Держите ожог под прохладной проточной водой.',
+       paused:'Пауза — верните ожог под воду.',
+       done:'20 минут прошло. Теперь свободно накройте ожог пищевой плёнкой или чистой тканью.',
+       tips:['Вода прохладная, не лёд','Остальное тело — в тепле','Снимите кольца и часы'] },
+  fa:{ title:'زمان‌سنج خنک کردن', btn:'شروع زمان‌سنج ۲۰ دقیقه‌ای خنک کردن', btnSub:'زمان را می‌شمارد و صفحه را روشن نگه می‌دارد',
+       btnRun:'خنک کردن: {t} مانده', btnRunSub:'برای باز کردن زمان‌سنج بزنید', btnDone:'۲۰ دقیقه تمام شد', btnDoneSub:'حالا روی سوختگی را آزادانه بپوشانید',
+       go:'شروع', pause:'توقف', resume:'ادامه', again:'از نو', reset:'بازنشانی', close:'بستن', left:'مانده',
+       ready:'سوختگی را زیر آب روان خنک بگیرید، بعد «شروع» را بزنید.',
+       running:'سوختگی را زیر آب روان خنک نگه دارید.',
+       paused:'متوقف شد — سوختگی را دوباره زیر آب بگیرید.',
+       done:'۲۰ دقیقه تمام شد. حالا روی سوختگی را آزادانه با سلفون یا پارچهٔ تمیز بپوشانید.',
+       tips:['آب خنک، نه یخ','بقیهٔ بدن را گرم نگه دارید','انگشتر و ساعت را درآورید'] }
+};
+
+const CPR_UI = {
+  en:{ title:'CPR rhythm coach', btn:'Open the CPR rhythm coach', btnSub:'Beeps 110 times a minute and counts 30 : 2',
+       call:'Call — put the phone on speaker', start:'Start', pause:'Pause', resume:'Continue', close:'Close', sound:'Sound',
+       modes:{ hands:{ label:'Pushes only', info:'Push on every beep, without stopping.' },
+               breaths:{ label:'30 : 2', info:'Only if you are trained: 30 pushes, then 2 breaths.' } },
+       ready:'Tap Start and push on every beep', push:'Push hard and fast', breaths:'Give 2 breaths',
+       swap:'2 minutes — swap with someone if you can' },
+  ru:{ title:'Ритм для СЛР', btn:'Открыть ритм для СЛР', btnSub:'Сигнал 110 раз в минуту и счёт 30 : 2',
+       call:'Позвоните и включите громкую связь', start:'Старт', pause:'Пауза', resume:'Продолжить', close:'Закрыть', sound:'Звук',
+       modes:{ hands:{ label:'Только нажатия', info:'Давите на каждый сигнал без остановки.' },
+               breaths:{ label:'30 : 2', info:'Только если вы обучены: 30 нажатий, затем 2 вдоха.' } },
+       ready:'Нажмите «Старт» и давите на каждый сигнал', push:'Давите сильно и быстро', breaths:'Сделайте 2 вдоха',
+       swap:'2 минуты — смените человека, если можно' },
+  fa:{ title:'ریتم احیا', btn:'باز کردن ریتم احیا', btnSub:'۱۱۰ بوق در دقیقه و شمارش ۳۰ : ۲',
+       call:'تماس بگیرید و بلندگو را روشن کنید', start:'شروع', pause:'توقف', resume:'ادامه', close:'بستن', sound:'صدا',
+       modes:{ hands:{ label:'فقط فشار', info:'با هر بوق، بدون توقف فشار دهید.' },
+               breaths:{ label:'۳۰ : ۲', info:'فقط اگر آموزش دیده‌اید: ۳۰ فشار، سپس ۲ تنفس.' } },
+       ready:'«شروع» را بزنید و با هر بوق فشار دهید', push:'محکم و سریع فشار دهید', breaths:'۲ تنفس بدهید',
+       swap:'۲ دقیقه — اگر می‌شود جایتان را عوض کنید' }
+};
+
+const SAY_UI = {
+  en:{ open:'What to say when you call — in Russian', title:'Calling 112', close:'Close',
+       english:'Moscow 112 has English-speaking operators: say “English, please” and wait. If you need Russian, build your message below.',
+       what:'What happened?', where:'Where are you?',
+       sits:{ fire:'Fire', smoke:'Heavy smoke', trapped:'Can’t get out', burn:'Someone is burned', breathed:'Someone breathed smoke', unconscious:'Someone is unconscious' },
+       main:'Main building, Ostrovityanova 1', dorm:'Dormitory, Akademika Volgina St', other:'Another address',
+       house:'Building number', otherPh:'Street and building number', floor:'Floor', room:'Room',
+       say:'Say this:', play:'Read aloud', big:'Show large', call:'Call 112', phrases:'Useful phrases',
+       noVoice:'This phone has no Russian voice, so it cannot read aloud. Read the text yourself or show it to someone.',
+       bigHint:'Tap anywhere to close' },
+  ru:{ open:'Что сказать, когда звоните в 112', title:'Звонок в 112', close:'Закрыть',
+       english:'',
+       what:'Что случилось?', where:'Где вы?',
+       sits:{ fire:'Пожар', smoke:'Сильный дым', trapped:'Не могу выйти', burn:'Есть ожоги', breathed:'Надышался дымом', unconscious:'Без сознания' },
+       main:'Главный корпус, Островитянова, 1', dorm:'Общежитие, ул. Академика Волгина', other:'Другой адрес',
+       house:'Номер дома', otherPh:'Улица и номер дома', floor:'Этаж', room:'Комната / кабинет',
+       say:'Скажите:', play:'Прочитать вслух', big:'Крупно', call:'Позвонить 112', phrases:'Полезные фразы',
+       noVoice:'На этом телефоне нет русского голоса. Прочитайте текст сами или покажите его кому-нибудь.',
+       bigHint:'Нажмите, чтобы закрыть' },
+  fa:{ open:'هنگام تماس چه بگوییم — به روسی', title:'تماس با ۱۱۲', close:'بستن',
+       english:'۱۱۲ مسکو اپراتور انگلیسی‌زبان دارد: بگویید «<bdi class="nw">English, please</bdi>» و منتظر بمانید. اگر لازم است روسی صحبت کنید، پیامتان را این پایین بسازید.',
+       what:'چه اتفاقی افتاده؟', where:'کجا هستید؟',
+       sits:{ fire:'آتش‌سوزی', smoke:'دود زیاد', trapped:'نمی‌توانم بیرون بروم', burn:'کسی سوخته', breathed:'کسی دود تنفس کرده', unconscious:'کسی بیهوش است' },
+       main:'ساختمان اصلی، آستروویتیانووا ۱', dorm:'خوابگاه، خیابان آکادمیکا والگینا', other:'آدرس دیگر',
+       house:'پلاک ساختمان', otherPh:'خیابان و پلاک', floor:'طبقه', room:'اتاق',
+       say:'این را بگویید:', play:'پخش صدا', big:'نمایش بزرگ', call:'تماس با ۱۱۲', phrases:'جمله‌های کاربردی',
+       noVoice:'این گوشی صدای روسی ندارد و نمی‌تواند متن را بخواند. خودتان بخوانید یا به کسی نشان دهید.',
+       bigHint:'برای بستن هر جای صفحه را بزنید' }
+};
+
+/* The Russian that the call helper puts together. Keep it short and plain:
+   the operator will ask what happened and where. */
+const SAY_SITS = ['fire','smoke','trapped','burn','breathed','unconscious'];
+const SAY_RU = {
+  fire:'Пожар!', smoke:'В здании сильный дым.', trapped:'Выйти невозможно, путь отрезан.',
+  burn:'Есть пострадавший с ожогами.', breathed:'Пострадавший надышался дымом.', unconscious:'Пострадавший без сознания.'
+};
+const SAY_DORMS = ['35','37','39','41'];   // RNIMU dormitories, ulitsa Akademika Volgina
+const SAY_PHRASES = [
+  { ru:'Я плохо говорю по-русски. Можно по-английски?', en:'I don’t speak Russian well. Can we speak English?', fa:'روسی را خوب صحبت نمی‌کنم. می‌شود انگلیسی صحبت کنیم؟' },
+  { ru:'Нужна скорая помощь.', en:'We need an ambulance.', fa:'آمبولانس لازم داریم.' },
+  { ru:'Пострадавший не дышит.', en:'The injured person is not breathing.', fa:'مصدوم نفس نمی‌کشد.' },
+  { ru:'Я на улице, в безопасности.', en:'I am outside, safe.', fa:'من بیرون ساختمان و در امان هستم.' },
+  { ru:'Я встречу вас у входа.', en:'I will meet you at the entrance.', fa:'جلوی در ورودی منتظرتان می‌مانم.' },
+  { ru:'Повторите медленнее, пожалуйста.', en:'Please say it again, more slowly.', fa:'لطفاً آهسته‌تر تکرار کنید.' }
+];
+
+
+/* ------------------------------------------------------------
+   Small helpers shared by the tools
+   ------------------------------------------------------------ */
+
+function uiLang(dict){ return dict[langEl.value] ? langEl.value : 'en'; }
+function faDigits(s, L){ return L === 'fa' ? String(s).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : String(s); }
+function mmss(ms){ const s = Math.max(0, Math.ceil(ms / 1000)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+
+// Keeps the screen on while a tool is running (phones that support it).
+async function wakeLock(owner, on){
+  try{
+    if(on && 'wakeLock' in navigator && !owner.wake && !document.hidden){
+      owner.wake = await navigator.wakeLock.request('screen');
+      owner.wake.addEventListener('release', () => { owner.wake = null; });
+    }
+    if(!on && owner.wake){ const w = owner.wake; owner.wake = null; await w.release(); }
+  }catch(e){ owner.wake = null; }
+}
+
+// One shared sound engine. Phones only allow sound after a tap, so it is
+// started from the Start buttons.
+function getAudio(){
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return null;
+  try{
+    if(!getAudio.ctx) getAudio.ctx = new AC();
+    if(getAudio.ctx.state === 'suspended') getAudio.ctx.resume();
+  }catch(e){ return null; }
+  return getAudio.ctx;
+}
+function tone(ac, at, freq, dur, vol){
+  try{
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(vol, at + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(at); o.stop(at + dur + 0.03);
+  }catch(e){}
+}
+function chime(){
+  const ac = getAudio(); if(!ac) return;
+  const t = ac.currentTime + 0.05;
+  [660, 880, 1100].forEach((f, i) => tone(ac, t + i * 0.24, f, 0.55, 0.35));
+}
+
+// Remember which cards were open, so changing language does not close them.
+function openDetails(box){ return Array.from(box.querySelectorAll('details[open]')).map(d => d.id).filter(Boolean); }
+function reopenDetails(box, ids){ ids.forEach(id => { const d = box.querySelector('#' + CSS.escape(id)); if(d) d.open = true; }); }
+
+
+/* ------------------------------------------------------------
+   Drawing the first aid list, the quick links and the install card
+   (called from render() once everything below has loaded)
+   ------------------------------------------------------------ */
+
+function toolButton(kind){
+  if(kind === 'cool'){
+    const ui = COOL_UI[uiLang(COOL_UI)];
+    return `<button type="button" class="aidTool cool" data-open="cool">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 2.2M9.5 2.8h5M12 2.8V6"/></svg>
+      <span class="aidToolTxt"><b>${ui.btn}</b><small>${ui.btnSub}</small></span></button>`;
+  }
+  if(kind === 'cpr'){
+    const ui = CPR_UI[uiLang(CPR_UI)];
+    return `<button type="button" class="aidTool" data-open="cpr">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M5.5 12h3l1.5-2.5 2 5 1.5-2.5h5"/></svg>
+      <span class="aidToolTxt"><b>${ui.btn}</b><small>${ui.btnSub}</small></span></button>`;
+  }
+  return '';
+}
+
+function renderExtras(code){
+  const c = (CONTENT[code] && CONTENT[code].aid) ? CONTENT[code] : CONTENT.en;
+
+  document.getElementById('aidFirst').innerHTML = (c.aidFirst || CONTENT.en.aidFirst).map(t => `<li>${t}</li>`).join('');
+  const box = document.getElementById('aidList');
+  const wasOpen = openDetails(box);
+  box.innerHTML = c.aid.map(a => `
+    <details class="aidCard" id="aid-${a.id}">
+      <summary>
+        <span class="aidIco" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${AID_ICONS[a.id] || ''}</svg></span>
+        <span class="aidHead"><span class="aidName">${a.title}</span><span class="aidTag">${a.tag}</span></span>
+      </summary>
+      <div class="body">${AID_ART[a.id] ? `<div class="aidArt">${AID_ART[a.id]}</div>` : ''}${a.html}</div>
+    </details>`).join('');
+  box.querySelectorAll('[data-tool]').forEach(el => { el.outerHTML = toolButton(el.dataset.tool); });
+  reopenDetails(box, wasOpen);
+  coolRender();
+
+  const nav = NAV_UI[uiLang(NAV_UI)];
+  document.getElementById('jump').setAttribute('aria-label', nav.label);
+  document.querySelectorAll('#jump [data-nav]').forEach(el => { el.querySelector('span').textContent = nav[el.dataset.nav]; });
+  document.getElementById('sayOpenLbl').textContent = SAY_UI[uiLang(SAY_UI)].open;
+  renderInstall();
+}
+
+// Links inside the page (#aid-burns, #fire-clothing, #first-aid …) open the
+// card and scroll to it. The same addresses work from outside, so a QR code
+// on a poster can point straight at one topic.
+function goTo(id, smooth){
+  if(id === 'say'){ openSay(); return; }
+  const el = document.getElementById(id);
+  if(!el || !document.getElementById('infoView').contains(el)) return;
+  if(!document.getElementById('quizView').hidden) closeQuiz();
+  if(el.tagName === 'DETAILS') el.open = true;
+  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: (smooth && !calm) ? 'smooth' : 'auto', block: 'start' });
+  try{ history.replaceState(history.state, '', '#' + id); }catch(e){}
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href^="#"]');
+  if(!a) return;
+  const id = decodeURIComponent(a.getAttribute('href').slice(1));
+  if(!id) return;
+  e.preventDefault();
+  goTo(id, true);
+});
+window.addEventListener('hashchange', () => goTo(decodeURIComponent(location.hash.slice(1)), false));
+document.querySelector('#jump [data-nav="say"]').onclick = () => openSay();
+document.getElementById('sayOpen').onclick = () => openSay();
+document.getElementById('aidList').addEventListener('click', e => {
+  const b = e.target.closest('[data-open]');
+  if(!b) return;
+  if(b.dataset.open === 'cool') openCool();
+  if(b.dataset.open === 'cpr') openCpr();
+});
+
+// "Install this guide" — Android/computer browsers offer a button; on iPhone
+// we explain the Share → Add to Home Screen steps instead.
+let installEvt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
+window.addEventListener('appinstalled', () => { installEvt = null; renderInstall(); });
+function renderInstall(){
+  const card = document.getElementById('installCard');
+  let dismissed = false;
+  try{ dismissed = !!localStorage.getItem('installHidden'); }catch(e){}
+  const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if(dismissed || standalone || (!installEvt && !ios)){ card.hidden = true; return; }
+  const ui = INSTALL_UI[uiLang(INSTALL_UI)];
+  document.getElementById('instTitle').textContent = ui.title;
+  document.getElementById('instSub').textContent = installEvt ? ui.sub : ui.ios;
+  const btn = document.getElementById('instBtn');
+  btn.textContent = ui.btn;
+  btn.hidden = !installEvt;
+  document.getElementById('instX').setAttribute('aria-label', ui.close);
+  card.hidden = false;
+}
+document.getElementById('instBtn').onclick = async () => {
+  if(!installEvt) return;
+  installEvt.prompt();
+  try{ await installEvt.userChoice; }catch(e){}
+  installEvt = null;
+  renderInstall();
+};
+document.getElementById('instX').onclick = () => {
+  try{ localStorage.setItem('installHidden', '1'); }catch(e){}
+  document.getElementById('installCard').hidden = true;
+};
+
+
+/* ------------------------------------------------------------
+   COOLING TIMER (burns) — 20 minutes under cool running water.
+   It keeps running if the window is closed; the button in the
+   Burns card then shows the time left.
+   ------------------------------------------------------------ */
+
+const COOL_MS = 20 * 60 * 1000;
+const COOL_RING = 540.35;          // length of the ring in the dial (2 × π × 86)
+const coolView = document.getElementById('coolView');
+let cool = { running:false, endAt:0, left:COOL_MS, done:false, timer:null, wake:null, from:null };
+
+function coolLeft(){ return cool.running ? Math.max(0, cool.endAt - Date.now()) : cool.left; }
+
+function coolTexts(){
+  const ui = COOL_UI[uiLang(COOL_UI)];
+  document.getElementById('coolTitle').textContent = ui.title;
+  document.getElementById('coolClose').setAttribute('aria-label', ui.close);
+  document.getElementById('coolLeft').textContent = ui.left;
+  document.getElementById('coolReset').textContent = ui.reset;
+  document.getElementById('coolTips').innerHTML = ui.tips.map(t => `<li>${t}</li>`).join('');
+}
+
+function coolRender(){
+  const L = uiLang(COOL_UI), ui = COOL_UI[L], ms = coolLeft(), started = ms < COOL_MS;
+  if(!coolView.hidden){
+    document.getElementById('coolTime').textContent = faDigits(mmss(ms), L);
+    document.getElementById('coolRing').style.strokeDashoffset = (COOL_RING * (1 - ms / COOL_MS)).toFixed(1);
+    document.getElementById('coolMsg').textContent = cool.done ? ui.done : cool.running ? ui.running : started ? ui.paused : ui.ready;
+    document.getElementById('coolGo').textContent = cool.done ? ui.again : cool.running ? ui.pause : started ? ui.resume : ui.go;
+    document.getElementById('coolReset').hidden = !started || cool.done;
+    coolView.classList.toggle('run', cool.running);
+  }
+  document.querySelectorAll('[data-open="cool"]').forEach(b => {
+    const t = b.querySelector('b'), s = b.querySelector('small');
+    if(cool.done){ t.textContent = ui.btnDone; s.textContent = ui.btnDoneSub; }
+    else if(started){ t.textContent = ui.btnRun.replace('{t}', faDigits(mmss(ms), L)); s.textContent = ui.btnRunSub; }
+    else { t.textContent = ui.btn; s.textContent = ui.btnSub; }
+  });
+}
+
+function coolStart(){
+  if(cool.done){ cool.done = false; cool.left = COOL_MS; }
+  getAudio();                                // allow the end-of-timer sound
+  cool.running = true;
+  cool.endAt = Date.now() + cool.left;
+  clearInterval(cool.timer);
+  cool.timer = setInterval(coolTick, 250);
+  wakeLock(cool, true);
+  coolRender();
+}
+function coolPause(){
+  if(!cool.running) return;
+  cool.left = coolLeft();
+  cool.running = false;
+  clearInterval(cool.timer);
+  wakeLock(cool, false);
+  coolRender();
+}
+function coolReset(){
+  coolPause();
+  cool.left = COOL_MS; cool.done = false;
+  coolRender();
+}
+function coolTick(){
+  if(cool.running && coolLeft() <= 0){ coolFinish(); return; }
+  coolRender();
+}
+function coolFinish(){
+  cool.running = false; cool.done = true; cool.left = 0;
+  clearInterval(cool.timer);
+  wakeLock(cool, false);
+  chime();
+  if(navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+  if(coolView.hidden && !document.hidden) openCool();
+  coolRender();
+}
+
+function openCool(){
+  if(!coolView.hidden) return;
+  cool.from = document.activeElement;
+  coolView.hidden = false;
+  document.body.style.overflow = 'hidden';
+  history.pushState({ cool:true }, '');
+  coolTexts(); coolRender();
+  document.getElementById('coolGo').focus();
+}
+function hideCool(){
+  if(coolView.hidden) return;
+  coolView.hidden = true;
+  document.body.style.overflow = '';
+  coolRender();
+  if(cool.from && cool.from.focus) cool.from.focus();
+}
+document.getElementById('coolGo').onclick = () => { if(cool.running) coolPause(); else coolStart(); };
+document.getElementById('coolReset').onclick = coolReset;
+document.getElementById('coolClose').onclick = () => { if(history.state && history.state.cool) history.back(); else hideCool(); };
+
+
+/* ------------------------------------------------------------
+   CPR RHYTHM COACH — a beep 110 times a minute (the middle of
+   100–120), with an optional 30 : 2 count for trained rescuers.
+   ------------------------------------------------------------ */
+
+const CPR_BEAT = 60 / 110;         // seconds between pushes
+const CPR_BREATHS = 5;             // seconds allowed for 2 rescue breaths
+const cprView = document.getElementById('cprView');
+let cpr = { mode:'hands', running:false, started:false, next:0, n:0, phase:'', queue:[], timer:null,
+            elapsed:0, runStart:0, lastSec:-1, swapAt:120, swapTimer:null, breathStart:0, wake:null, from:null };
+
+function cprNow(){ return performance.now() / 1000; }
+
+function cprBeep(t, freq, dur, vol){
+  if(!document.getElementById('cprSound').checked) return;
+  const ac = getAudio.ctx;
+  if(!ac || ac.state !== 'running') return;
+  tone(ac, ac.currentTime + Math.max(0, t - cprNow()), freq, dur, vol);
+}
+
+// Plans the next beats a moment ahead, so the sound stays exactly on time.
+function cprPump(){
+  const now = cprNow();
+  if(cpr.next < now - 0.25) cpr.next = now + 0.05;     // coming back after a pause (e.g. after dialling): skip missed beats
+  while(cpr.next < now + 0.12){
+    if(cpr.mode === 'breaths' && cpr.n === 30){
+      cpr.queue.push({ t:cpr.next, kind:'breaths' });
+      cprBeep(cpr.next, 440, 0.3, 0.35);
+      cprBeep(cpr.next + 2.4, 440, 0.3, 0.35);
+      cpr.n = 0;
+      cpr.next += CPR_BREATHS;
+    } else {
+      cpr.n = cpr.mode === 'breaths' ? cpr.n + 1 : (cpr.n % 30) + 1;
+      cpr.queue.push({ t:cpr.next, kind:'push', n:cpr.n });
+      cprBeep(cpr.next, (cpr.mode === 'breaths' && cpr.n === 1) ? 1320 : 990, 0.05, 0.5);
+      cpr.next += CPR_BEAT;
+    }
+  }
+}
+
+function cprFrame(){
+  if(!cpr.running) return;
+  const now = cprNow(), L = uiLang(CPR_UI), ui = CPR_UI[L];
+  const pulse = document.getElementById('cprPulse'), count = document.getElementById('cprCount');
+  while(cpr.queue.length && cpr.queue[0].t <= now){
+    const ev = cpr.queue.shift();
+    if(ev.kind === 'push'){
+      pulse.classList.remove('breath');
+      pulse.classList.add('hit');
+      setTimeout(() => pulse.classList.remove('hit'), 130);
+      count.textContent = cpr.mode === 'breaths' ? faDigits(ev.n, L) : '';
+      if(cpr.phase !== 'push'){ cpr.phase = 'push'; document.getElementById('cprMsg').textContent = ui.push; }
+    } else {
+      cpr.phase = 'breaths';
+      cpr.breathStart = ev.t;
+      pulse.classList.add('breath');
+      document.getElementById('cprMsg').textContent = ui.breaths;
+    }
+  }
+  if(cpr.phase === 'breaths') count.textContent = faDigits(now - cpr.breathStart < 2.4 ? 1 : 2, L);
+  const sec = Math.floor(cpr.elapsed + now - cpr.runStart);
+  if(sec !== cpr.lastSec){
+    cpr.lastSec = sec;
+    document.getElementById('cprTime').textContent = faDigits(mmss(sec * 1000), L);
+    if(sec >= cpr.swapAt){ cpr.swapAt += 120; cprSwapNote(); }
+  }
+  requestAnimationFrame(cprFrame);
+}
+
+function cprSwapNote(){
+  const el = document.getElementById('cprSwap');
+  el.textContent = CPR_UI[uiLang(CPR_UI)].swap;
+  el.hidden = false;
+  clearTimeout(cpr.swapTimer);
+  cpr.swapTimer = setTimeout(() => { el.hidden = true; }, 6000);
+}
+
+function cprTexts(){
+  const L = uiLang(CPR_UI), ui = CPR_UI[L];
+  document.getElementById('cprTitle').textContent = ui.title;
+  document.getElementById('cprClose').setAttribute('aria-label', ui.close);
+  document.getElementById('cprCallLbl').textContent = ui.call;
+  document.getElementById('cprSoundLbl').textContent = ui.sound;
+  document.getElementById('cprInfo').textContent = ui.modes[cpr.mode].info;
+  document.getElementById('cprGo').textContent = cpr.running ? ui.pause : (cpr.started ? ui.resume : ui.start);
+  const box = document.getElementById('cprModes');
+  box.innerHTML = Object.keys(ui.modes).map(k =>
+    `<button type="button" role="radio" aria-checked="${k === cpr.mode}" data-mode="${k}">${ui.modes[k].label}</button>`).join('');
+  box.querySelectorAll('button').forEach(b => { b.onclick = () => cprSetMode(b.dataset.mode); });
+  if(!cpr.running){
+    document.getElementById('cprMsg').textContent = ui.ready;
+    document.getElementById('cprCount').textContent = '';
+    document.getElementById('cprPulse').classList.remove('breath');
+  }
+}
+
+function cprStart(){
+  getAudio();                                // sound needs a tap to start
+  const now = cprNow();
+  if(!cpr.started){ cpr.started = true; cpr.elapsed = 0; cpr.swapAt = 120; cpr.lastSec = -1; }
+  cpr.n = 0; cpr.phase = ''; cpr.queue = [];
+  cpr.next = now + 0.3;
+  cpr.running = true; cpr.runStart = now;
+  clearInterval(cpr.timer);
+  cpr.timer = setInterval(cprPump, 25);
+  cprPump();
+  wakeLock(cpr, true);
+  cprTexts();
+  requestAnimationFrame(cprFrame);
+}
+function cprPause(){
+  if(!cpr.running) return;
+  cpr.running = false;
+  cpr.elapsed += cprNow() - cpr.runStart;
+  clearInterval(cpr.timer);
+  cpr.queue = [];
+  wakeLock(cpr, false);
+  cprTexts();
+}
+function cprSetMode(k){
+  cpr.mode = k;
+  if(cpr.running){ cpr.n = 0; cpr.phase = ''; cpr.queue = []; cpr.next = cprNow() + 0.3; }
+  cprTexts();
+}
+
+function openCpr(){
+  if(!cprView.hidden) return;
+  cpr.from = document.activeElement;
+  cprView.hidden = false;
+  document.body.style.overflow = 'hidden';
+  history.pushState({ cpr:true }, '');
+  cpr.started = false; cpr.elapsed = 0; cpr.lastSec = -1;
+  document.getElementById('cprTime').textContent = faDigits('0:00', uiLang(CPR_UI));
+  document.getElementById('cprSwap').hidden = true;
+  cprTexts();
+  document.getElementById('cprGo').focus();
+}
+function hideCpr(){
+  if(cprView.hidden) return;
+  cprPause();
+  cprView.hidden = true;
+  document.body.style.overflow = '';
+  if(cpr.from && cpr.from.focus) cpr.from.focus();
+}
+document.getElementById('cprGo').onclick = () => { if(cpr.running) cprPause(); else cprStart(); };
+document.getElementById('cprClose').onclick = () => { if(history.state && history.state.cpr) history.back(); else hideCpr(); };
+
+
+/* ------------------------------------------------------------
+   CALL HELPER — builds what to say to 112 in Russian, reads it
+   aloud with the phone's own Russian voice, or shows it large.
+   The address is remembered on this phone only.
+   ------------------------------------------------------------ */
+
+const sayView = document.getElementById('sayView');
+let say = { place:'main', dorm:'35', other:'', floor:'', room:'', sits:[], from:null };
+try{
+  const s = JSON.parse(localStorage.getItem('say112') || '{}');
+  if(['main','dorm','other'].includes(s.place)) say.place = s.place;
+  if(SAY_DORMS.includes(s.dorm)) say.dorm = s.dorm;
+  ['other','floor','room'].forEach(k => { if(typeof s[k] === 'string') say[k] = s[k].slice(0, 120); });
+}catch(e){}
+function saySave(){
+  try{ localStorage.setItem('say112', JSON.stringify({ place:say.place, dorm:say.dorm, other:say.other, floor:say.floor, room:say.room })); }catch(e){}
+}
+
+const TRANSLIT = { 'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+  'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y',
+  'ь':'','э':'e','ю':'yu','я':'ya' };
+function translit(s){
+  // "е" sounds like "ye" at the start of a word and after a vowel (Есть → Yest).
+  return String(s).replace(/[а-яё]/gi, (ch, i, all) => {
+    const lo = ch.toLowerCase();
+    let t = TRANSLIT[lo];
+    if(lo === 'е' && (i === 0 || /[^а-яё]|[аеёиоуыэюяъь]/i.test(all[i - 1]))) t = 'ye';
+    return ch === lo ? t : t.charAt(0).toUpperCase() + t.slice(1);
+  });
+}
+
+function sayMessage(){
+  const parts = SAY_SITS.filter(k => say.sits.includes(k)).map(k => SAY_RU[k]);
+  const other = say.other.trim().replace(/[.\s]+$/, '');
+  const addr = say.place === 'main' ? 'улица Островитянова, дом 1, главный корпус университета имени Пирогова'
+             : say.place === 'dorm' ? 'улица Академика Волгина, дом ' + say.dorm + ', общежитие университета имени Пирогова'
+             : (other || '…');
+  parts.push('Адрес: ' + addr + '.');
+  if(say.floor.trim()) parts.push('Этаж ' + say.floor.trim() + '.');
+  if(say.room.trim()) parts.push((say.place === 'main' ? 'Кабинет ' : 'Комната ') + say.room.trim() + '.');
+  return parts.join(' ');
+}
+
+function sayRussianVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const ru = speechSynthesis.getVoices().filter(v => /^ru([-_]|$)/i.test(v.lang));
+  return ru.find(v => v.localService) || ru[0] || null;   // prefer a voice that works offline
+}
+function sayVoiceCheck(){
+  const apply = () => {
+    const ok = !!sayRussianVoice();
+    sayView.querySelectorAll('[data-speak]').forEach(b => { b.hidden = !ok; });
+    const note = document.getElementById('sayNoVoice');
+    if(note) note.hidden = ok;
+  };
+  if(!('speechSynthesis' in window) || speechSynthesis.getVoices().length){ apply(); return; }
+  speechSynthesis.onvoiceschanged = apply;   // some browsers load their voices a moment later
+  setTimeout(apply, 1500);
+}
+function saySpeak(text){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ru-RU';
+  u.rate = 0.85;
+  const v = sayRussianVoice();
+  if(v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
+const SPEAK_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/></svg>';
+
+function sayBuild(){
+  const L = uiLang(SAY_UI), ui = SAY_UI[L], showTr = L !== 'ru';
+  document.getElementById('sayTitle').textContent = ui.title;
+  document.getElementById('sayClose').setAttribute('aria-label', ui.close);
+  document.getElementById('sayBigHint').textContent = ui.bigHint;
+  document.getElementById('sayInner').innerHTML = `
+    ${ui.english ? `<p class="sayEn">${ui.english}</p>` : ''}
+    <h3>${ui.what}</h3>
+    <div class="sayChips">${SAY_SITS.map(k =>
+      `<button type="button" class="sayChip" data-sit="${k}" aria-pressed="${say.sits.includes(k)}">${ui.sits[k]}</button>`).join('')}</div>
+    <h3>${ui.where}</h3>
+    <div class="sayOpts" role="radiogroup" aria-label="${ui.where}">
+      <button type="button" class="sayOpt" role="radio" data-place="main" aria-checked="${say.place === 'main'}">${ui.main}</button>
+      <button type="button" class="sayOpt" role="radio" data-place="dorm" aria-checked="${say.place === 'dorm'}">${ui.dorm}</button>
+      <div class="sayHouses" id="sayHouses" role="radiogroup" aria-label="${ui.house}">${SAY_DORMS.map(n =>
+        `<button type="button" role="radio" data-dorm="${n}" aria-checked="${say.dorm === n}">${faDigits(n, L)}</button>`).join('')}</div>
+      <button type="button" class="sayOpt" role="radio" data-place="other" aria-checked="${say.place === 'other'}">${ui.other}</button>
+      <input class="sayOther" id="sayOther" type="text" maxlength="120" autocomplete="street-address" placeholder="${ui.otherPh}" aria-label="${ui.other}">
+    </div>
+    <div class="sayRow">
+      <label>${ui.floor}<input id="sayFloor" type="text" inputmode="numeric" maxlength="4" autocomplete="off"></label>
+      <label>${ui.room}<input id="sayRoom" type="text" maxlength="8" autocomplete="off"></label>
+    </div>
+    <div class="sayOut">
+      <p class="sayLbl">${ui.say}</p>
+      <p class="sayRu" id="sayRu" lang="ru" dir="ltr"></p>
+      ${showTr ? '<p class="sayTr" id="sayTr" dir="ltr"></p>' : ''}
+      <div class="sayBtns">
+        <button type="button" id="sayPlay" data-speak="msg">${SPEAK_ICON}<span>${ui.play}</span></button>
+        <button type="button" id="sayBigBtn">${ui.big}</button>
+        <a href="tel:112">${ui.call}</a>
+      </div>
+      <p class="sayNoVoice" id="sayNoVoice" hidden>${ui.noVoice}</p>
+    </div>
+    <h3>${ui.phrases}</h3>
+    <div>${SAY_PHRASES.map((p, i) => `
+      <div class="sayPh">
+        <div class="sayPhTxt"><span class="ru" lang="ru" dir="ltr">${p.ru}</span>${showTr ?
+          `<span class="tr" dir="ltr">${translit(p.ru)}</span><span class="mean">${p[L] || p.en}</span>` : ''}</div>
+        <button type="button" class="sayPlay" data-speak="${i}" aria-label="${ui.play}">${SPEAK_ICON}</button>
+      </div>`).join('')}</div>`;
+  document.getElementById('sayOther').value = say.other;
+  document.getElementById('sayFloor').value = say.floor;
+  document.getElementById('sayRoom').value = say.room;
+  sayUpdate();
+  sayVoiceCheck();
+}
+
+function sayUpdate(){
+  const msg = sayMessage();
+  document.getElementById('sayRu').textContent = msg;
+  const tr = document.getElementById('sayTr');
+  if(tr) tr.textContent = translit(msg);
+  document.getElementById('sayHouses').hidden = say.place !== 'dorm';
+  document.getElementById('sayOther').hidden = say.place !== 'other';
+  sayView.querySelectorAll('[data-place]').forEach(b => b.setAttribute('aria-checked', b.dataset.place === say.place));
+  sayView.querySelectorAll('[data-dorm]').forEach(b => b.setAttribute('aria-checked', b.dataset.dorm === say.dorm));
+  sayView.querySelectorAll('[data-sit]').forEach(b => b.setAttribute('aria-pressed', say.sits.includes(b.dataset.sit)));
+}
+
+document.getElementById('sayInner').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+  if(b.dataset.sit){
+    const k = b.dataset.sit;
+    say.sits = say.sits.includes(k) ? say.sits.filter(x => x !== k) : say.sits.concat(k);
+  } else if(b.dataset.place){
+    say.place = b.dataset.place; saySave();
+    if(say.place === 'other') setTimeout(() => document.getElementById('sayOther').focus(), 0);
+  } else if(b.dataset.dorm){
+    say.dorm = b.dataset.dorm; saySave();
+  } else if(b.dataset.speak !== undefined){
+    saySpeak(b.dataset.speak === 'msg' ? sayMessage() : SAY_PHRASES[+b.dataset.speak].ru);
+    return;
+  } else if(b.id === 'sayBigBtn'){
+    document.getElementById('sayBigText').textContent = sayMessage();
+    document.getElementById('sayBig').hidden = false;
+    return;
+  } else return;
+  sayUpdate();
+});
+document.getElementById('sayInner').addEventListener('input', e => {
+  const map = { sayOther:'other', sayFloor:'floor', sayRoom:'room' };
+  const k = map[e.target.id];
+  if(!k) return;
+  say[k] = e.target.value.slice(0, 120);
+  saySave();
+  sayUpdate();
+});
+document.getElementById('sayBig').onclick = () => { document.getElementById('sayBig').hidden = true; };
+
+function openSay(){
+  if(!sayView.hidden) return;
+  say.from = document.activeElement;
+  sayView.hidden = false;
+  document.body.style.overflow = 'hidden';
+  history.pushState({ say:true }, '');
+  sayBuild();
+  document.getElementById('sayClose').focus();
+}
+function hideSay(){
+  if(sayView.hidden) return;
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  document.getElementById('sayBig').hidden = true;
+  sayView.hidden = true;
+  document.body.style.overflow = '';
+  if(say.from && say.from.focus) say.from.focus();
+}
+document.getElementById('sayClose').onclick = () => { if(history.state && history.state.say) history.back(); else hideSay(); };
+
+
+/* The phone's back button closes whichever tool is open; Escape does too. */
+window.addEventListener('popstate', () => { hideCool(); hideCpr(); hideSay(); });
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Escape') return;
+  const big = document.getElementById('sayBig');
+  if(!big.hidden){ big.hidden = true; return; }
+  if(!coolView.hidden) document.getElementById('coolClose').click();
+  else if(!cprView.hidden) document.getElementById('cprClose').click();
+  else if(!sayView.hidden) document.getElementById('sayClose').click();
+});
+// Phones drop the "keep the screen on" lock when you switch apps; take it back.
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden) return;
+  if(cool.running){ wakeLock(cool, true); coolTick(); }
+  if(cpr.running) wakeLock(cpr, true);
+});
+
+
 window.floorMapsReady = true;
 renderFloorMaps(langEl.value);
 
@@ -1782,6 +3469,12 @@ SURVEYS.forEach((sv, i) => { document.getElementById('quizLaunchBtn' + i).onclic
 
 // Everything above is defined by now, so it is safe to fill the quiz card.
 renderQuizLaunch();
+
+// …and the first aid cards, quick links and tools. A link such as
+// …/#aid-burns (for a QR code on a poster) opens that card straight away.
+window.aidReady = true;
+renderExtras(langEl.value);
+if(location.hash) goTo(decodeURIComponent(location.hash.slice(1)), false);
 </script>
 </body>
 </html>

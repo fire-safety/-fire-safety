@@ -126,8 +126,72 @@ right columns. The app can't confirm this for you — it can't read
 Google's reply, so it always shows "thank you" whether or not the
 submission actually landed.
 
+## First aid
+
+Below the fire guide there is a **First aid** section with seven topics:
+burns, smoke and toxic fumes, unresponsive but breathing (recovery
+position), CPR, chemical burns and eyes, electric shock, and heavy
+bleeding. Each topic has a moving picture, short steps with the reason
+for each step, a red "never" box and a yellow "call if / danger signs" box.
+
+- **The words** are in `CONTENT`, like the rest of the guide: look for
+  `aid: [` in each language (`en`, `ru`, `fa`). Each topic has an `id`,
+  a `title`, a one-line `tag` and the `html`.
+- **The pictures** are in `AID_ART` further down `index.html`, one per
+  topic `id`. They are drawings written as SVG and moved with CSS, so they
+  are tiny, sharp on every screen and work offline. Phones set to "reduce
+  motion" show them still.
+- **The icons** in the list are in `AID_ICONS`, with the same `id`s.
+
+To add a topic, add it to `aid: [` in every language, then add a picture
+and an icon under the same `id` (a topic without a picture still works).
+
+The medical content follows: the Russian Ministry of Health order on first
+aid (Приказ Минздрава России № 220н от 03.05.2024 «Об утверждении Порядка
+оказания первой помощи»), the 2025 guidelines of the European
+Resuscitation Council and Resuscitation Council UK, and NHS advice.
+
+## The tools
+
+- **Cooling timer** (in Burns): counts 20 minutes, keeps the screen on,
+  and rings at the end. It keeps counting if the window is closed; the
+  button in the Burns card shows the time left.
+- **CPR rhythm coach** (in CPR): beeps 110 times a minute (the middle of
+  100–120), with a 30 : 2 count for people trained in rescue breaths, and
+  a reminder to swap every 2 minutes.
+- **What to say when you call** (the dashed button under the phone
+  numbers): the student taps what happened and where they are, and gets
+  the Russian sentence to say, with Latin letters under it. It can read
+  the sentence aloud with the phone's own Russian voice, or show it in big
+  letters to hand to a Russian speaker. The address is remembered on that
+  phone only. The Russian pieces are in `SAY_RU`, the dormitory house
+  numbers (ulitsa Akademika Volgina 35, 37, 39, 41) in `SAY_DORMS`.
+- **Install card**: on phones that can install the app, a small card
+  offers to install it (on iPhone it explains Share → Add to Home Screen).
+  It can be hidden with ✕.
+
+All of them work with no internet.
+
+## Links to one topic (for QR codes)
+
+Every card has its own address, so a poster can point straight at it.
+Opening the link opens that card:
+
+| Link ends with | Opens |
+|---|---|
+| `#first-aid` | the First aid section |
+| `#aid-burns`, `#aid-smoke`, `#aid-recovery`, `#aid-cpr`, `#aid-chemical`, `#aid-electric`, `#aid-bleeding` | one first aid topic |
+| `#guide` | the fire guide |
+| `#fire-alarm`, `#fire-see`, `#fire-smoke`, `#fire-trapped`, `#fire-clothing`, `#fire-extinguisher`, `#fire-banned` | one fire guide card, in order |
+| `#say` | the "what to say when you call" helper |
+| `#plans`, `#videos`, `#breathe` | those sections |
+
+For example: `https://fire-safety.github.io/-fire-safety/#aid-burns`
+
 ## Before students use this
 
 The safety text here follows RNIMU's own published instructions, but it has not been checked by anyone at the university. Take it to the fire safety department and ask them to review it. Their approval is what turns this from a student project into something the university can hand out.
+
+The first aid section should also be read by a first aid instructor or a doctor from the university before it is handed out, for the same reason.
 
 The floor plans must match the official plans posted on the walls, exactly.
