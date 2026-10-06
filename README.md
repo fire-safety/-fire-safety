@@ -103,28 +103,70 @@ That number is how phones know a new version exists. If you do not change it, pe
 
 ---
 
-## The quiz
+## The questionnaires
 
-The green button above the guide opens a 21-question quiz built into
-the app. It shows questions in whichever language is selected, scores
-the 8 knowledge questions itself, and sends every answer straight to
-your Google Form's spreadsheet — no one has to open the Form itself.
+The two green buttons under the emergency numbers open the questionnaires.
+Each one sends its answers straight into its own Google Form — no one has
+to open the Form itself. The questions show in whichever language is
+selected; the answers are always saved in English.
 
-This works because each question in `SURVEY` (inside `index.html`)
-carries the same `entry.xxxxxxx` number as the matching question in
-your actual Google Form. **If you ever add, remove, or reorder
-questions in the Google Form itself, those numbers change**, and
-you'd need a fresh pre-filled link (⋮ menu on the form → "Get
-pre-filled link" → answer everything → copy the link) to find the new
-ones and update `SURVEY` to match. Editing wording only, with the same
-questions in the same order, is safe and needs no changes here.
+| Button | Google Form | What it asks |
+|---|---|---|
+| 📝 Level 1 | "Fire Safety Questionnaire — Level 1" | code, year, languages, 8 knowledge questions, 4 readiness questions |
+| 🔥 Level 2 | "Fire Safety Quest — Level 2 (October 2026)" | code · how useful each part of the site was (6 parts, 1–5 or "Didn't use") · 2 real-life tasks · the evacuation drill in the main building |
 
-**Test it once before handing this to students**: submit the quiz
-yourself through the real deployed link, then open your Google
-Sheet and confirm a new row appeared with the right answers in the
-right columns. The app can't confirm this for you — it can't read
-Google's reply, so it always shows "thank you" whether or not the
-submission actually landed.
+The first version of Level 2 ("Fire Safety Quest — Level 2", with its 17
+answers from September) was left untouched; nothing new is sent there.
+
+**Level 2, in detail**
+
+- *Mission 1* rates: In a fire · First aid · What to say when you call 112 ·
+  Floor plans · Evacuation videos · Breathing exercise.
+- *Mission 2* has two "tick every right action" tasks. Right answers:
+  - Task 1 (night alarm): leave right away · stay low, go to the stairs and
+    close doors · go to the assembly point and stay.
+  - Task 2 (burn + smoke): cool water for 20 minutes · take off rings and
+    watch · call 112 / 103.
+  Every option is worth one point (ticked if right, left empty if wrong),
+  so the score is out of 12. The website also writes that score into the
+  form ("Task score") together with the language the student used.
+- *Mission 3* asks whether the student was at the drill; only those who
+  say yes are asked whether the website helped, and what helped or was
+  missing.
+- After submitting, students see their score, a rank, and for every
+  mistake the reason and a link to the card that explains it.
+
+**How the website talks to the forms**
+
+Each question in `SURVEY_L1` / `SURVEY_L2` (inside `index.html`) carries
+the same `entry.xxxxxxx` number as the matching question in the Google
+Form, and every option's `value` is copied exactly from the form. **If
+you add, remove or retype questions or options in a Google Form, those
+numbers or values no longer match** and those answers are lost. Get the
+new numbers from the form (⋮ menu → "Get pre-filled link" → answer
+everything → copy the link) and update the survey to match. Editing a
+question's wording only, with the same options, is safe.
+
+Keep every question in the Google Forms **not required** — the website
+checks that the student answered, and a required question the website
+skips (for example the drill follow-ups) would make Google throw the
+whole answer away.
+
+**Nothing gets lost**
+
+- Answers in progress are kept on the phone. If a student closes the
+  page halfway, they continue where they stopped (or tap "Start over").
+- Finished answers wait in an "outbox" on the phone until they have been
+  sent. With no internet the student is told so, and the answers go by
+  themselves when the phone is back online.
+- The secret code is tidied (`el 7` → `EL07`, Persian digits → 0–9) and
+  checked (2 letters + a day from 01 to 31). Once a student has entered
+  it, it is filled in for them next time on the same phone.
+
+**Test it once after any change**: submit through the real deployed link,
+then open the form's Responses tab and check that the answer arrived in
+the right questions. Then delete that test response. Google does not let
+the page read its reply, so the website cannot check this for you.
 
 ## First aid
 
@@ -169,6 +211,19 @@ Resuscitation Council and Resuscitation Council UK, and NHS advice.
 - **Install card**: on phones that can install the app, a small card
   offers to install it (on iPhone it explains Share → Add to Home Screen).
   It can be hidden with ✕.
+- **Am I ready? checklist** (under the quick links): ten things every
+  student should have done, each with a button that opens the part of
+  the guide that helps. Ticks stay on that phone only. Some tick
+  themselves: saving the numbers to contacts, opening "What to say",
+  playing all three videos, installing the app. The items are in
+  `READY_ITEMS`.
+- **Save to contacts** (in the checklist): downloads one contact card
+  with 112, 101, 103 and the RNIMU duty dispatcher, labelled in the
+  chosen language.
+- **Share this guide** (above the footer): the phone's share menu, a QR
+  code a friend can scan straight from the screen, or copy the link.
+- **"New version ready"**: when a phone has saved a newer version of the
+  guide, a small bar offers to reload, so nobody keeps an old copy.
 
 All of them work with no internet.
 
@@ -184,7 +239,8 @@ Opening the link opens that card:
 | `#guide` | the fire guide |
 | `#fire-alarm`, `#fire-see`, `#fire-smoke`, `#fire-trapped`, `#fire-clothing`, `#fire-extinguisher`, `#fire-banned` | one fire guide card, in order |
 | `#say` | the "what to say when you call" helper |
-| `#plans`, `#videos`, `#breathe` | those sections |
+| `#plans`, `#videos`, `#breathe`, `#share` | those sections |
+| `#ready` | the "Am I ready?" checklist, opened |
 
 For example: `https://fire-safety.github.io/-fire-safety/#aid-burns`
 

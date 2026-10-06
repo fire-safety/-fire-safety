@@ -17,7 +17,7 @@
       new version exists. If you forget, people keep seeing the old one.
    ============================================================ */
 
-const VERSION = 'fire-safety-v14';
+const VERSION = 'fire-safety-v15';
 
 const FILES = [
   './',
@@ -25,6 +25,9 @@ const FILES = [
   'manifest.json',
   'icon-192.png',
   'icon-512.png',
+  'evacuation-university.jpg',
+  'evacuation-dormitory.jpg',
+  'evacuation-smoke.jpg',
   'maps/floor-4-small.webp',
   'maps/floor-3-small.webp',
   'maps/floor-2-small.webp',
@@ -60,8 +63,13 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   // Videos are too big to store on the phone, so they always stream
-  // from the internet and skip the offline copy.
-  if (event.request.url.includes('/videos/')) return;
+  // straight from the internet. Leaving them alone also lets the browser
+  // ask for the video piece by piece, which iPhones need to play it.
+  const url = new URL(event.request.url);
+  if (/\.mp4$/i.test(url.pathname) || url.pathname.includes('/videos/')) return;
+
+  // Only our own files are saved; anything from another site goes straight through.
+  if (url.origin !== self.location.origin) return;
 
   // Full floor plans are big, so they are not saved up front. Each one is
   // saved the first time someone opens it, and works offline after that.
@@ -77,10 +85,18 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Opening the page itself (also with ?something=… after the address,
+  // for example from a QR code) gets the saved copy; with no internet and
+  // no saved copy of that address, it gets the guide.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      caches.match(event.request, { ignoreSearch: true }).then(hit =>
+        hit || fetch(event.request).catch(() => caches.match('index.html')))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then(hit => {
-      if (hit) return hit;
-      return fetch(event.request).catch(() => caches.match('index.html'));
-    })
+    caches.match(event.request).then(hit => hit || fetch(event.request))
   );
 });

@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fire Safety for International Students — RNIMU</title>
 <meta name="theme-color" content="#00843D">
+<meta name="description" content="Offline fire safety and first aid guide for international students at RNIMU (Pirogov University) — in English, Russian and Persian.">
+<!-- What Telegram, WhatsApp and VK show when someone shares the link. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fire Safety for International Students — RNIMU">
+<meta property="og:description" content="What to do in a fire, first aid, floor plans, evacuation videos and what to say when you call 112. Works offline. English · Русский · فارسی">
+<meta property="og:url" content="https://fire-safety.github.io/-fire-safety/">
+<meta property="og:image" content="https://fire-safety.github.io/-fire-safety/icon-512.png">
+<meta name="twitter:card" content="summary">
 
 <!-- This line connects the app to manifest.json, which is what lets a phone
      install it to the home screen. Without it, it is just a website. -->
@@ -303,7 +311,8 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 }
 .jump svg{flex:none;color:var(--green)}
 .jump a:focus-visible,.jump button:focus-visible{outline:3px solid var(--green);outline-offset:1px}
-#guide,#first-aid,#plans,#videos,#breathe{scroll-margin-top:8px}
+#guide,#first-aid,#plans,#videos,#breathe,#ready,#share{scroll-margin-top:8px}
+@media (hover:hover) and (pointer:fine){.jump{flex-wrap:wrap;overflow-x:visible}}
 .list details{scroll-margin-top:8px}
 
 /* ---------- install card ---------- */
@@ -539,6 +548,84 @@ html[lang="fa"] .body ol{list-style-type:persian}
 #sayBig[hidden]{display:none}
 #sayBig p{margin:0;font-size:clamp(28px,8.5vw,60px);font-weight:700;line-height:1.25}
 #sayBig small{display:block;margin-top:24px;font-size:14px;color:#555}
+/* ---------- questionnaire: extras ---------- */
+.qChip{display:inline-block;margin-inline-start:8px;padding:1px 9px;border-radius:999px;background:rgba(255,255,255,.22);font-size:12px;font-weight:600;vertical-align:2px;white-space:nowrap}
+.qChip[hidden]{display:none}
+.inQuiz .quizLaunch{display:none}
+.qSectionTitle:focus,.qDoneTitle:focus{outline:none}
+.qDoneTitle{font-weight:600;font-size:17px;margin:0 0 18px}
+.qCode{text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.qCode::placeholder{text-transform:none;letter-spacing:normal;font-weight:400}
+.qSaved{margin:6px 0 0}
+.qResumed{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:10px 12px;border-radius:var(--radius);background:#EAF5EF;font-size:14px;line-height:1.4}
+.qResumed button{flex:none;padding:6px 12px;border:1px solid var(--green);border-radius:999px;background:var(--paper);color:var(--green-dark);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.qResumed button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.qGridRow.withIco{display:grid;grid-template-columns:34px 1fr;column-gap:10px;align-items:center;margin:0;padding:12px 0;border-top:1px solid var(--line)}
+.qGridRow.withIco:first-of-type{border-top:none;padding-top:4px}
+.qGridIco{width:34px;height:34px;border-radius:9px;background:var(--wash);color:var(--green-dark);display:flex;align-items:center;justify-content:center}
+.qGridRow.withIco .qGridLabel{margin:0;font-weight:600;line-height:1.3}
+.qGridLabel small{display:block;margin-top:2px;font-size:12.5px;font-weight:400;line-height:1.35;color:var(--muted)}
+.qGridRow.withIco .qGridBtns{grid-column:1 / -1;margin-top:9px}
+.qStatus{margin:8px 0 0;min-height:1.4em;font-size:14px;font-weight:600;color:var(--green-dark)}
+.qReviewHead{margin:24px 0 0;font-weight:600;text-align:start}
+.qReview + .qReview{margin-top:12px}
+.qRev{display:flex;align-items:flex-start;gap:10px;margin:0 0 12px}
+.qReview .qRev p{margin:0;font-size:14px}
+.qRev small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.qRev.bad small{color:var(--red)}
+.qRev.miss small{color:#6A4B00}
+.qRevMark{flex:none;width:22px;height:22px;margin-top:1px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.qRev.bad .qRevMark{background:var(--red)}
+.qRev.miss .qRevMark{background:#E0A400;color:#3D2E00}
+.qReview .qPerfect{margin:0;color:var(--green-dark);font-weight:600}
+.qReview .qLearn{margin:4px 0 0;font-size:14px}
+.qLearn a{color:var(--green-dark);font-weight:600}
+
+/* ---------- am I ready? checklist ---------- */
+.ready{padding:0 18px 14px}
+.readyCard{border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:0 1px 3px rgba(20,38,28,.08);overflow:hidden}
+.readyCard summary{justify-content:flex-start;padding:12px 14px}
+.readyRing{position:relative;flex:none;width:44px;height:44px}
+.readyRing svg{display:block;width:44px;height:44px;transform:rotate(-90deg)}
+.rrBg{fill:none;stroke:var(--wash);stroke-width:4}
+.rrFg{fill:none;stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-dasharray:97.4;stroke-dashoffset:97.4;transition:stroke-dashoffset .5s ease}
+.readyRing span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--green-dark)}
+.readyHead{flex:1;min-width:0;display:flex;flex-direction:column}
+.readyName{font-size:16px;font-weight:600;line-height:1.3}
+.readyTag{margin-top:1px;font-size:13px;font-weight:400;line-height:1.35;color:var(--muted)}
+.readyCard.all .readyTag{color:var(--green-dark);font-weight:600}
+.readyBody{padding:0 14px 14px}
+.readyList{list-style:none;margin:0;padding:0}
+.readyList li{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px;padding:2px 0;border-top:1px solid var(--line)}
+.readyChk{flex:1 1 200px;min-width:0;display:flex;align-items:flex-start;gap:12px;padding:10px 0;border:none;background:none;font:inherit;font-size:15px;line-height:1.4;color:var(--ink);text-align:start;cursor:pointer}
+.rkBox{flex:none;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:2px solid var(--line);border-radius:6px;background:var(--paper)}
+.readyList li.on .rkBox{background:var(--green);border-color:var(--green)}
+.readyList li.on .rkBox::after{content:"\2713";color:#fff;font-size:14px;font-weight:700;line-height:1}
+.readyList li.on .readyTxt{color:var(--muted)}
+.readyGo{flex:none;margin-block:4px;margin-inline-start:auto;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--green-dark);font:inherit;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer}
+.readyChk:focus-visible,.readyGo:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.readyNote{margin:10px 0 0}
+
+/* ---------- share this guide ---------- */
+.share{padding:20px 18px 22px;border-top:1px solid var(--line)}
+.share h2{margin:0 0 2px;font-size:17px;font-weight:600}
+.share .vSub{margin:0 0 12px;font-size:14px;color:var(--muted)}
+.shareBtns{display:flex;flex-wrap:wrap;gap:8px}
+.shareBtn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.shareBtn.primary{background:var(--green);border-color:var(--green);color:#fff}
+.shareBtn[hidden]{display:none}
+.shareBtn svg{flex:none}
+.shareBtn:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.shareQr{margin-top:14px;text-align:center}
+.shareQr[hidden]{display:none}
+.shareQr svg{width:min(220px,70vw);height:auto;border:1px solid var(--line);border-radius:12px}
+.shareQr .note{margin:8px 0 0}
+
+/* ---------- "new version ready" ---------- */
+#updateBar{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 28px);padding:10px 10px 10px 16px;border-radius:12px;background:var(--ink);color:#fff;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+#updateBar[hidden]{display:none}
+#updateBar button{flex:none;padding:7px 14px;border:none;border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+#updateBar button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 </style>
 </head>
 
@@ -574,11 +661,11 @@ html[lang="fa"] .body ol{list-style-type:persian}
 
   <!-- One button per questionnaire level (SURVEYS in the script, in this order). -->
   <button class="quizLaunch" id="quizLaunchBtn0" type="button">
-    <span id="quizLaunchTitle0"></span>
+    <span id="quizLaunchTitle0"></span><span class="qChip" id="quizDone0" hidden></span>
     <span class="sub" id="quizLaunchSub0"></span>
   </button>
   <button class="quizLaunch" id="quizLaunchBtn1" type="button">
-    <span id="quizLaunchTitle1"></span>
+    <span id="quizLaunchTitle1"></span><span class="qChip" id="quizDone1" hidden></span>
     <span class="sub" id="quizLaunchSub1"></span>
   </button>
 
@@ -591,6 +678,7 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <a href="#plans" data-nav="plans"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg><span></span></a>
       <a href="#videos" data-nav="videos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2l5 2.8-5 2.8z"/></svg><span></span></a>
       <a href="#breathe" data-nav="breathe"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg><span></span></a>
+      <a href="#ready" data-nav="ready"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h10M9 12h10M9 19h10"/><path d="m3.5 5 1.5 1.5L7.5 4M3.5 12l1.5 1.5L7.5 11M3.5 19l1.5 1.5L7.5 18"/></svg><span></span></a>
     </nav>
 
     <!-- "Install this guide" card: only shown when the phone can install it. -->
@@ -599,6 +687,20 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <button type="button" class="installBtn" id="instBtn" hidden></button>
       <button type="button" class="installX" id="instX" aria-label="Hide">✕</button>
     </div>
+
+    <!-- AM I READY? checklist: items in READY_ITEMS in the script; ticks stay on the phone. -->
+    <section class="ready" id="ready" aria-labelledby="readyTitle">
+      <details class="readyCard" id="readyCard">
+        <summary>
+          <span class="readyRing" aria-hidden="true"><svg viewBox="0 0 36 36"><circle class="rrBg" cx="18" cy="18" r="15.5"/><circle class="rrFg" id="readyArc" cx="18" cy="18" r="15.5"/></svg><span id="readyNum"></span></span>
+          <span class="readyHead"><span class="readyName" id="readyTitle"></span><span class="readyTag" id="readySub"></span></span>
+        </summary>
+        <div class="readyBody">
+          <ul class="readyList" id="readyList"></ul>
+          <p class="note readyNote" id="readyNote"></p>
+        </div>
+      </details>
+    </section>
 
     <!-- VIDEOS: to add one, put the .mp4 (and a .jpg preview) in the videos
          folder, then add a <figure> below and its title in CONTENT (vid1, vid2…). -->
@@ -669,6 +771,20 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <ol class="aidFirst" id="aidFirst"></ol>
       <div class="aidList" id="aidList"></div>
       <p class="note aidNote" id="aidNote"></p>
+    </section>
+    <!-- SHARE: words in SHARE_UI in the script. The QR code opens SITE_URL. -->
+    <section class="share" id="share" aria-labelledby="shareTitle">
+      <h2 id="shareTitle"></h2>
+      <p class="vSub" id="shareSub"></p>
+      <div class="shareBtns">
+        <button type="button" class="shareBtn primary" id="shareNative" hidden><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span id="shareNativeLbl"></span></button>
+        <button type="button" class="shareBtn" id="shareQrBtn" aria-expanded="false" aria-controls="shareQr"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span id="shareQrLbl"></span></button>
+        <button type="button" class="shareBtn" id="shareCopy"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg><span id="shareCopyLbl"></span></button>
+      </div>
+      <div class="shareQr" id="shareQr" hidden>
+        <svg viewBox="-2 -2 37 37" width="200" height="200" role="img" aria-label="QR code: https://fire-safety.github.io/-fire-safety/" shape-rendering="crispEdges"><rect x="-2" y="-2" width="37" height="37" fill="#fff"/><path fill="#14261C" d="M0 0h7v1h-7zM8 0h1v1h-1zM10 0h2v1h-2zM13 0h1v1h-1zM16 0h8v1h-8zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM15 1h1v1h-1zM17 1h1v1h-1zM20 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM14 2h9v1h-9zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM13 3h4v1h-4zM22 3h2v1h-2zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h6v1h-6zM17 4h2v1h-2zM21 4h1v1h-1zM23 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h2v1h-2zM15 5h2v1h-2zM18 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM10 7h1v1h-1zM13 7h2v1h-2zM16 7h1v1h-1zM21 7h2v1h-2zM1 8h7v1h-7zM9 8h6v1h-6zM17 8h1v1h-1zM22 8h3v1h-3zM27 8h2v1h-2zM32 8h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM19 9h3v1h-3zM23 9h2v1h-2zM26 9h2v1h-2zM29 9h2v1h-2zM32 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h3v1h-3zM10 10h2v1h-2zM14 10h2v1h-2zM18 10h1v1h-1zM21 10h1v1h-1zM25 10h2v1h-2zM28 10h1v1h-1zM30 10h2v1h-2zM0 11h1v1h-1zM2 11h1v1h-1zM4 11h2v1h-2zM7 11h3v1h-3zM12 11h2v1h-2zM19 11h4v1h-4zM25 11h1v1h-1zM28 11h4v1h-4zM0 12h2v1h-2zM4 12h1v1h-1zM6 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM18 12h2v1h-2zM22 12h1v1h-1zM24 12h2v1h-2zM27 12h3v1h-3zM31 12h1v1h-1zM0 13h2v1h-2zM4 13h1v1h-1zM11 13h1v1h-1zM14 13h3v1h-3zM21 13h1v1h-1zM23 13h2v1h-2zM26 13h2v1h-2zM30 13h3v1h-3zM3 14h1v1h-1zM5 14h2v1h-2zM9 14h4v1h-4zM15 14h1v1h-1zM20 14h2v1h-2zM25 14h2v1h-2zM28 14h1v1h-1zM31 14h1v1h-1zM2 15h1v1h-1zM4 15h1v1h-1zM8 15h2v1h-2zM11 15h1v1h-1zM13 15h1v1h-1zM16 15h1v1h-1zM18 15h5v1h-5zM25 15h2v1h-2zM28 15h1v1h-1zM30 15h1v1h-1zM1 16h1v1h-1zM3 16h2v1h-2zM6 16h2v1h-2zM9 16h6v1h-6zM16 16h1v1h-1zM18 16h2v1h-2zM22 16h1v1h-1zM24 16h2v1h-2zM27 16h2v1h-2zM32 16h1v1h-1zM0 17h2v1h-2zM3 17h1v1h-1zM9 17h2v1h-2zM13 17h1v1h-1zM15 17h1v1h-1zM19 17h1v1h-1zM21 17h1v1h-1zM23 17h1v1h-1zM26 17h2v1h-2zM29 17h4v1h-4zM0 18h3v1h-3zM5 18h3v1h-3zM10 18h3v1h-3zM15 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM24 18h2v1h-2zM27 18h2v1h-2zM30 18h2v1h-2zM0 19h3v1h-3zM4 19h2v1h-2zM7 19h1v1h-1zM10 19h3v1h-3zM15 19h4v1h-4zM21 19h1v1h-1zM23 19h2v1h-2zM26 19h5v1h-5zM2 20h2v1h-2zM6 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM13 20h1v1h-1zM16 20h2v1h-2zM19 20h1v1h-1zM22 20h1v1h-1zM24 20h2v1h-2zM27 20h3v1h-3zM32 20h1v1h-1zM0 21h1v1h-1zM5 21h1v1h-1zM9 21h1v1h-1zM13 21h2v1h-2zM16 21h4v1h-4zM21 21h1v1h-1zM23 21h1v1h-1zM26 21h2v1h-2zM29 21h1v1h-1zM32 21h1v1h-1zM0 22h1v1h-1zM2 22h3v1h-3zM6 22h5v1h-5zM12 22h2v1h-2zM17 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h2v1h-2zM28 22h1v1h-1zM31 22h1v1h-1zM0 23h1v1h-1zM8 23h2v1h-2zM14 23h2v1h-2zM18 23h1v1h-1zM21 23h1v1h-1zM23 23h2v1h-2zM26 23h1v1h-1zM28 23h5v1h-5zM0 24h1v1h-1zM4 24h3v1h-3zM8 24h3v1h-3zM12 24h2v1h-2zM15 24h2v1h-2zM19 24h2v1h-2zM22 24h1v1h-1zM24 24h5v1h-5zM32 24h1v1h-1zM8 25h2v1h-2zM11 25h11v1h-11zM23 25h2v1h-2zM28 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM0 26h7v1h-7zM8 26h1v1h-1zM10 26h2v1h-2zM17 26h1v1h-1zM21 26h4v1h-4zM26 26h1v1h-1zM28 26h1v1h-1zM30 26h2v1h-2zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM16 27h3v1h-3zM20 27h5v1h-5zM28 27h3v1h-3zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM8 28h2v1h-2zM11 28h1v1h-1zM13 28h1v1h-1zM15 28h1v1h-1zM17 28h2v1h-2zM20 28h1v1h-1zM22 28h1v1h-1zM24 28h6v1h-6zM31 28h1v1h-1zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h1v1h-1zM10 29h2v1h-2zM13 29h1v1h-1zM15 29h1v1h-1zM17 29h9v1h-9zM28 29h1v1h-1zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM8 30h1v1h-1zM10 30h3v1h-3zM14 30h1v1h-1zM16 30h1v1h-1zM21 30h2v1h-2zM26 30h2v1h-2zM29 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h2v1h-2zM11 31h2v1h-2zM16 31h1v1h-1zM18 31h1v1h-1zM20 31h4v1h-4zM26 31h1v1h-1zM28 31h3v1h-3zM0 32h7v1h-7zM9 32h1v1h-1zM13 32h1v1h-1zM15 32h1v1h-1zM17 32h2v1h-2zM20 32h1v1h-1zM22 32h4v1h-4zM27 32h1v1h-1zM31 32h1v1h-1z"/></svg>
+        <p class="note" id="shareQrNote"></p>
+      </div>
     </section>
     <footer id="foot"></footer>
   </div>
@@ -777,6 +893,9 @@ html[lang="fa"] .body ol{list-style-type:persian}
   <div class="sayScroll"><div class="sayInner" id="sayInner"></div></div>
 </div>
 <div id="sayBig" hidden role="dialog" aria-modal="true" lang="ru" dir="ltr"><p id="sayBigText"></p><small id="sayBigHint" dir="auto"></small></div>
+
+<!-- Shown when a newer version of the guide has been saved on the phone. -->
+<div id="updateBar" hidden role="status"><span id="updateTxt"></span><button type="button" id="updateBtn"></button></div>
 
 <script>
 /* ============================================================
@@ -1016,7 +1135,7 @@ const CONTENT = {
 
     ],
     foot: `<p>Prepared by students of RNIMU. Check every instruction against the official notices in your building.</p>
-           <p>Last updated: September 2026.</p>`
+           <p>Last updated: October 2026.</p>`
   },
 
   ru: {
@@ -1033,7 +1152,7 @@ const CONTENT = {
     breSub: "Дыхательное упражнение на 1–2 минуты, чтобы успокоиться после тревоги, учений или сильного испуга. Следите за цветком: вдох — когда он раскрывается, выдох — когда закрывается.",
     breBtn: "Начать дыхательное упражнение",
     breNote: "Делайте его только в безопасном месте, вдали от дыма. Если после контакта с дымом у человека боль в груди, одышка, головокружение или спутанность сознания, звоните 112 (скорая: 103).",
-    emTitle: "При пожаре звоните",
+    emTitle: "В экстренной ситуации звоните",
     emSub: "Бесплатно с любого телефона, даже без SIM-карты.",
     who112: "Единая служба",
     who101: "Пожарная охрана",
@@ -1234,7 +1353,7 @@ const CONTENT = {
       }
     ],
     foot: `<p>Подготовлено студентами РНИМУ. Сверяйте все указания с официальными инструкциями в вашем корпусе.</p>
-           <p>Обновлено: сентябрь 2026 г.</p>`
+           <p>Обновлено: октябрь 2026 г.</p>`
   },
 
   fa: {
@@ -1452,7 +1571,7 @@ const CONTENT = {
       }
     ],
     foot: `<p>تهیه‌شده توسط دانشجویان دانشگاه پیروگوف. هر دستورالعمل را با اطلاعیه‌های رسمی ساختمان خود مطابقت دهید.</p>
-           <p>آخرین به‌روزرسانی: سپتامبر ۲۰۲۶.</p>`
+           <p>آخرین به‌روزرسانی: اکتبر ۲۰۲۶.</p>`
   }
 
 };
@@ -1536,85 +1655,100 @@ if('serviceWorker' in navigator){
 }
 
 /* ============================================================
-   THE SURVEY — Fire Safety Quest, Level 2
+   THE QUESTIONNAIRES — Level 1 and Level 2
 
-   This feeds the Google Form "Fire Safety Quest — Level 2".
-   The "entry.xxxxxxx" number on each question is what ties it to
-   one specific question in that form. If you add, remove or retype
-   questions or options in the Google Form, update this section to
-   match, or those answers will not be saved.
+   Each level sends its answers to its own Google Form. The
+   "entry.xxxxxxx" number on each question is what ties it to one
+   question in that form. If you add, remove or retype questions or
+   options in a Google Form, update the matching part below, or those
+   answers will not be saved.
 
    Every option has a "value" (always English, copied exactly from the
-   Google Form — this is what gets saved in the spreadsheet, so all
-   answers land in one language) and a "label" per language (what the
-   student reads on screen).
+   Google Form — this is what gets saved, so all answers land in one
+   language) and a "label" per language (what the student reads).
 
-   Questions with a "correct" value are scored. Their options are
-   shuffled on screen so the right answer is not always in the same
-   place; what gets saved does not change.
+   Questions with a "correct" value are scored on the phone:
+   - one right answer (radio): "correct" is that value;
+   - tick all that apply (checkbox): "correct" is a list of values,
+     and every option is worth one point — ticked if it is right,
+     left empty if it is wrong.
+   The options of scored questions are shuffled on screen; what gets
+   saved does not change.
+
+   Other things a question can have:
+     optional:true     may be left empty
+     showIf:{q,is}     only shown when question q was answered "is"
+     format:'code'     the secret code: tidied to 2 letters + 2 digits
+     learn:[...]       links to guide cards, shown on the results screen
+     why:{...}         (on an option) the reason, shown on the results screen
+   A level can also have "auto" answers that the website fills in
+   itself (the score, the language) — the student never sees them.
+
+   Answers in progress are kept on the phone, so closing the page does
+   not lose them. Finished answers wait on the phone until they have
+   been sent, so a student with no internet loses nothing either.
    ============================================================ */
 
-const SURVEY_L2 = {
-  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSf_svd6mQLiYpY33ueWK2xlbyIje8pBpTzmrGUjJPYYITXnQw/formResponse',
-  pageHistory: '0',
+/* Words used by both levels. */
+const QUIZ_UI = {
+  en: { back:'Back to guide', prev:'Previous', next:'Next', submit:'Submit', required:'Please answer this question.',
+        codeBad:'Use 2 letters and 2 digits, for example EL07.',
+        codeSaved:'Filled in from last time on this phone — check that it is right.',
+        resumed:'Welcome back! We kept the answers you had already given.', restart:'Start over',
+        offline:"You'll need an internet connection to submit this. Your answers are still here — try again once you're online.",
+        sending:'Sending your answers…', sent:'✓ Your answers were sent.',
+        queued:"You're offline. Your answers are saved on this phone and will be sent automatically when you're back online.",
+        doneTitle:'Mission complete!', doneScore:'correct answers on the missions', rankLabel:'Your rank',
+        reviewTitle:'Check these again', correctLabel:'Correct answer:',
+        ticked:'You ticked this, but it is wrong', missed:'You missed this right action',
+        perfect:'Perfect — every choice was right!', readMore:'Read:', done:'✓ Done',
+        doneBody:'Thanks, agent! Your answers help the team improve this guide for other students.', doneBtn:'Back to guide' },
+  ru: { back:'Назад к инструкции', prev:'Предыдущий шаг', next:'Далее', submit:'Отправить', required:'Пожалуйста, ответьте на этот вопрос.',
+        codeBad:'Нужны 2 буквы и 2 цифры, например EL07.',
+        codeSaved:'Подставлен код, который вы вводили на этом телефоне, — проверьте его.',
+        resumed:'С возвращением! Мы сохранили ответы, которые вы уже дали.', restart:'Начать заново',
+        offline:'Для отправки нужен интернет. Ваши ответы сохранены — попробуйте снова при подключении к сети.',
+        sending:'Отправляем ответы…', sent:'✓ Ваши ответы отправлены.',
+        queued:'Нет интернета. Ответы сохранены на этом телефоне и отправятся сами, когда появится сеть.',
+        doneTitle:'Миссия выполнена!', doneScore:'правильных ответов в миссиях', rankLabel:'Ваше звание',
+        reviewTitle:'Повторите это', correctLabel:'Правильный ответ:',
+        ticked:'Вы это отметили, но это неправильно', missed:'Вы пропустили правильное действие',
+        perfect:'Отлично — все решения верные!', readMore:'Подробнее:', done:'✓ Пройдено',
+        doneBody:'Спасибо, агент! Ваши ответы помогут команде улучшить этот гид для других студентов.', doneBtn:'Назад к инструкции' },
+  fa: { back:'بازگشت به راهنما', prev:'مرحلهٔ قبل', next:'بعدی', submit:'ارسال', required:'لطفاً به این سؤال پاسخ دهید.',
+        codeBad:'از ۲ حرف و ۲ رقم استفاده کنید، مثلاً <bdi>EL07</bdi>.',
+        codeSaved:'کدی که دفعهٔ قبل در این گوشی وارد کردید اینجا آمده است — درستی‌اش را بررسی کنید.',
+        resumed:'خوش برگشتید! پاسخ‌هایی را که قبلاً داده بودید نگه داشتیم.', restart:'شروع دوباره',
+        offline:'برای ارسال به اینترنت نیاز دارید. پاسخ‌های شما ذخیره شده‌اند — پس از اتصال دوباره امتحان کنید.',
+        sending:'در حال ارسال پاسخ‌ها…', sent:'✓ پاسخ‌های شما ارسال شد.',
+        queued:'اینترنت ندارید. پاسخ‌هایتان روی همین گوشی ذخیره شده و وقتی دوباره آنلاین شوید، خودکار ارسال می‌شود.',
+        doneTitle:'مأموریت انجام شد!', doneScore:'پاسخ درست در مأموریت‌ها', rankLabel:'رتبهٔ شما',
+        reviewTitle:'این‌ها را دوباره مرور کنید', correctLabel:'پاسخ درست:',
+        ticked:'این را علامت زدید، اما درست نیست', missed:'این کار درست را جا انداختید',
+        perfect:'عالی — همهٔ انتخاب‌هایتان درست بود!', readMore:'بخوانید:', done:'✓ انجام شد',
+        doneBody:'ممنون، مأمور! پاسخ‌های شما به تیم کمک می‌کند این راهنما را برای دانشجویان دیگر بهتر کند.', doneBtn:'بازگشت به راهنما' }
+};
 
-  launch: {
-    en: { title: '🔥 Fire Safety Quest — Level 2', sub: 'After our training · about 6 minutes · see your score and rank' },
-    ru: { title: '🔥 Квест по пожарной безопасности — уровень 2', sub: 'После обучения · около 6 минут · ваш результат и звание' },
-    fa: { title: '🔥 کوئست ایمنی آتش‌سوزی — مرحلهٔ ۲', sub: 'پس از آموزش · حدود ۶ دقیقه · امتیاز و رتبهٔ شما' }
-  },
+/* Small icons for each part of the site (the same ones as the quick links). */
+const PART_ICONS = {
+  fire:    '<path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/>',
+  aid:     '<path d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"/>',
+  say:     '<path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9.5h8M8 12.5h5"/>',
+  plans:   '<path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/>',
+  videos:  '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2l5 2.8-5 2.8z"/>',
+  breathe: '<path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/>',
+  ready:   '<path d="M9 5h10M9 12h10M9 19h10"/><path d="m3.5 5 1.5 1.5L7.5 4M3.5 12l1.5 1.5L7.5 11M3.5 19l1.5 1.5L7.5 18"/>'
+};
 
-  ui: {
-    en: { back:'Back to guide', next:'Next', submit:'Submit', required:'Please answer this question.',
-          offline:"You'll need an internet connection to submit this. Your answers are still here — try again once you're online.",
-          doneTitle:'Mission complete!', doneScore:'correct answers on the missions', rankLabel:'Your rank',
-          reviewTitle:'Check these again', correctLabel:'Correct answer:',
-          doneBody:'Thanks, agent! Your answers help the team improve this guide for other students.', doneBtn:'Back to guide' },
-    ru: { back:'Назад к инструкции', next:'Далее', submit:'Отправить', required:'Пожалуйста, ответьте на этот вопрос.',
-          offline:'Для отправки нужен интернет. Ваши ответы сохранены — попробуйте снова при подключении к сети.',
-          doneTitle:'Миссия выполнена!', doneScore:'правильных ответов в миссиях', rankLabel:'Ваше звание',
-          reviewTitle:'Повторите это', correctLabel:'Правильный ответ:',
-          doneBody:'Спасибо, агент! Ваши ответы помогут команде улучшить этот гид для других студентов.', doneBtn:'Назад к инструкции' },
-    fa: { back:'بازگشت به راهنما', next:'بعدی', submit:'ارسال', required:'لطفاً به این سؤال پاسخ دهید.',
-          offline:'برای ارسال به اینترنت نیاز دارید. پاسخ‌های شما ذخیره شده‌اند — پس از اتصال دوباره امتحان کنید.',
-          doneTitle:'مأموریت انجام شد!', doneScore:'پاسخ درست در مأموریت‌ها', rankLabel:'رتبهٔ شما',
-          reviewTitle:'این‌ها را دوباره مرور کنید', correctLabel:'پاسخ درست:',
-          doneBody:'ممنون، مأمور! پاسخ‌های شما به تیم کمک می‌کند این راهنما را برای دانشجویان دیگر بهتر کند.', doneBtn:'بازگشت به راهنما' }
-  },
+/* ------------------------------------------------------------
+   LEVEL 1 — Fire Safety Questionnaire (the first check)
+   This feeds the Google Form "Fire Safety Questionnaire — Level 1".
+   Questions 1–12 are kept here; each one gets its Level 1 entry
+   number below (and, for 9–12, the option text that form saves).
+   ------------------------------------------------------------ */
 
-  // Rank by number of correct answers (checked from the top down).
-  ranks: [
-    { min:11, label:{en:'🏆 Fire Safety Legend', ru:'🏆 Легенда пожарной безопасности', fa:'🏆 اسطورهٔ ایمنی آتش‌سوزی'} },
-    { min:9,  label:{en:'🥇 Senior Agent', ru:'🥇 Старший агент', fa:'🥇 مأمور ارشد'} },
-    { min:6,  label:{en:'🥈 Field Agent', ru:'🥈 Полевой агент', fa:'🥈 مأمور میدانی'} },
-    { min:3,  label:{en:'🥉 Agent in Training', ru:'🥉 Агент-стажёр', fa:'🥉 مأمور کارآموز'} },
-    { min:0,  label:{en:'🔰 Rookie', ru:'🔰 Новичок', fa:'🔰 تازه‌کار'} }
-  ],
-
-  sections: [
-    { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
-      intro:{en:"Welcome back, agent! 🕵️ Since our first check, you've had our training, videos, website and chatbot. Let's see how much your skills have grown!",
-             ru:'С возвращением, агент! 🕵️ После первой проверки у вас были наше обучение, видео, сайт и чат-бот. Посмотрим, насколько выросли ваши навыки!',
-             fa:'خوش آمدید، مأمور! 🕵️ از بررسی اول تاکنون، آموزش، ویدیوها، وب‌سایت و چت‌بات ما را داشته‌اید. ببینیم مهارت‌هایتان چقدر پیشرفت کرده است!'},
-      questions:[
-        { id:'first', entry:'entry.1866014080', type:'radio',
-          text:{en:'Did you fill in our first questionnaire?', ru:'Вы проходили наш первый опрос?', fa:'آیا در پرسشنامهٔ اول ما شرکت کردید؟'},
-          options:[
-            {value:'Yes', label:{en:'Yes', ru:'Да', fa:'بله'}},
-            {value:'No',  label:{en:'No',  ru:'Нет', fa:'خیر'}}
-          ]},
-        { id:'code', entry:'entry.1943426309', type:'text',
-          text:{en:'Your secret agent code', ru:'Ваш секретный код агента', fa:'کد مخفی مأمور شما'},
-          help:{en:'Same code as in Level 1: the first 2 letters of your first name + the day you were born (2 digits).',
-                ru:'Тот же код, что и на уровне 1: первые 2 буквы вашего имени + день вашего рождения (2 цифры).',
-                fa:'همان کد مرحلهٔ ۱: دو حرف اول نام خودتان + روز تولدتان (دو رقم).'},
-          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} }
-      ]
-    },
-
-    { title:{en:'🚨 Mission 1 — React', ru:'🚨 Миссия 1 — Действуй', fa:'🚨 مأموریت ۱ — واکنش'},
-      questions:[
-        { id:'Q1', entry:'entry.777401003', type:'radio', correct:'B. Leave using the designated safe evacuation route',
+const L1_QUESTIONS = [
+        { id:'Q1', type:'radio', correct:'B. Leave using the designated safe evacuation route',
           kicker:{en:'What would you do?', ru:'Что бы вы сделали?', fa:'چه می‌کنید؟'},
           text:{en:'You are sitting in a university classroom when the fire alarm starts. You do not see any fire or smoke. What should you do?',
                 ru:'Вы сидите в учебной аудитории, и начинает звучать пожарная сигнализация. Огня и дыма вы не видите. Что нужно сделать?',
@@ -1625,7 +1759,7 @@ const SURVEY_L2 = {
             {value:'C. Use the elevator so you can leave faster', label:{en:'Use the elevator so you can leave faster', ru:'Воспользоваться лифтом, чтобы выйти быстрее', fa:'از آسانسور استفاده کنم تا سریع‌تر خارج شوم'}},
             {value:'D. Finish what you are doing and then leave', label:{en:'Finish what you are doing and then leave', ru:'Закончить то, что делаю, а потом выйти', fa:'کارم را تمام کنم و بعد خارج شوم'}}
           ]},
-        { id:'Q2', entry:'entry.404543737', type:'radio', correct:'B. Find a safer alternative exit/route and avoid the smoke if possible',
+        { id:'Q2', type:'radio', correct:'B. Find a safer alternative exit/route and avoid the smoke if possible',
           kicker:{en:'Smoke Challenge', ru:'Испытание дымом', fa:'چالش دود'},
           text:{en:'You are evacuating your dormitory. Your usual corridor has become filled with smoke. What is the safest response?',
                 ru:'Вы эвакуируетесь из общежития. Ваш обычный коридор заполнился дымом. Как поступить безопаснее всего?',
@@ -1635,13 +1769,8 @@ const SURVEY_L2 = {
             {value:'B. Find a safer alternative exit/route and avoid the smoke if possible', label:{en:'Find a safer exit or route and avoid the smoke if possible', ru:'Найти другой, более безопасный выход или путь и по возможности избегать дыма', fa:'خروجی یا مسیر امن‌تری پیدا کنم و تا جای ممکن از دود دوری کنم'}},
             {value:'C. Wait in the corridor until the smoke disappears', label:{en:'Wait in the corridor until the smoke disappears', ru:'Ждать в коридоре, пока дым не рассеется', fa:'در راهرو منتظر بمانم تا دود از بین برود'}},
             {value:'D. Use the elevator instead', label:{en:'Use the elevator instead', ru:'Вместо этого воспользоваться лифтом', fa:'به‌جای آن از آسانسور استفاده کنم'}}
-          ]}
-      ]
-    },
-
-    { title:{en:'🧭 Mission 2 — Find Your Way Out', ru:'🧭 Миссия 2 — Найди выход', fa:'🧭 مأموریت ۲ — راه خروج را پیدا کن'},
-      questions:[
-        { id:'Q3', entry:'entry.1104570873', type:'radio', correct:'B. False', shuffle:false,
+          ]},
+        { id:'Q3', type:'radio', correct:'B. False', shuffle:false,
           kicker:{en:'Elevator or Stairs?', ru:'Лифт или лестница?', fa:'آسانسور یا پله؟'},
           text:{en:'True or false: during a fire evacuation, using an elevator is generally a safe way to leave the building quickly.',
                 ru:'Верно или неверно: при эвакуации во время пожара лифт — обычно безопасный способ быстро покинуть здание.',
@@ -1651,7 +1780,7 @@ const SURVEY_L2 = {
             {value:'B. False', label:{en:'False', ru:'Неверно', fa:'نادرست'}},
             {value:'C. Not sure', label:{en:'Not sure', ru:'Не уверен(а)', fa:'مطمئن نیستم'}}
           ]},
-        { id:'Q4', entry:'entry.1044163087', type:'radio', correct:'B. Warn others/activate the alarm and begin following the emergency procedure',
+        { id:'Q4', type:'radio', correct:'B. Warn others/activate the alarm and begin following the emergency procedure',
           kicker:{en:'You Discover a Fire', ru:'Вы обнаружили пожар', fa:'شما آتش را می‌بینید'},
           text:{en:'You notice a fire developing in a university common area. What should be your first priority?',
                 ru:'Вы замечаете, что в общем помещении университета начинается пожар. Что нужно сделать в первую очередь?',
@@ -1661,13 +1790,8 @@ const SURVEY_L2 = {
             {value:'B. Warn others/activate the alarm and begin following the emergency procedure', label:{en:'Warn others or activate the alarm, and start following the emergency procedure', ru:'Предупредить окружающих или включить сигнализацию и начать действовать по инструкции', fa:'دیگران را خبر کنم یا آژیر را فعال کنم و طبق دستورالعمل اضطراری عمل کنم'}},
             {value:'C. Search for an extinguisher and fight the fire regardless of its size', label:{en:'Search for an extinguisher and fight the fire, whatever its size', ru:'Искать огнетушитель и тушить огонь, независимо от размера очага', fa:'دنبال کپسول آتش‌نشانی بگردم و فارغ از اندازهٔ آتش با آن مقابله کنم'}},
             {value:'D. Open nearby doors and windows', label:{en:'Open nearby doors and windows', ru:'Открыть ближайшие двери и окна', fa:'درها و پنجره‌های اطراف را باز کنم'}}
-          ]}
-      ]
-    },
-
-    { title:{en:'🧯 Mission 3 — Fire Extinguisher Challenge', ru:'🧯 Миссия 3 — Испытание огнетушителем', fa:'🧯 مأموریت ۳ — چالش کپسول آتش‌نشانی'},
-      questions:[
-        { id:'Q5', entry:'entry.295403241', type:'radio', correct:'B. When the fire is small and contained, they can safely operate the extinguisher, others have been alerted/emergency response initiated, and they have a clear escape route',
+          ]},
+        { id:'Q5', type:'radio', correct:'B. When the fire is small and contained, they can safely operate the extinguisher, others have been alerted/emergency response initiated, and they have a clear escape route',
           kicker:{en:'When Should You Use a Fire Extinguisher?', ru:'Когда можно использовать огнетушитель?', fa:'کِی از کپسول آتش‌نشانی استفاده کنیم؟'},
           text:{en:'When is it most appropriate for an ordinary student to consider using a fire extinguisher?',
                 ru:'Когда обычному студенту уместнее всего подумать о том, чтобы воспользоваться огнетушителем?',
@@ -1678,7 +1802,7 @@ const SURVEY_L2 = {
             {value:'C. When smoke is too thick to find an exit', label:{en:'When smoke is too thick to find an exit', ru:'Когда дым такой густой, что не найти выход', fa:'وقتی دود آن‌قدر غلیظ است که راه خروج پیدا نمی‌شود'}},
             {value:'D. When the fire is spreading rapidly', label:{en:'When the fire is spreading rapidly', ru:'Когда огонь быстро распространяется', fa:'وقتی آتش به‌سرعت در حال گسترش است'}}
           ]},
-        { id:'Q6', entry:'entry.912204784', type:'radio', correct:'B. At the base of the fire',
+        { id:'Q6', type:'radio', correct:'B. At the base of the fire',
           kicker:{en:'Where Would You Aim?', ru:'Куда направить струю?', fa:'کجا را نشانه بگیریم؟'},
           text:{en:'You decide that it is safe and appropriate to use a fire extinguisher. Where should you aim?',
                 ru:'Вы решили, что пользоваться огнетушителем безопасно и уместно. Куда нужно направить струю?',
@@ -1688,13 +1812,8 @@ const SURVEY_L2 = {
             {value:'B. At the base of the fire', label:{en:'At the base of the fire', ru:'В основание огня', fa:'پایهٔ آتش'}},
             {value:'C. Above the fire', label:{en:'Above the fire', ru:'Над огнём', fa:'بالای آتش'}},
             {value:'D. At the nearest wall', label:{en:'At the nearest wall', ru:'В ближайшую стену', fa:'نزدیک‌ترین دیوار'}}
-          ]}
-      ]
-    },
-
-    { title:{en:'🆘 Mission 4 — Emergency Challenge', ru:'🆘 Миссия 4 — Экстренная ситуация', fa:'🆘 مأموریت ۴ — چالش اضطراری'},
-      questions:[
-        { id:'Q7', entry:'entry.1692836956', type:'radio', correct:'B. Stop, drop and roll',
+          ]},
+        { id:'Q7', type:'radio', correct:'B. Stop, drop and roll',
           kicker:{en:'Clothing Catches Fire', ru:'Загорелась одежда', fa:'لباس آتش گرفته'},
           text:{en:"Your friend's clothing catches fire. Which action is appropriate?",
                 ru:'На вашем друге загорелась одежда. Какое действие правильное?',
@@ -1705,7 +1824,7 @@ const SURVEY_L2 = {
             {value:'C. Tell them to stand still and wait', label:{en:'Tell them to stand still and wait', ru:'Сказать ему стоять на месте и ждать', fa:'به او بگویم بی‌حرکت بایستد و صبر کند'}},
             {value:'D. Use an elevator to reach help', label:{en:'Use an elevator to reach help', ru:'Спуститься на лифте за помощью', fa:'با آسانسور برای کمک گرفتن برود'}}
           ]},
-        { id:'Q8', entry:'entry.96129879', type:'radio', correct:'B. Stay in the room with the door closed, call emergency services/report your location, and signal for help if possible',
+        { id:'Q8', type:'radio', correct:'B. Stay in the room with the door closed, call emergency services/report your location, and signal for help if possible',
           kicker:{en:'Trapped!', ru:'В ловушке!', fa:'گیر افتاده‌اید!'},
           text:{en:'You are in your dorm room. Smoke and heat in the corridor prevent you from safely reaching an exit. What should you do?',
                 ru:'Вы в своей комнате в общежитии. Дым и жар в коридоре не дают безопасно добраться до выхода. Что делать?',
@@ -1715,155 +1834,54 @@ const SURVEY_L2 = {
             {value:'B. Stay in the room with the door closed, call emergency services/report your location, and signal for help if possible', label:{en:'Stay in the room with the door closed, call emergency services and give your location, and signal for help if possible', ru:'Остаться в комнате с закрытой дверью, позвонить в экстренные службы, сообщить, где вы, и по возможности подавать сигналы о помощи', fa:'با در بسته در اتاق بمانم، با اورژانس تماس بگیرم و محلم را بگویم و در صورت امکان برای کمک علامت بدهم'}},
             {value:'C. Hide under the bed', label:{en:'Hide under the bed', ru:'Спрятаться под кроватью', fa:'زیر تخت پنهان شوم'}},
             {value:'D. Open the door and windows fully to create airflow', label:{en:'Open the door and windows fully to create airflow', ru:'Полностью открыть дверь и окна, чтобы создать поток воздуха', fa:'در و پنجره‌ها را کاملاً باز کنم تا هوا جریان پیدا کند'}}
-          ]}
-      ]
-    },
-
-    { title:{en:'🧠 Mission 5 — How Ready Are You?', ru:'🧠 Миссия 5 — Насколько вы готовы?', fa:'🧠 مأموریت ۵ — چقدر آماده‌اید؟'},
-      intro:{en:'No right or wrong answers here. Just be honest!', ru:'Здесь нет правильных и неправильных ответов. Просто отвечайте честно!', fa:'اینجا پاسخ درست یا غلطی وجود ندارد. فقط صادق باشید!'},
-      questions:[
-        { id:'Q9', entry:'entry.281067844', type:'scale',
+          ]},
+        { id:'Q9', type:'scale',
           values:['1 — Not at all confident','2 — Slightly confident','3 — Moderately confident','4 — Very confident','5 — Completely confident'],
           text:{en:'Right now, how confident are you that you could identify a safe evacuation route from the university building you use most often?',
                 ru:'Насколько вы сейчас уверены, что смогли бы найти безопасный путь эвакуации из учебного корпуса, где бываете чаще всего?',
                 fa:'در حال حاضر چقدر مطمئن هستید که می‌توانید مسیر امن تخلیه را در ساختمانی از دانشگاه که بیشتر از همه در آن هستید پیدا کنید؟'},
           low:{en:'Not at all confident', ru:'Совсем не уверен(а)', fa:'اصلاً مطمئن نیستم'},
           high:{en:'Completely confident', ru:'Полностью уверен(а)', fa:'کاملاً مطمئنم'} },
-        { id:'Q10', entry:'entry.803739762', type:'scale',
+        { id:'Q10', type:'scale',
           values:['1 — Not at all familiar','2 — Slightly familiar','3 — Moderately familiar','4 — Very familiar','5 — Extremely familiar'],
           text:{en:'How familiar are you with the location of emergency exits in the university and dormitory buildings you regularly use?',
                 ru:'Насколько хорошо вы знаете, где находятся аварийные выходы в учебных корпусах и общежитии, где вы регулярно бываете?',
                 fa:'چقدر با محل خروجی‌های اضطراری در ساختمان‌های دانشگاه و خوابگاهی که مرتب در آن‌ها هستید آشنا هستید؟'},
           low:{en:'Not at all familiar', ru:'Совсем не знаю', fa:'اصلاً آشنا نیستم'},
           high:{en:'Extremely familiar', ru:'Знаю отлично', fa:'کاملاً آشنا هستم'} },
-        { id:'Q11', entry:'entry.303679078', type:'scale',
+        { id:'Q11', type:'scale',
           values:['1 — Not at all prepared','2 — Slightly prepared','3 — Moderately prepared','4 — Very prepared','5 — Extremely prepared'],
           text:{en:'If a real fire happened at university today, how prepared would you feel to respond appropriately?',
                 ru:'Если бы сегодня в университете случился настоящий пожар, насколько вы были бы готовы действовать правильно?',
                 fa:'اگر امروز در دانشگاه آتش‌سوزی واقعی رخ دهد، چقدر احساس می‌کنید برای واکنش درست آماده‌اید؟'},
           low:{en:'Not at all prepared', ru:'Совсем не готов(а)', fa:'اصلاً آماده نیستم'},
           high:{en:'Extremely prepared', ru:'Полностью готов(а)', fa:'کاملاً آماده‌ام'} },
-        { id:'Q12', entry:'entry.1825557300', type:'scale',
+        { id:'Q12', type:'scale',
           values:['1 — Very unlikely','2 — Unlikely','3 — Neither likely nor unlikely','4 — Likely','5 — Very likely'],
           text:{en:"If a fire alarm sounded but you could not see or smell smoke, how likely would you be to follow the university's evacuation instructions immediately?",
                 ru:'Если бы сработала пожарная сигнализация, но вы не видели бы дыма и не чувствовали его запаха, насколько вероятно, что вы сразу выполнили бы инструкции по эвакуации?',
                 fa:'اگر آژیر آتش به صدا درآید ولی دودی نبینید و بویی حس نکنید، چقدر احتمال دارد بلافاصله از دستورالعمل تخلیهٔ دانشگاه پیروی کنید؟'},
           low:{en:'Very unlikely', ru:'Очень маловероятно', fa:'بسیار بعید'},
           high:{en:'Very likely', ru:'Очень вероятно', fa:'بسیار محتمل'} }
-      ]
-    },
+];
+const READY_INTRO = {en:'No right or wrong answers here. Just be honest!', ru:'Здесь нет правильных и неправильных ответов. Просто отвечайте честно!', fa:'اینجا پاسخ درست یا غلطی وجود ندارد. فقط صادق باشید!'};
 
-    { title:{en:'⭐ BONUS Mission — Be the Rescuer', ru:'⭐ Бонусная миссия — Стань спасателем', fa:'⭐ مأموریت ویژه — نجات‌دهنده باشید'},
-      intro:{en:'New level unlocked!', ru:'Открыт новый уровень!', fa:'مرحلهٔ جدید باز شد!'},
-      questions:[
-        { id:'Q13', entry:'entry.1856946207', type:'radio', correct:'C. Cool it under cool running water for about 20 minutes',
-          kicker:{en:'Burn Rescue', ru:'Помощь при ожоге', fa:'کمک به سوختگی'},
-          text:{en:'Your friend burned their hand while escaping. What is the best first aid?',
-                ru:'Ваш друг обжёг руку, пока выбирался. Какая первая помощь лучше всего?',
-                fa:'دست دوستتان هنگام فرار سوخته است. بهترین کمک اولیه چیست؟'},
-          options:[
-            {value:'A. Put ice directly on the burn', label:{en:'Put ice directly on the burn', ru:'Приложить лёд прямо к ожогу', fa:'یخ را مستقیم روی سوختگی بگذارم'}},
-            {value:'B. Cover it with butter, oil or toothpaste', label:{en:'Cover it with butter, oil or toothpaste', ru:'Смазать сливочным или растительным маслом либо зубной пастой', fa:'روی آن کره، روغن یا خمیردندان بمالم'}},
-            {value:'C. Cool it under cool running water for about 20 minutes', label:{en:'Cool it under cool running water for about 20 minutes', ru:'Охлаждать под прохладной проточной водой около 20 минут', fa:'حدود ۲۰ دقیقه آن را زیر آب روان خنک بگیرم'}},
-            {value:'D. Pop the blisters to let the heat out', label:{en:'Pop the blisters to let the heat out', ru:'Проколоть пузыри, чтобы вышел жар', fa:'تاول‌ها را بترکانم تا گرما خارج شود'}}
-          ]},
-        { id:'Q14', entry:'entry.1426254289', type:'radio', correct:'A. Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives',
-          kicker:{en:'Smoke Victim', ru:'Пострадавший от дыма', fa:'مصدوم دود'},
-          text:{en:'You helped a classmate get out of a smoky building. Outside, they are coughing, dizzy and confused. What should you do?',
-                ru:'Вы помогли однокурснику выбраться из задымлённого здания. На улице он кашляет, у него кружится голова и путаются мысли. Что делать?',
-                fa:'به هم‌کلاسی‌تان کمک کردید از ساختمانی پر از دود بیرون بیاید. بیرون از ساختمان سرفه می‌کند، سرگیجه دارد و گیج است. چه باید بکنید؟'},
-          options:[
-            {value:'A. Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives', label:{en:'Keep them in fresh air, call 112 (or 103) and watch their breathing until help arrives', ru:'Оставаться с ним на свежем воздухе, позвонить 112 (или 103) и следить за дыханием до приезда помощи', fa:'او را در هوای آزاد نگه دارم، با ۱۱۲ (یا ۱۰۳) تماس بگیرم و تا رسیدن کمک تنفسش را زیر نظر بگیرم'}},
-            {value:'B. Give them water and let them go home to rest', label:{en:'Give them water and let them go home to rest', ru:'Дать воды и отпустить домой отдохнуть', fa:'به او آب بدهم و بگذارم برای استراحت به خانه برود'}},
-            {value:'C. Take them back inside to get their belongings', label:{en:'Take them back inside to get their belongings', ru:'Вернуться с ним внутрь за вещами', fa:'او را برای برداشتن وسایلش به داخل برگردانم'}},
-            {value:"D. Do nothing. If they can cough, they're fine", label:{en:"Do nothing — if they can cough, they're fine", ru:'Ничего не делать: раз кашляет, значит, всё в порядке', fa:'کاری نکنم؛ اگر می‌تواند سرفه کند، حالش خوب است'}}
-          ]},
-        { id:'Q15', entry:'entry.1697952356', type:'radio', correct:'D. 112',
-          kicker:{en:'The Magic Number', ru:'Магический номер', fa:'شمارهٔ جادویی'},
-          text:{en:'From a mobile phone in Russia, which ONE number connects you to all emergency services?',
-                ru:'Какой ОДИН номер с мобильного телефона в России соединяет со всеми экстренными службами?',
-                fa:'در روسیه، با تلفن همراه کدام شمارهٔ واحد شما را به همهٔ خدمات اضطراری وصل می‌کند؟'},
-          options:[
-            {value:'A. 100', label:{en:'100', ru:'100', fa:'۱۰۰'}},
-            {value:'B. 115', label:{en:'115', ru:'115', fa:'۱۱۵'}},
-            {value:'C. 122', label:{en:'122', ru:'122', fa:'۱۲۲'}},
-            {value:'D. 112', label:{en:'112', ru:'112', fa:'۱۱۲'}}
-          ]}
-      ]
-    },
-
-    { title:{en:'🎬 Final Mission — Rate Our Training', ru:'🎬 Финальная миссия — Оцените наше обучение', fa:'🎬 مأموریت نهایی — آموزش ما را ارزیابی کنید'},
-      questions:[
-        { id:'Q16', type:'grid',
-          text:{en:'How useful was each part?', ru:'Насколько полезной была каждая часть?', fa:'هر بخش چقدر مفید بود؟'},
-          help:{en:'1 = not useful, 5 = very useful', ru:'1 — бесполезно, 5 — очень полезно', fa:'۱ = مفید نبود، ۵ = بسیار مفید'},
-          rows:[
-            {entry:'entry.1091832860', label:{en:'Live session with our team', ru:'Живое занятие с нашей командой', fa:'جلسهٔ حضوری با تیم ما'}},
-            {entry:'entry.1468441134', label:{en:'Evacuation plan videos', ru:'Видео о планах эвакуации', fa:'ویدیوهای طرح تخلیه'}},
-            {entry:'entry.1990757949', label:{en:'Website & database', ru:'Сайт и база данных', fa:'وب‌سایت و پایگاه داده'}},
-            {entry:'entry.380814113',  label:{en:'Chatbot', ru:'Чат-бот', fa:'چت‌بات'}}
-          ],
-          columns:[
-            {value:"Didn't use", label:{en:"Didn't use", ru:'Не пользовался', fa:'استفاده نکردم'}, na:true},
-            {value:'1', label:{en:'1', ru:'1', fa:'۱'}},
-            {value:'2', label:{en:'2', ru:'2', fa:'۲'}},
-            {value:'3', label:{en:'3', ru:'3', fa:'۳'}},
-            {value:'4', label:{en:'4', ru:'4', fa:'۴'}},
-            {value:'5', label:{en:'5', ru:'5', fa:'۵'}}
-          ]},
-        { id:'Q17', entry:'entry.1354005031', type:'checkbox', exclusive:'None of these yet',
-          text:{en:'Since the training, have you…', ru:'После обучения вы…', fa:'از زمان آموزش تاکنون…'},
-          help:{en:'Tick all that apply.', ru:'Отметьте всё подходящее.', fa:'همهٔ موارد مربوط را علامت بزنید.'},
-          options:[
-            {value:'Checked where the nearest emergency exit is', label:{en:'Checked where the nearest emergency exit is', ru:'Проверили, где ближайший аварийный выход', fa:'محل نزدیک‌ترین خروجی اضطراری را بررسی کرده‌ام'}},
-            {value:'Found the nearest fire extinguisher', label:{en:'Found the nearest fire extinguisher', ru:'Нашли ближайший огнетушитель', fa:'نزدیک‌ترین کپسول آتش‌نشانی را پیدا کرده‌ام'}},
-            {value:'Saved 112 / 101 in my phone', label:{en:'Saved 112 / 101 in my phone', ru:'Сохранили 112 / 101 в телефоне', fa:'شماره‌های ۱۱۲ / ۱۰۱ را در گوشی‌ام ذخیره کرده‌ام'}},
-            {value:'Told a friend what I learned', label:{en:'Told a friend what I learned', ru:'Рассказали другу о том, что узнали', fa:'آنچه یاد گرفتم را به یک دوست گفته‌ام'}},
-            {value:'Visited the website again', label:{en:'Visited the website again', ru:'Снова заходили на сайт', fa:'دوباره به وب‌سایت سر زده‌ام'}},
-            {value:'None of these yet', label:{en:'None of these yet', ru:'Пока ничего из этого', fa:'هنوز هیچ‌کدام'}}
-          ]},
-        { id:'Q18', entry:'entry.1399424141', type:'scale',
-          values:['1','2','3','4','5'],
-          text:{en:'The language of our materials was easy to understand', ru:'Язык наших материалов был понятным', fa:'زبان مطالب ما به‌راحتی قابل فهم بود'},
-          low:{en:'Strongly disagree', ru:'Совершенно не согласен(на)', fa:'کاملاً مخالفم'},
-          high:{en:'Strongly agree', ru:'Полностью согласен(на)', fa:'کاملاً موافقم'} },
-        { id:'Q19', entry:'entry.1932267229', type:'scale',
-          values:['0','1','2','3','4','5','6','7','8','9','10'],
-          text:{en:'How likely are you to recommend our training to a new international student?',
-                ru:'Насколько вероятно, что вы порекомендуете наше обучение новому иностранному студенту?',
-                fa:'چقدر احتمال دارد آموزش ما را به یک دانشجوی بین‌المللی تازه‌وارد پیشنهاد کنید؟'},
-          low:{en:'Not at all likely', ru:'Совсем маловероятно', fa:'اصلاً محتمل نیست'},
-          high:{en:'Extremely likely', ru:'Очень вероятно', fa:'بسیار محتمل'} },
-        { id:'Q20', entry:'entry.1100274645', type:'long',
-          text:{en:'Your #1 tip for a friend 💬', ru:'Ваш главный совет другу 💬', fa:'مهم‌ترین توصیهٔ شما به یک دوست 💬'},
-          help:{en:"In one sentence: what's the most important thing you learned?", ru:'Одним предложением: что самое важное вы узнали?', fa:'در یک جمله: مهم‌ترین چیزی که یاد گرفتید چه بود؟'} },
-        { id:'Q21', entry:'entry.293594578', type:'long', optional:true,
-          text:{en:'Help us level up (optional)', ru:'Помогите нам стать лучше (необязательно)', fa:'کمک کنید بهتر شویم (اختیاری)'},
-          help:{en:'What should we add or improve?', ru:'Что нам добавить или улучшить?', fa:'چه چیزی را اضافه یا بهتر کنیم؟'} }
-      ]
-    }
-  ]
-};
-
-/* ============================================================
-   LEVEL 1 — Fire Safety Questionnaire (the first check)
-
-   This feeds the Google Form "Fire Safety Questionnaire — Level 1".
-   Questions 1–12 are the same scenarios as in Level 2, so they reuse
-   the Level 2 wording below; only the entry numbers (and, for 9–12,
-   the saved option text) are different in this form.
-   ============================================================ */
+// Where to read more about each knowledge question (shown after submitting).
+const L1_LEARN = { Q1:['fire-alarm'], Q2:['fire-smoke'], Q3:['fire-alarm'], Q4:['fire-see'],
+                   Q5:['fire-extinguisher'], Q6:['fire-extinguisher'], Q7:['fire-clothing'], Q8:['fire-trapped'] };
 
 function level1Copy(id, entry, values){
-  const q = SURVEY_L2.sections.reduce((all, s) => all.concat(s.questions), []).find(x => x.id === id);
+  const q = L1_QUESTIONS.find(x => x.id === id);
   const copy = Object.assign({}, q, { entry });
   if(values) copy.values = values;
+  if(L1_LEARN[id]) copy.learn = L1_LEARN[id];
   return copy;
 }
 const LETTERS = ['A','B','C','D','E'];
 const lettered = values => values.map((v,i) => LETTERS[i] + '. ' + v);
 
 const SURVEY_L1 = {
+  key: 'L1',
   formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSepkaxmYe7RNx2QZOQ2XFiyOus4SfCyyxuzCEgKQ99o3DtrTQ/formResponse',
   pageHistory: '0,1',
 
@@ -1874,15 +1892,15 @@ const SURVEY_L1 = {
   },
 
   ui: {
-    en: Object.assign({}, SURVEY_L2.ui.en, { doneTitle:'Thank you!', doneScore:'correct answers on the knowledge questions',
+    en: Object.assign({}, QUIZ_UI.en, { doneTitle:'Thank you!', doneScore:'correct answers on the knowledge questions',
           doneBody:'Your answers help the team understand what to teach first. Remember your code — you will need it for Level 2.' }),
-    ru: Object.assign({}, SURVEY_L2.ui.ru, { doneTitle:'Спасибо!', doneScore:'правильных ответов в вопросах на знание',
+    ru: Object.assign({}, QUIZ_UI.ru, { doneTitle:'Спасибо!', doneScore:'правильных ответов в вопросах на знание',
           doneBody:'Ваши ответы помогут команде понять, чему учить в первую очередь. Запомните свой код — он понадобится для уровня 2.' }),
-    fa: Object.assign({}, SURVEY_L2.ui.fa, { doneTitle:'سپاسگزاریم!', doneScore:'پاسخ درست در سؤالات دانشی',
+    fa: Object.assign({}, QUIZ_UI.fa, { doneTitle:'سپاسگزاریم!', doneScore:'پاسخ درست در سؤالات دانشی',
           doneBody:'پاسخ‌های شما به تیم کمک می‌کند بداند اول چه چیزی را آموزش دهد. کدتان را به خاطر بسپارید — برای مرحلهٔ ۲ لازم است.' })
   },
 
-  ranks: null,   // Level 1 shows the score only; ranks are a Level 2 thing.
+  ranks: null,   // Level 1 shows the score only.
 
   sections: [
     { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
@@ -1890,7 +1908,7 @@ const SURVEY_L1 = {
              ru:'Этот опрос — часть университетского проекта о знаниях, осведомлённости и готовности студентов в вопросах пожарной безопасности. Внимательно прочитайте каждый вопрос и выберите ответ, который лучше всего отражает ваши знания или мнение.',
              fa:'این پرسشنامه بخشی از یک پروژهٔ دانشگاهی دربارهٔ دانش، آگاهی و آمادگی دانشجویان در زمینهٔ ایمنی آتش‌سوزی است. هر سؤال را با دقت بخوانید و پاسخی را انتخاب کنید که بهتر از همه دانش یا نظر شما را نشان می‌دهد.'},
       questions:[
-        { id:'code', entry:'entry.2146882345', type:'text',
+        { id:'code', entry:'entry.2146882345', type:'text', format:'code',
           text:{en:'Your secret code', ru:'Ваш секретный код', fa:'کد مخفی شما'},
           help:{en:'The first 2 letters of your first name + the day you were born (2 digits). Remember it — you will use the same code in Level 2.',
                 ru:'Первые 2 буквы вашего имени + день вашего рождения (2 цифры). Запомните его — этот же код понадобится на уровне 2.',
@@ -1946,7 +1964,7 @@ const SURVEY_L1 = {
       questions:[ level1Copy('Q7','entry.1799551098'), level1Copy('Q8','entry.1509669983') ] },
 
     { title:{en:'⭐ Part 5 — How Ready Are You?', ru:'⭐ Часть 5 — Насколько вы готовы?', fa:'⭐ بخش ۵ — چقدر آماده‌اید؟'},
-      intro:SURVEY_L2.sections[5].intro,
+      intro:READY_INTRO,
       questions:[
         level1Copy('Q9',  'entry.444632080',  lettered(['1 — Not at all confident','2 — Slightly confident','3 — Moderately confident','4 — Very confident','5 — Completely confident'])),
         level1Copy('Q10', 'entry.119735555',  lettered(['1 — Not at all familiar','2 — Slightly familiar','3 — Moderately familiar','4 — Very familiar','5 — Extremely familiar'])),
@@ -1954,6 +1972,200 @@ const SURVEY_L1 = {
         level1Copy('Q12', 'entry.1785860480', lettered(['1 — Very unlikely','2 — Unlikely','3 — Neither likely nor unlikely','4 — Likely','5 — Very likely']))
       ]
     }
+  ]
+};
+
+/* ------------------------------------------------------------
+   LEVEL 2 — Fire Safety Quest (October 2026 version)
+   This feeds the Google Form "Fire Safety Quest — Level 2 (October 2026)".
+   1) rate each part of the website, 2) two real-life tasks,
+   3) the evacuation drill in the main building.
+   (The first version of Level 2 and its 17 answers stay in the old
+   form "Fire Safety Quest — Level 2"; nothing new is sent there.)
+   ------------------------------------------------------------ */
+
+const SURVEY_L2 = {
+  key: 'L2-2026-10',
+  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSdH-yyxOAaXGW3ECCNG289Oo3xUo5m-YC3qT8H0-KmK055d5Q/formResponse',
+  pageHistory: '0',
+
+  launch: {
+    en: { title: '🔥 Fire Safety Quest — Level 2', sub: 'Rate our website · 2 real-life tasks · the drill · about 4 minutes' },
+    ru: { title: '🔥 Квест по пожарной безопасности — уровень 2', sub: 'Оцените сайт · 2 жизненные задачи · учебная эвакуация · около 4 минут' },
+    fa: { title: '🔥 کوئست ایمنی آتش‌سوزی — مرحلهٔ ۲', sub: 'ارزیابی سایت · ۲ موقعیت واقعی · مانور تخلیه · حدود ۴ دقیقه' }
+  },
+
+  ui: {
+    en: Object.assign({}, QUIZ_UI.en, { doneScore:'right choices in the real-life tasks',
+          doneBody:'Thanks, agent! Your answers help the team make this guide better for other students.' }),
+    ru: Object.assign({}, QUIZ_UI.ru, { doneScore:'верных решений в жизненных задачах',
+          doneBody:'Спасибо, агент! Ваши ответы помогут команде сделать этот гид лучше для других студентов.' }),
+    fa: Object.assign({}, QUIZ_UI.fa, { doneScore:'انتخاب درست در موقعیت‌های واقعی',
+          doneBody:'ممنون، مأمور! پاسخ‌های شما به تیم کمک می‌کند این راهنما را برای دانشجویان دیگر بهتر کند.' })
+  },
+
+  // Rank by right choices in the two tasks (12 in total), checked from the top down.
+  ranks: [
+    { min:12, label:{en:'🏆 Fire Safety Legend', ru:'🏆 Легенда пожарной безопасности', fa:'🏆 اسطورهٔ ایمنی آتش‌سوزی'} },
+    { min:10, label:{en:'🥇 Senior Agent', ru:'🥇 Старший агент', fa:'🥇 مأمور ارشد'} },
+    { min:8,  label:{en:'🥈 Field Agent', ru:'🥈 Полевой агент', fa:'🥈 مأمور میدانی'} },
+    { min:6,  label:{en:'🥉 Agent in Training', ru:'🥉 Агент-стажёр', fa:'🥉 مأمور کارآموز'} },
+    { min:0,  label:{en:'🔰 Rookie', ru:'🔰 Новичок', fa:'🔰 تازه‌کار'} }
+  ],
+
+  sections: [
+    { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
+      intro:{en:'Welcome back, agent! 🕵️ Three short missions: rate each part of our website, solve two real-life situations, and tell us how the evacuation drill went.',
+             ru:'С возвращением, агент! 🕵️ Впереди три короткие миссии: оцените каждый раздел нашего сайта, решите две жизненные ситуации и расскажите, как прошла учебная эвакуация.',
+             fa:'دوباره خوش آمدید، مأمور! 🕵️ سه مأموریت کوتاه در پیش است: به هر بخش وب‌سایت ما نمره بدهید، دو موقعیت واقعی را حل کنید و از مانور تخلیه برایمان بگویید.'},
+      questions:[
+        { id:'code', entry:'entry.980163913', type:'text', format:'code',
+          text:{en:'Your secret agent code', ru:'Ваш секретный код агента', fa:'کد مخفی مأمور شما'},
+          help:{en:'Same code as in Level 1: the first 2 letters of your first name + the day you were born (2 digits).',
+                ru:'Тот же код, что и на уровне 1: первые 2 буквы вашего имени + день вашего рождения (2 цифры).',
+                fa:'همان کد مرحلهٔ ۱: دو حرف اول نام خودتان + روز تولدتان (دو رقم).'},
+          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} }
+      ]
+    },
+
+    { title:{en:'⭐ Mission 1 — Rate our website', ru:'⭐ Миссия 1 — Оцените наш сайт', fa:'⭐ مأموریت ۱ — به وب‌سایت ما نمره بدهید'},
+      intro:{en:'How useful and educational was each part of our website for you? 1 = not useful, 5 = very useful, I learned a lot. If you never opened a part, tap “Didn’t use”.',
+             ru:'Насколько полезным и познавательным был для вас каждый раздел сайта? 1 — бесполезно, 5 — очень полезно, я многое узнал(а). Если вы не открывали раздел, нажмите «Не открывал(а)».',
+             fa:'هر بخش وب‌سایت ما چقدر برایتان مفید و آموزنده بود؟ ۱ یعنی مفید نبود و ۵ یعنی خیلی مفید بود و چیزهای زیادی یاد گرفتم. اگر بخشی را باز نکرده‌اید، «استفاده نکردم» را بزنید.'},
+      questions:[
+        { id:'parts', type:'grid',
+          text:{en:'How useful and educational was each part?', ru:'Насколько полезен и познавателен каждый раздел?', fa:'هر بخش چقدر مفید و آموزنده بود؟'},
+          help:{en:'1 = not useful · 5 = very useful', ru:'1 — бесполезно · 5 — очень полезно', fa:'۱ = مفید نبود · ۵ = خیلی مفید بود'},
+          rows:[
+            {entry:'entry.1915239919', icon:'fire',
+             label:{en:'In a fire: what to do', ru:'При пожаре: что делать', fa:'هنگام آتش‌سوزی: چه باید کرد'},
+             desc:{en:'7 cards: the alarm, smoke, trapped, extinguisher…', ru:'7 карточек: сигнализация, дым, нет выхода, огнетушитель…', fa:'۷ کارت: آژیر، دود، گیر افتادن، کپسول آتش‌نشانی…'}},
+            {entry:'entry.355039300', icon:'aid',
+             label:{en:'First aid', ru:'Первая помощь', fa:'کمک‌های اولیه'},
+             desc:{en:'Burns, smoke, CPR… with the cooling timer and CPR coach', ru:'Ожоги, дым, СЛР… с таймером охлаждения и ритмом для СЛР', fa:'سوختگی، دود، احیا… همراه با زمان‌سنج خنک کردن و ریتم احیا'}},
+            {entry:'entry.239795038', icon:'say',
+             label:{en:'What to say when you call 112', ru:'Что сказать, когда звоните в 112', fa:'هنگام تماس با ۱۱۲ چه بگوییم'},
+             desc:{en:'Builds your message in Russian and reads it aloud', ru:'Составляет сообщение на русском и читает его вслух', fa:'پیام شما را به روسی می‌سازد و بلند می‌خواند'}},
+            {entry:'entry.1411001565', icon:'plans',
+             label:{en:'Floor plans', ru:'Планы этажей', fa:'نقشهٔ طبقات'},
+             desc:{en:'Zoomable plans of the main building', ru:'Планы главного корпуса с увеличением', fa:'نقشه‌های ساختمان اصلی با امکان بزرگ‌نمایی'}},
+            {entry:'entry.1372430938', icon:'videos',
+             label:{en:'Evacuation videos', ru:'Видео об эвакуации', fa:'ویدیوهای تخلیه'},
+             desc:{en:'Real routes out of the university and the dormitory', ru:'Настоящие пути эвакуации из корпуса и общежития', fa:'مسیرهای واقعی خروج از دانشگاه و خوابگاه'}},
+            {entry:'entry.559405931', icon:'breathe',
+             label:{en:'Breathing exercise', ru:'Дыхательное упражнение', fa:'تمرین تنفس'},
+             desc:{en:'The flower that helps you calm down', ru:'Цветок, который помогает успокоиться', fa:'گلی که کمک می‌کند آرام شوید'}}
+          ],
+          columns:[
+            {value:'Did not use', label:{en:'Didn’t use', ru:'Не открывал(а)', fa:'استفاده نکردم'}, na:true},
+            {value:'1', label:{en:'1', ru:'1', fa:'۱'}},
+            {value:'2', label:{en:'2', ru:'2', fa:'۲'}},
+            {value:'3', label:{en:'3', ru:'3', fa:'۳'}},
+            {value:'4', label:{en:'4', ru:'4', fa:'۴'}},
+            {value:'5', label:{en:'5', ru:'5', fa:'۵'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🚨 Mission 2 — Real-life tasks', ru:'🚨 Миссия 2 — Жизненные задачи', fa:'🚨 مأموریت ۲ — موقعیت‌های واقعی'},
+      intro:{en:'Two real situations. Tick every action that is right — there is more than one.',
+             ru:'Две реальные ситуации. Отметьте все правильные действия — их несколько.',
+             fa:'دو موقعیت واقعی. همهٔ کارهای درست را علامت بزنید — بیش از یک جواب درست وجود دارد.'},
+      questions:[
+        { id:'T1', entry:'entry.599037841', type:'checkbox', learn:['fire-alarm','fire-smoke'],
+          correct:['Leave right away, even if I cannot see any fire',
+                   'Stay low, go to the stairs and close doors behind me',
+                   'Go to the assembly point and stay until I am told I may leave'],
+          kicker:{en:'Task 1 — Night alarm', ru:'Задача 1 — Тревога ночью', fa:'موقعیت ۱ — آژیر نیمه‌شب'},
+          text:{en:'It’s 2 a.m. in the dormitory and the fire alarm goes off. You open your door: there is smoke at the far end of the corridor, but the way to the stairs is clear. What do you do?',
+                ru:'Два часа ночи, вы в общежитии, и срабатывает пожарная сигнализация. Вы открываете дверь: в дальнем конце коридора дым, но путь к лестнице свободен. Что вы делаете?',
+                fa:'ساعت ۲ بامداد است و در خوابگاه هستید که آژیر آتش به صدا درمی‌آید. در اتاق را باز می‌کنید: انتهای راهرو دود است، اما راه پله‌ها باز است. چه می‌کنید؟'},
+          help:{en:'Tick all the right actions.', ru:'Отметьте все правильные действия.', fa:'همهٔ کارهای درست را علامت بزنید.'},
+          options:[
+            {value:'Leave right away, even if I cannot see any fire',
+             label:{en:'Leave right away, even if I can’t see any fire', ru:'Сразу выйти, даже если огня не видно', fa:'فوراً بیرون بروم، حتی اگر آتشی نمی‌بینم'},
+             why:{en:'The alarm itself is the signal to leave — don’t wait to see fire or smoke.', ru:'Сигнализация — уже сигнал уходить. Не ждите, пока увидите огонь или дым.', fa:'خودِ آژیر یعنی باید بیرون بروید — منتظر دیدن آتش یا دود نمانید.'}},
+            {value:'Pack my passport and laptop first',
+             label:{en:'Pack my passport and laptop first', ru:'Сначала собрать паспорт и ноутбук', fa:'اول پاسپورت و لپ‌تاپم را جمع کنم'},
+             why:{en:'Every minute counts. Take your coat only if it is right next to you — never stop for belongings.', ru:'Дорога каждая минута. Возьмите верхнюю одежду, только если она рядом, — не задерживайтесь из-за вещей.', fa:'هر دقیقه مهم است. فقط اگر کاپشنتان کنار دستتان است آن را بردارید — برای وسایل معطل نشوید.'}},
+            {value:'Stay low, go to the stairs and close doors behind me',
+             label:{en:'Stay low, go to the stairs and close doors behind me', ru:'Пригнуться, идти к лестнице и закрывать за собой двери', fa:'خم شوم، به طرف پله‌ها بروم و درها را پشت سرم ببندم'},
+             why:{en:'The cleanest air is low down, and closed doors hold back smoke and fire.', ru:'Внизу воздух чище, а закрытые двери сдерживают дым и огонь.', fa:'هوای پاک‌تر پایین است و درِ بسته جلوی پخش دود و آتش را می‌گیرد.'}},
+            {value:'Take the lift because it is faster',
+             label:{en:'Take the lift — it’s faster', ru:'Поехать на лифте — так быстрее', fa:'با آسانسور بروم — سریع‌تر است'},
+             why:{en:'Never use the lift: it can stop at the fire floor or lose power with you inside.', ru:'Никогда не пользуйтесь лифтом: он может остановиться на этаже пожара или обесточиться, пока вы внутри.', fa:'هرگز از آسانسور استفاده نکنید: ممکن است در طبقهٔ آتش‌سوزی بایستد یا وقتی داخلش هستید برقش قطع شود.'}},
+            {value:'Go to the assembly point and stay until I am told I may leave',
+             label:{en:'Go to the assembly point and stay until I’m told I may leave', ru:'Пойти к месту сбора и оставаться там, пока не разрешат уйти', fa:'به محل تجمع بروم و تا وقتی اجازهٔ رفتن نداده‌اند همان‌جا بمانم'},
+             why:{en:'That is how staff know everyone is out — so nobody goes back inside to look for you.', ru:'Так сотрудники видят, что вышли все, и никто не пойдёт обратно в здание искать вас.', fa:'این‌طوری مسئولان می‌فهمند همه بیرون آمده‌اند و کسی برای پیدا کردن شما به داخل برنمی‌گردد.'}},
+            {value:'Wait in my room until someone confirms it is a real fire',
+             label:{en:'Wait in my room until someone confirms it is a real fire', ru:'Ждать в комнате, пока кто-нибудь не подтвердит, что пожар настоящий', fa:'در اتاقم بمانم تا کسی تأیید کند که آتش‌سوزی واقعی است'},
+             why:{en:'Waiting wastes the minutes you need. Treat every alarm as real.', ru:'Ожидание отнимает минуты, которые вам нужны. Считайте каждую тревогу настоящей.', fa:'انتظار، دقیقه‌هایی را که لازم دارید هدر می‌دهد. هر آژیری را واقعی بدانید.'}}
+          ]},
+
+        { id:'T2', entry:'entry.962551881', type:'checkbox', learn:['aid-burns','aid-smoke'],
+          correct:['Hold the burn under cool running water for 20 minutes',
+                   'Take off their rings and watch',
+                   'Call 112 or 103 because a hoarse voice after smoke is a danger sign'],
+          kicker:{en:'Task 2 — Be the rescuer', ru:'Задача 2 — Станьте спасателем', fa:'موقعیت ۲ — نجات‌دهنده باشید'},
+          text:{en:'You are outside after the evacuation. Your friend has a burn the size of a coin on the back of their hand. They keep coughing, and their voice has become hoarse. What do you do?',
+                ru:'Вы на улице после эвакуации. У вашего друга на тыльной стороне ладони ожог размером с монету. Он всё время кашляет, и голос у него стал хриплым. Что вы делаете?',
+                fa:'بعد از تخلیه بیرون ساختمان هستید. پشت دست دوستتان سوختگی‌ای به اندازهٔ یک سکه است. مدام سرفه می‌کند و صدایش گرفته است. چه می‌کنید؟'},
+          help:{en:'Tick all the right actions.', ru:'Отметьте все правильные действия.', fa:'همهٔ کارهای درست را علامت بزنید.'},
+          options:[
+            {value:'Hold the burn under cool running water for 20 minutes',
+             label:{en:'Hold the burn under cool running water for 20 minutes', ru:'Держать ожог под прохладной проточной водой 20 минут', fa:'سوختگی را ۲۰ دقیقه زیر آب روان خنک بگیرم'},
+             why:{en:'Cooling stops the heat from going deeper and eases the pain. It still helps if you start late.', ru:'Охлаждение не даёт жару проникать глубже и уменьшает боль. Помогает, даже если начать не сразу.', fa:'خنک کردن نمی‌گذارد گرما به لایه‌های عمیق‌تر برسد و درد را کم می‌کند. حتی اگر دیر شروع کنید هم کمک می‌کند.'}},
+            {value:'Put ice or butter on the burn',
+             label:{en:'Put ice or butter on the burn', ru:'Приложить к ожогу лёд или намазать маслом', fa:'روی سوختگی یخ یا کره بگذارم'},
+             why:{en:'Ice damages the skin even more, and butter or oil keeps the heat in and raises the risk of infection.', ru:'Лёд ещё сильнее повреждает кожу, а масло удерживает жар и повышает риск инфекции.', fa:'یخ به پوست آسیب بیشتری می‌زند، و کره یا روغن گرما را در پوست نگه می‌دارد و خطر عفونت را بالا می‌برد.'}},
+            {value:'Take off their rings and watch',
+             label:{en:'Take off their rings and watch', ru:'Снять с него кольца и часы', fa:'انگشتر و ساعتش را دربیاورم'},
+             why:{en:'Burned skin swells fast — a ring can cut off the blood supply to a finger.', ru:'Обожжённая кожа быстро отекает — кольцо может пережать палец.', fa:'پوست سوخته زود ورم می‌کند — انگشتر ممکن است جریان خون انگشت را قطع کند.'}},
+            {value:'Pop the blisters so it heals faster',
+             label:{en:'Pop the blisters so it heals faster', ru:'Проколоть пузыри, чтобы быстрее зажило', fa:'تاول‌ها را بترکانم تا زودتر خوب شود'},
+             why:{en:'Blisters protect the wound from infection. Leave them alone.', ru:'Пузыри защищают рану от инфекции. Не трогайте их.', fa:'تاول از زخم در برابر عفونت محافظت می‌کند. به آن دست نزنید.'}},
+            {value:'Call 112 or 103 because a hoarse voice after smoke is a danger sign',
+             label:{en:'Call 112 (or 103) — a hoarse voice after smoke is a danger sign', ru:'Позвонить 112 (или 103): хриплый голос после дыма — опасный признак', fa:'با ۱۱۲ (یا ۱۰۳) تماس بگیرم — گرفتگی صدا بعد از دود نشانهٔ خطر است'},
+             why:{en:'Smoke can make the throat swell over the next hours. A burn on the hand also needs a doctor.', ru:'После дыма горло может отекать ещё несколько часов. Ожог кисти тоже нужно показать врачу.', fa:'دود ممکن است در ساعت‌های بعد باعث ورم گلو شود. سوختگی دست هم باید به پزشک نشان داده شود.'}},
+            {value:'Let them go home to sleep it off',
+             label:{en:'Let them go home to sleep it off', ru:'Отпустить его домой отоспаться', fa:'بگذارم برود خانه و بخوابد تا خوب شود'},
+             why:{en:'Carbon monoxide poisoning and throat swelling can get worse during sleep. Don’t leave them alone.', ru:'Отравление угарным газом и отёк горла могут усилиться во сне. Не оставляйте пострадавшего одного.', fa:'مسمومیت با مونوکسید کربن و ورم گلو ممکن است در خواب بدتر شود. او را تنها نگذارید.'}}
+          ]}
+      ]
+    },
+
+    { title:{en:'🏫 Mission 3 — The evacuation drill', ru:'🏫 Миссия 3 — Учебная эвакуация', fa:'🏫 مأموریت ۳ — مانور تخلیه'},
+      intro:{en:'Recently there was a fire evacuation drill in the main building (Ostrovityanova 1).',
+             ru:'Недавно в главном корпусе (Островитянова, 1) прошла учебная эвакуация на случай пожара.',
+             fa:'به‌تازگی در ساختمان اصلی دانشگاه (آستروویتیانووا ۱) مانور تخلیه در شرایط آتش‌سوزی برگزار شد.'},
+      questions:[
+        { id:'drill', entry:'entry.1693624681', type:'radio',
+          text:{en:'Did you take part in the evacuation drill in the main building?', ru:'Вы участвовали в учебной эвакуации в главном корпусе?', fa:'آیا در مانور تخلیهٔ ساختمان اصلی شرکت داشتید؟'},
+          options:[
+            {value:'Yes', label:{en:'Yes, I was there', ru:'Да, я там был(а)', fa:'بله، آنجا بودم'}},
+            {value:'No',  label:{en:'No, I wasn’t there', ru:'Нет, меня там не было', fa:'نه، آنجا نبودم'}}
+          ]},
+        { id:'drillHelp', entry:'entry.367881162', type:'radio', showIf:{q:'drill', is:'Yes'},
+          text:{en:'Did our website and its database help you during the drill?', ru:'Помогли ли вам наш сайт и его база данных во время учебной эвакуации?', fa:'آیا وب‌سایت ما و پایگاه داده‌اش در طول مانور به شما کمک کرد؟'},
+          options:[
+            {value:'Yes, a lot',      label:{en:'Yes, a lot', ru:'Да, очень', fa:'بله، خیلی'}},
+            {value:'Yes, a little',   label:{en:'Yes, a little', ru:'Да, немного', fa:'بله، کمی'}},
+            {value:'No, not at all',  label:{en:'No, not at all', ru:'Нет, совсем нет', fa:'نه، اصلاً'}},
+            {value:'I had not used the website before the drill', label:{en:'I hadn’t used the website before the drill', ru:'До эвакуации я не пользовался(-ась) сайтом', fa:'قبل از مانور از وب‌سایت استفاده نکرده بودم'}}
+          ]},
+        { id:'drillWhat', entry:'entry.925523928', type:'long', optional:true, showIf:{q:'drill', is:'Yes'},
+          text:{en:'What helped you most during the drill — or what was missing? (optional)', ru:'Что помогло вам больше всего во время эвакуации — или чего не хватило? (необязательно)', fa:'در طول مانور چه چیزی بیشتر از همه کمکتان کرد — یا چه چیزی کم بود؟ (اختیاری)'},
+          help:{en:'For example: I knew to use the stairs, I recognised the route from the video, I didn’t know where to go outside…',
+                ru:'Например: я знал(а), что нужно идти по лестнице; узнал(а) путь по видео; не знал(а), куда идти на улице…',
+                fa:'مثلاً: می‌دانستم باید از پله‌ها بروم، مسیر را از روی ویدیو شناختم، نمی‌دانستم بیرون کجا بروم…'} }
+      ]
+    }
+  ],
+
+  // Filled in by the website itself.
+  auto: [
+    { entry:'entry.977995973', get: r => String(r.got) },                                    // right choices out of 12
+    { entry:'entry.354153204', get: r => ({en:'English', ru:'Russian', fa:'Persian'})[r.lang] || r.lang }
   ]
 };
 
@@ -1972,41 +2184,13 @@ function scaleNum(v, L){
   return L === 'fa' ? n.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) : n;
 }
 
-function allQuestions(){
-  return SURVEY.sections.reduce((all, s) => all.concat(s.questions), []);
-}
+function quizLang(){ return SURVEY.ui[langEl.value] ? langEl.value : 'en'; }
+function allQuestions(){ return SURVEY.sections.reduce((all, s) => all.concat(s.questions), []); }
 
-function renderQuizLaunch(){
-  SURVEYS.forEach((sv, i) => {
-    const L = sv.launch[langEl.value] ? langEl.value : 'en';
-    document.getElementById('quizLaunchTitle' + i).textContent = sv.launch[L].title;
-    document.getElementById('quizLaunchSub' + i).textContent = sv.launch[L].sub;
-  });
-}
-
-function openQuiz(level){
-  SURVEY = SURVEYS[level];
-  quizState = { section:0, answers:{}, order:{}, done:false };
-  // Shuffle the options of scored questions once per attempt.
-  allQuestions().forEach(q => {
-    if(q.correct && q.shuffle !== false){
-      const idx = q.options.map((o,i) => i);
-      for(let i = idx.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [idx[i], idx[j]] = [idx[j], idx[i]];
-      }
-      quizState.order[q.id] = idx;
-    }
-  });
-  document.getElementById('infoView').hidden = true;
-  document.getElementById('quizView').hidden = false;
-  window.scrollTo(0, 0);
-  renderQuizSection();
-}
-
-function closeQuiz(){
-  document.getElementById('quizView').hidden = true;
-  document.getElementById('infoView').hidden = false;
+function isVisible(q){
+  if(!q.showIf) return true;
+  const v = quizState.answers[q.showIf.q];
+  return Array.isArray(v) ? v.includes(q.showIf.is) : v === q.showIf.is;
 }
 
 function isAnswered(q){
@@ -2016,105 +2200,289 @@ function isAnswered(q){
   return v !== undefined && String(v).trim() !== '';
 }
 
+/* The secret code: " el 7 " -> "EL07". Persian digits become 0–9.
+   Letters may be Latin, Cyrillic or Persian. */
+function tidyCode(v){
+  let s = String(v || '').replace(/\s+/g, '')
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .toUpperCase();
+  const m = s.match(/^([^\d]{2})(\d)$/);
+  if(m) s = m[1] + '0' + m[2];
+  return s;
+}
+function codeOk(v){
+  const m = tidyCode(v).match(/^[^\d\s.,;:!?'"()\-_\/\\#@+*=]{2}(\d{2})$/);
+  return !!m && +m[1] >= 1 && +m[1] <= 31;
+}
+
+/* ---------- remembering things on this phone ---------- */
+function store(key, value){ try{ localStorage.setItem(key, JSON.stringify(value)); return true; }catch(e){ return false; } }
+function recall(key, fallback){ try{ const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); }catch(e){ return fallback; } }
+function forget(key){ try{ localStorage.removeItem(key); }catch(e){} }
+
+function draftKey(){ return 'quizDraft-' + SURVEY.key; }
+function saveDraft(){
+  if(quizState.done) return;
+  store(draftKey(), { section:quizState.section, answers:quizState.answers, order:quizState.order, t:Date.now() });
+}
+
+function renderQuizLaunch(){
+  SURVEYS.forEach((sv, i) => {
+    const L = sv.launch[langEl.value] ? langEl.value : 'en';
+    document.getElementById('quizLaunchTitle' + i).textContent = sv.launch[L].title;
+    document.getElementById('quizLaunchSub' + i).textContent = sv.launch[L].sub;
+    const chip = document.getElementById('quizDone' + i);
+    chip.textContent = sv.ui[L].done;
+    chip.hidden = !recall('quizDone-' + sv.key, null);
+  });
+}
+
+function shuffleScored(){
+  allQuestions().forEach(q => {
+    const have = quizState.order[q.id];
+    if(!q.correct || q.shuffle === false || (Array.isArray(have) && have.length === q.options.length)) return;
+    const idx = q.options.map((o,i) => i);
+    for(let i = idx.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    quizState.order[q.id] = idx;
+  });
+}
+
+function startFresh(){
+  quizState = { section:0, answers:{}, order:{}, done:false, resumed:false, prefilled:false };
+  shuffleScored();
+  // The code the student used last time on this phone (Level 1 → Level 2).
+  const codeQ = allQuestions().find(q => q.format === 'code');
+  const mine = recall('myCode', '');
+  if(codeQ && mine){ quizState.answers[codeQ.id] = mine; quizState.prefilled = true; }
+}
+
+function openQuiz(level){
+  SURVEY = SURVEYS[level];
+  startFresh();
+  const d = recall(draftKey(), null);
+  if(d && d.answers && Object.keys(d.answers).length && Date.now() - (d.t || 0) < 60 * 24 * 3600e3){
+    quizState.answers = Object.assign(quizState.answers, d.answers);
+    quizState.order = d.order || {};
+    quizState.section = Math.min(Math.max(0, d.section | 0), SURVEY.sections.length - 1);
+    quizState.resumed = true;
+    shuffleScored();
+  }
+  document.getElementById('infoView').hidden = true;
+  document.getElementById('quizView').hidden = false;
+  document.body.classList.add('inQuiz');
+  if(!(history.state && history.state.quiz)) history.pushState({ quiz:true }, '');
+  renderQuizSection();
+  quizScrollTop();
+  focusQuizTop();
+}
+
+function closeQuiz(){
+  document.getElementById('quizView').hidden = true;
+  document.getElementById('infoView').hidden = false;
+  document.body.classList.remove('inQuiz');
+  renderQuizLaunch();
+  const btn = document.getElementById('quizLaunchBtn' + Math.max(0, SURVEYS.indexOf(SURVEY)));
+  window.scrollTo(0, Math.max(0, btn.getBoundingClientRect().top + window.pageYOffset - 16));
+}
+
+// Buttons that leave the questionnaire go "back", so the phone's Back
+// button and these buttons do the same thing.
+function leaveQuiz(){ if(history.state && history.state.quiz) history.back(); else closeQuiz(); }
+window.addEventListener('popstate', () => {
+  if(!(history.state && history.state.quiz) && !document.getElementById('quizView').hidden) closeQuiz();
+});
+
+// Bring the top of the questionnaire into view. The emergency numbers stay
+// just above it — one swipe up.
+function quizScrollTop(){
+  const v = document.getElementById('quizView');
+  window.scrollTo(0, Math.max(0, v.getBoundingClientRect().top + window.pageYOffset - 4));
+}
+
+function focusQuizTop(){
+  const t = document.getElementById('qSecTitle');
+  if(t) t.focus({ preventScroll:true });
+}
+
+/* ---------- scoring ---------- */
+function scoreOf(q){
+  const ans = quizState.answers[q.id];
+  if(Array.isArray(q.correct)){
+    const picked = Array.isArray(ans) ? ans : [];
+    let got = 0;
+    q.options.forEach(o => { if(q.correct.includes(o.value) === picked.includes(o.value)) got++; });
+    return { got, max:q.options.length };
+  }
+  return { got: ans === q.correct ? 1 : 0, max:1 };
+}
+function quizResult(){
+  let got = 0, max = 0;
+  allQuestions().filter(q => q.correct).forEach(q => { const r = scoreOf(q); got += r.got; max += r.max; });
+  return { got, max };
+}
+
+// The title of a guide or first aid card, for "Read: …" links.
+function cardTitle(id, L){
+  const c = CONTENT[L] || CONTENT.en;
+  const gi = GUIDE_IDS.indexOf(id);
+  if(gi >= 0 && c.sections[gi]) return c.sections[gi].title;
+  const a = (c.aid || []).find(x => 'aid-' + x.id === id);
+  return a ? a.title : id;
+}
+function learnLinks(q, ui, L){
+  if(!q.learn) return '';
+  return `<p class="qLearn">${ui.readMore} ${q.learn.map(id => `<a href="#${id}">${cardTitle(id, L)}</a>`).join(' · ')}</p>`;
+}
+
+function renderDone(view, ui, L){
+  const res = quizResult();
+  const rank = SURVEY.ranks ? SURVEY.ranks.find(r => res.got >= r.min) : null;
+  const notes = allQuestions().filter(q => q.correct).map(q => {
+    const s = scoreOf(q);
+    if(!Array.isArray(q.correct)){
+      if(s.got) return '';
+      const right = q.options.find(o => o.value === q.correct);
+      return `<div class="qReview"><p class="qReviewTitle">${(q.kicker && q.kicker[L]) || ''}</p>
+        <p>${ui.correctLabel} ${right.label[L]}</p>${learnLinks(q, ui, L)}</div>`;
+    }
+    const picked = quizState.answers[q.id] || [];
+    const wrong = q.options.filter(o => q.correct.includes(o.value) !== picked.includes(o.value));
+    return `<div class="qReview"><p class="qReviewTitle">${q.kicker[L]}</p>
+      ${wrong.length ? wrong.map(o => {
+        const bad = picked.includes(o.value);
+        return `<div class="qRev ${bad ? 'bad' : 'miss'}"><span class="qRevMark" aria-hidden="true">${bad ? '✗' : '!'}</span>
+          <p><small>${bad ? ui.ticked : ui.missed}</small>${o.label[L]}${o.why ? `<span class="why">${o.why[L]}</span>` : ''}</p></div>`;
+      }).join('') : `<p class="qPerfect">✓ ${ui.perfect}</p>`}
+      ${wrong.length ? learnLinks(q, ui, L) : ''}</div>`;
+  }).join('');
+  const radioMissed = allQuestions().some(q => q.correct && !Array.isArray(q.correct) && !scoreOf(q).got);
+  view.innerHTML = `
+    <div class="qTop"><button class="qBack" id="qBackBtn" type="button">${ui.back}</button></div>
+    <div class="qDone">
+      <p class="qDoneTitle" id="qSecTitle" tabindex="-1">${ui.doneTitle}</p>
+      <p class="score">${faDigits(res.got, L)}/${faDigits(res.max, L)}</p>
+      <p class="note" style="margin:0 0 18px">${ui.doneScore}</p>
+      ${rank ? `<p class="note" style="margin:0">${ui.rankLabel}</p><p class="qRank">${rank.label[L]}</p>` : ''}
+      <p class="note">${ui.doneBody}</p>
+      <p class="qStatus" id="qStatus" role="status">${quizState.status ? ui[quizState.status] : ''}</p>
+      ${radioMissed ? `<p class="qReviewHead">${ui.reviewTitle}</p>` : ''}
+      ${notes}
+    </div>
+    <div class="qNav"><button class="qBtn primary" id="qDoneBtn" type="button">${ui.doneBtn}</button></div>`;
+  document.getElementById('qBackBtn').onclick = leaveQuiz;
+  document.getElementById('qDoneBtn').onclick = leaveQuiz;
+}
+
 function renderQuizSection(){
-  const L = SURVEY.ui[langEl.value] ? langEl.value : 'en';
+  const L = quizLang();
   const ui = SURVEY.ui[L];
   const view = document.getElementById('quizView');
 
-  if(quizState.done){
-    const scored = allQuestions().filter(q => q.correct);
-    const missed = scored.filter(q => quizState.answers[q.id] !== q.correct);
-    const correct = scored.length - missed.length;
-    const rank = SURVEY.ranks ? SURVEY.ranks.find(r => correct >= r.min) : null;
-    const review = missed.length ? `
-        <div class="qReview">
-          <p class="qReviewTitle">${ui.reviewTitle}</p>
-          ${missed.map(q => {
-            const right = q.options.find(o => o.value === q.correct);
-            return `<p><b>${(q.kicker && q.kicker[L]) || ''}</b><br>${ui.correctLabel} ${right.label[L]}</p>`;
-          }).join('')}
-        </div>` : '';
-    view.innerHTML = `
-      <div class="qTop"><button class="qBack" id="qBackBtn" type="button">${ui.back}</button></div>
-      <div class="qDone">
-        <p style="font-weight:600;font-size:17px;margin:0 0 18px">${ui.doneTitle}</p>
-        <p class="score">${correct}/${scored.length}</p>
-        <p class="note" style="margin:0 0 18px">${ui.doneScore}</p>
-        ${rank ? `<p class="note" style="margin:0">${ui.rankLabel}</p>
-        <p class="qRank">${rank.label[L]}</p>` : ''}
-        <p class="note">${ui.doneBody}</p>
-        ${review}
-      </div>
-      <div class="qNav"><button class="qBtn primary" id="qDoneBtn" type="button">${ui.doneBtn}</button></div>`;
-    document.getElementById('qBackBtn').onclick = closeQuiz;
-    document.getElementById('qDoneBtn').onclick = closeQuiz;
-    return;
-  }
+  if(quizState.done){ renderDone(view, ui, L); return; }
 
   const section = SURVEY.sections[quizState.section];
   const isLast = quizState.section === SURVEY.sections.length - 1;
   const isFirst = quizState.section === 0;
   const dots = SURVEY.sections.map((s,i) => `<span class="qDot${i===quizState.section?' on':''}"></span>`).join('');
 
-  const qHtml = section.questions.map(q => {
+  const qHtml = section.questions.filter(isVisible).map(q => {
     const val = quizState.answers[q.id];
+    const tid = 'qt-' + q.id;
     let inputHtml = '';
     if(q.type === 'text'){
-      inputHtml = `<input class="qInput" type="text" data-qid="${q.id}" placeholder="${esc((q.placeholder && q.placeholder[L]) || '')}" value="${val ? esc(val) : ''}">`;
+      const code = q.format === 'code';
+      inputHtml = `<input class="qInput${code ? ' qCode' : ''}" type="text" id="qin-${q.id}" data-qid="${q.id}" aria-labelledby="${tid}"
+        placeholder="${esc((q.placeholder && q.placeholder[L]) || '')}" value="${val ? esc(val) : ''}"
+        ${code ? 'autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10" dir="ltr"' : ''}>
+        ${code && quizState.prefilled && val ? `<p class="qHelp qSaved">${ui.codeSaved}</p>` : ''}`;
     } else if(q.type === 'long'){
-      inputHtml = `<textarea class="qInput" rows="3" data-qid="${q.id}">${val ? esc(val) : ''}</textarea>`;
+      inputHtml = `<textarea class="qInput" rows="3" id="qin-${q.id}" data-qid="${q.id}" aria-labelledby="${tid}">${val ? esc(val) : ''}</textarea>`;
     } else if(q.type === 'radio'){
       const order = quizState.order[q.id] || q.options.map((o,i) => i);
-      inputHtml = order.map(i => q.options[i]).map(o => `
-        <button type="button" class="qOption${val===o.value?' sel':''}" data-qid="${q.id}" data-val="${esc(o.value)}">${o.label[L]}</button>`).join('');
+      inputHtml = `<div role="radiogroup" aria-labelledby="${tid}">${order.map(i => {
+        const o = q.options[i];
+        return `<button type="button" role="radio" aria-checked="${val===o.value}" id="qo-${q.id}-${i}" class="qOption${val===o.value?' sel':''}" data-qid="${q.id}" data-val="${esc(o.value)}">${o.label[L]}</button>`;
+      }).join('')}</div>`;
     } else if(q.type === 'checkbox'){
       const picked = Array.isArray(val) ? val : [];
-      inputHtml = q.options.map(o => `
-        <button type="button" class="qOption qCheck${picked.includes(o.value)?' sel':''}" aria-pressed="${picked.includes(o.value)}" data-qid="${q.id}" data-check="${esc(o.value)}">${o.label[L]}</button>`).join('');
+      const order = quizState.order[q.id] || q.options.map((o,i) => i);
+      inputHtml = `<div role="group" aria-labelledby="${tid}">${order.map(i => {
+        const o = q.options[i], on = picked.includes(o.value);
+        return `<button type="button" role="checkbox" aria-checked="${on}" id="qo-${q.id}-${i}" class="qOption qCheck${on?' sel':''}" data-qid="${q.id}" data-check="${esc(o.value)}">${o.label[L]}</button>`;
+      }).join('')}</div>`;
     } else if(q.type === 'scale'){
       const wide = q.values.length > 6 ? ' wide' : '';
       inputHtml = `
-        <div class="qScale${wide}">${q.values.map((v,i) => `<button type="button" class="qScaleBtn${val===v?' sel':''}" data-qid="${q.id}" data-val="${esc(v)}">${scaleNum(v, L)}</button>`).join('')}</div>
+        <div class="qScale${wide}" role="radiogroup" aria-labelledby="${tid}">${q.values.map((v,i) => `<button type="button" role="radio" aria-checked="${val===v}" id="qo-${q.id}-${i}" class="qScaleBtn${val===v?' sel':''}" data-qid="${q.id}" data-val="${esc(v)}">${scaleNum(v, L)}</button>`).join('')}</div>
         ${q.low ? `<div class="qScaleLabels"><span>${q.low[L]}</span><span>${q.high[L]}</span></div>` : '<div style="height:12px"></div>'}`;
     } else if(q.type === 'grid'){
       const g = val || {};
       inputHtml = q.rows.map((r,ri) => `
-        <div class="qGridRow">
-          <p class="qGridLabel">${r.label[L]}</p>
-          <div class="qGridBtns">${q.columns.map(c => `<button type="button" class="qGridBtn${c.na?' na':''}${g[ri]===c.value?' sel':''}" data-qid="${q.id}" data-row="${ri}" data-val="${esc(c.value)}">${c.label[L]}</button>`).join('')}</div>
+        <div class="qGridRow${r.icon ? ' withIco' : ''}" role="radiogroup" aria-labelledby="qr-${q.id}-${ri}">
+          ${r.icon ? `<span class="qGridIco" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${PART_ICONS[r.icon] || ''}</svg></span>` : ''}
+          <p class="qGridLabel" id="qr-${q.id}-${ri}">${r.label[L]}${r.desc ? `<small>${r.desc[L]}</small>` : ''}</p>
+          <div class="qGridBtns">${q.columns.map((c,ci) => `<button type="button" role="radio" aria-checked="${g[ri]===c.value}" id="qg-${q.id}-${ri}-${ci}" class="qGridBtn${c.na?' na':''}${g[ri]===c.value?' sel':''}" data-qid="${q.id}" data-row="${ri}" data-val="${esc(c.value)}">${c.label[L]}</button>`).join('')}</div>
         </div>`).join('');
     }
     return `
       <div class="qQuestion">
         ${q.kicker ? `<p class="qKicker">${q.kicker[L]}</p>` : ''}
-        <p class="qText">${q.text[L]}</p>
+        <p class="qText" id="${tid}">${q.text[L]}</p>
         ${q.help ? `<p class="qHelp">${q.help[L]}</p>` : ''}
         ${inputHtml}
-        <p class="qErr" data-qerr="${q.id}" hidden>${ui.required}</p>
+        <p class="qErr" data-qerr="${q.id}" role="alert" hidden>${ui.required}</p>
       </div>`;
   }).join('');
 
   view.innerHTML = `
     <div class="qTop">
-      <button class="qBack" id="qBackBtn" type="button">${isFirst ? ui.back : (L==='fa' ? '→' : '←')}</button>
-      <div class="qDots">${dots}</div>
+      <button class="qBack" id="qBackBtn" type="button" aria-label="${esc(isFirst ? ui.back : ui.prev)}">${isFirst ? ui.back : (L==='fa' ? '→' : '←')}</button>
+      <div class="qDots" aria-hidden="true">${dots}</div>
     </div>
     <div class="qBody">
-      <p class="qSectionTitle">${section.title[L]}</p>
+      ${quizState.resumed ? `<div class="qResumed"><span>${ui.resumed}</span><button type="button" id="qRestart">${ui.restart}</button></div>` : ''}
+      <p class="qSectionTitle" id="qSecTitle" tabindex="-1">${section.title[L]}</p>
       ${section.intro ? `<p class="qIntro">${section.intro[L]}</p>` : ''}
       ${qHtml}
     </div>
     <div class="qNav"><button class="qBtn primary" id="qNextBtn" type="button">${isLast ? ui.submit : ui.next}</button></div>`;
 
-  document.getElementById('qBackBtn').onclick = () => {
-    if(isFirst){ closeQuiz(); } else { quizState.section--; renderQuizSection(); window.scrollTo(0, 0); }
+  const goSection = step => {
+    quizState.section += step;
+    quizState.resumed = false;
+    saveDraft();
+    renderQuizSection();
+    quizScrollTop();
+    focusQuizTop();
+  };
+
+  document.getElementById('qBackBtn').onclick = () => { if(isFirst) leaveQuiz(); else goSection(-1); };
+  const restart = document.getElementById('qRestart');
+  if(restart) restart.onclick = () => { forget(draftKey()); startFresh(); renderQuizSection(); focusQuizTop(); };
+
+  // After a tap the section is drawn again; put the focus back where it was.
+  const redraw = focusId => {
+    saveDraft();
+    renderQuizSection();
+    const el = focusId && document.getElementById(focusId);
+    if(el) el.focus({ preventScroll:true });
   };
 
   view.querySelectorAll('.qInput').forEach(el => {
-    el.oninput = () => { quizState.answers[el.dataset.qid] = el.value; };
+    el.oninput = () => { quizState.answers[el.dataset.qid] = el.value; saveDraft(); };
+    if(el.classList.contains('qCode')){
+      el.onblur = () => {
+        const t = tidyCode(el.value);
+        if(t !== el.value){ el.value = t; quizState.answers[el.dataset.qid] = t; saveDraft(); }
+      };
+    }
   });
   view.querySelectorAll('.qOption[data-val], .qScaleBtn').forEach(el => {
-    el.onclick = () => { quizState.answers[el.dataset.qid] = el.dataset.val; renderQuizSection(); };
+    el.onclick = () => { quizState.answers[el.dataset.qid] = el.dataset.val; redraw(el.id); };
   });
   view.querySelectorAll('.qCheck').forEach(el => {
     el.onclick = () => {
@@ -2130,7 +2498,7 @@ function renderQuizSection(){
       }
       // Keep the same order as the Google Form.
       quizState.answers[q.id] = q.options.map(o => o.value).filter(x => picked.includes(x));
-      renderQuizSection();
+      redraw(el.id);
     };
   });
   view.querySelectorAll('.qGridBtn').forEach(el => {
@@ -2138,49 +2506,102 @@ function renderQuizSection(){
       const g = Object.assign({}, quizState.answers[el.dataset.qid] || {});
       g[el.dataset.row] = el.dataset.val;
       quizState.answers[el.dataset.qid] = g;
-      renderQuizSection();
+      redraw(el.id);
     };
   });
 
   document.getElementById('qNextBtn').onclick = () => {
     let ok = true, firstErr = null;
-    section.questions.forEach(q => {
+    section.questions.filter(isVisible).forEach(q => {
       const errEl = view.querySelector(`[data-qerr="${q.id}"]`);
-      if(!q.optional && !isAnswered(q)){
+      let msg = null;
+      if(!q.optional && !isAnswered(q)) msg = ui.required;
+      else if(q.format === 'code' && isAnswered(q)){
+        quizState.answers[q.id] = tidyCode(quizState.answers[q.id]);
+        const input = document.getElementById('qin-' + q.id);
+        if(input) input.value = quizState.answers[q.id];
+        if(!codeOk(quizState.answers[q.id])) msg = ui.codeBad;
+      }
+      if(msg){
         ok = false;
-        if(errEl){ errEl.hidden = false; if(!firstErr) firstErr = errEl; }
+        if(errEl){ errEl.innerHTML = msg; errEl.hidden = false; if(!firstErr) firstErr = errEl; }
       } else if(errEl){ errEl.hidden = true; }
     });
     if(!ok){ firstErr.parentElement.scrollIntoView({behavior:'smooth', block:'center'}); return; }
-    if(isLast){ submitQuiz(); } else { quizState.section++; renderQuizSection(); window.scrollTo(0, 0); }
+    if(isLast) submitQuiz(); else goSection(1);
   };
 }
 
-function submitQuiz(){
-  const L = SURVEY.ui[langEl.value] ? langEl.value : 'en';
-  if(!navigator.onLine){ alert(SURVEY.ui[L].offline); return; }
+/* ---------- sending ----------
+   Every finished questionnaire goes into an outbox on the phone first,
+   and leaves it only once it has been sent. No internet? It waits and
+   goes by itself when the phone is back online. Google does not let
+   the page read its reply (cross-origin), so "sent" means "the request
+   reached Google". */
+const OUTBOX = 'quizOutbox';
+let flushing = null;
+function flushOutbox(){
+  if(flushing) return flushing;
+  flushing = (async () => {
+    for(const item of recall(OUTBOX, []).slice()){
+      if(!navigator.onLine) break;
+      try{
+        await fetch(item.url, { method:'POST', mode:'no-cors', body:new URLSearchParams(item.body) });
+        store(OUTBOX, recall(OUTBOX, []).filter(x => x.id !== item.id));
+      }catch(e){ break; }       // no connection after all — try again later
+    }
+  })().finally(() => { flushing = null; });
+  return flushing;
+}
+window.addEventListener('online', flushOutbox);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) flushOutbox(); });
 
+function setQuizStatus(s){
+  quizState.status = s;
+  const el = document.getElementById('qStatus');
+  if(el && quizState.done) el.textContent = SURVEY.ui[quizLang()][s] || '';
+}
+
+async function submitQuiz(){
+  const L = quizLang();
+  const res = quizResult();
   const body = new URLSearchParams();
-  allQuestions().forEach(q => {
+  allQuestions().filter(isVisible).forEach(q => {
     const v = quizState.answers[q.id];
     if(q.type === 'grid'){
-      q.rows.forEach((r,i) => body.append(r.entry, (v && v[i]) || ''));
+      q.rows.forEach((r,i) => { if(v && v[i] !== undefined) body.append(r.entry, v[i]); });
     } else if(q.type === 'checkbox'){
       (v || []).forEach(x => body.append(q.entry, x));
-    } else {
-      body.append(q.entry, v === undefined ? '' : String(v).trim());
+    } else if(v !== undefined && String(v).trim() !== ''){
+      body.append(q.entry, q.format === 'code' ? tidyCode(v) : String(v).trim());
     }
   });
+  (SURVEY.auto || []).forEach(a => body.append(a.entry, a.get({ got:res.got, max:res.max, lang:L })));
   body.append('pageHistory', SURVEY.pageHistory);
   body.append('fvv', '1');
 
-  // Google does not let the page see its reply (cross-origin), so we show
-  // our own results screen either way.
-  fetch(SURVEY.formBase, { method:'POST', mode:'no-cors', body }).catch(() => {});
+  const item = { id: Date.now() + '-' + Math.random().toString(36).slice(2, 8), url: SURVEY.formBase, body: body.toString() };
+  const queued = store(OUTBOX, recall(OUTBOX, []).concat(item));
+  if(!queued && !navigator.onLine){ alert(SURVEY.ui[L].offline); return; }
 
+  const codeQ = allQuestions().find(q => q.format === 'code');
+  if(codeQ && quizState.answers[codeQ.id]) store('myCode', tidyCode(quizState.answers[codeQ.id]));
+  store('quizDone-' + SURVEY.key, Date.now());
+  forget(draftKey());
   quizState.done = true;
+  quizState.status = navigator.onLine ? 'sending' : 'queued';
   renderQuizSection();
-  window.scrollTo(0, 0);
+  quizScrollTop();
+  focusQuizTop();
+
+  if(!queued){
+    fetch(item.url, { method:'POST', mode:'no-cors', body }).then(() => setQuizStatus('sent'), () => setQuizStatus('queued'));
+    return;
+  }
+  if(!navigator.onLine) return;
+  await flushOutbox();
+  if(recall(OUTBOX, []).some(x => x.id === item.id)) await flushOutbox();   // it arrived while another send was running
+  setQuizStatus(recall(OUTBOX, []).some(x => x.id === item.id) ? 'queued' : 'sent');
 }
 
 
@@ -2745,9 +3166,9 @@ const AID_ICONS = {
 
 /* Words for the quick links, the tools and the install card. */
 const NAV_UI = {
-  en:{ label:'Go to', fire:'In a fire', aid:'First aid', say:'What to say', plans:'Floor plans', videos:'Videos', breathe:'Breathe' },
-  ru:{ label:'Разделы', fire:'При пожаре', aid:'Первая помощь', say:'Что сказать', plans:'Планы этажей', videos:'Видео', breathe:'Дыхание' },
-  fa:{ label:'بخش‌ها', fire:'هنگام آتش‌سوزی', aid:'کمک‌های اولیه', say:'چه بگوییم', plans:'نقشهٔ طبقات', videos:'ویدیوها', breathe:'تنفس' }
+  en:{ label:'Go to', fire:'In a fire', aid:'First aid', say:'What to say', plans:'Floor plans', videos:'Videos', breathe:'Breathe', ready:'Checklist' },
+  ru:{ label:'Разделы', fire:'При пожаре', aid:'Первая помощь', say:'Что сказать', plans:'Планы этажей', videos:'Видео', breathe:'Дыхание', ready:'Чек-лист' },
+  fa:{ label:'بخش‌ها', fire:'هنگام آتش‌سوزی', aid:'کمک‌های اولیه', say:'چه بگوییم', plans:'نقشهٔ طبقات', videos:'ویدیوها', breathe:'تنفس', ready:'چک‌لیست' }
 };
 
 const INSTALL_UI = {
@@ -2948,6 +3369,8 @@ function renderExtras(code){
   document.querySelectorAll('#jump [data-nav]').forEach(el => { el.querySelector('span').textContent = nav[el.dataset.nav]; });
   document.getElementById('sayOpenLbl').textContent = SAY_UI[uiLang(SAY_UI)].open;
   renderInstall();
+  renderReady();
+  renderShare();
 }
 
 // Links inside the page (#aid-burns, #fire-clothing, #first-aid …) open the
@@ -2959,6 +3382,7 @@ function goTo(id, smooth){
   if(!el || !document.getElementById('infoView').contains(el)) return;
   if(!document.getElementById('quizView').hidden) closeQuiz();
   if(el.tagName === 'DETAILS') el.open = true;
+  if(id === 'ready') document.getElementById('readyCard').open = true;
   const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   el.scrollIntoView({ behavior: (smooth && !calm) ? 'smooth' : 'auto', block: 'start' });
   try{ history.replaceState(history.state, '', '#' + id); }catch(e){}
@@ -2984,8 +3408,8 @@ document.getElementById('aidList').addEventListener('click', e => {
 // "Install this guide" — Android/computer browsers offer a button; on iPhone
 // we explain the Share → Add to Home Screen steps instead.
 let installEvt = null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
-window.addEventListener('appinstalled', () => { installEvt = null; renderInstall(); });
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); if(window.aidReady) renderReady(); });
+window.addEventListener('appinstalled', () => { installEvt = null; renderInstall(); readyTick('install'); });
 function renderInstall(){
   const card = document.getElementById('installCard');
   let dismissed = false;
@@ -3002,13 +3426,15 @@ function renderInstall(){
   document.getElementById('instX').setAttribute('aria-label', ui.close);
   card.hidden = false;
 }
-document.getElementById('instBtn').onclick = async () => {
+async function doInstall(){
   if(!installEvt) return;
   installEvt.prompt();
   try{ await installEvt.userChoice; }catch(e){}
   installEvt = null;
   renderInstall();
-};
+  if(window.aidReady) renderReady();
+}
+document.getElementById('instBtn').onclick = doInstall;
 document.getElementById('instX').onclick = () => {
   try{ localStorage.setItem('installHidden', '1'); }catch(e){}
   document.getElementById('installCard').hidden = true;
@@ -3432,6 +3858,7 @@ function openSay(){
   history.pushState({ say:true }, '');
   sayBuild();
   document.getElementById('sayClose').focus();
+  readyTick('say');
 }
 function hideSay(){
   if(sayView.hidden) return;
@@ -3460,6 +3887,239 @@ document.addEventListener('visibilitychange', () => {
   if(cool.running){ wakeLock(cool, true); coolTick(); }
   if(cpr.running) wakeLock(cpr, true);
 });
+
+
+/* ------------------------------------------------------------
+   AM I READY? — a personal checklist, kept on this phone only.
+   Each item opens the part of the guide that helps with it. Some
+   tick themselves: saving the numbers to contacts, opening "What to
+   say", playing all three videos, installing the app.
+   ------------------------------------------------------------ */
+
+const READY_ITEMS = [
+  { id:'numbers', act:'contacts',
+    text:{en:'Emergency numbers are saved in my phone (112, 101, 103 and the RNIMU duty dispatcher)',
+          ru:'Экстренные номера сохранены в телефоне (112, 101, 103 и дежурный диспетчер РНИМУ)',
+          fa:'شماره‌های اضطراری در گوشی‌ام ذخیره شده است (۱۱۲، ۱۰۱، ۱۰۳ و افسر کشیک دانشگاه)'} },
+  { id:'exits', go:'plans',
+    text:{en:'I know two ways out of my floor — at university and in the dormitory',
+          ru:'Я знаю два пути выхода со своего этажа — в университете и в общежитии',
+          fa:'دو راه خروج از طبقه‌ام را بلدم — هم در دانشگاه، هم در خوابگاه'} },
+  { id:'videos', go:'videos',
+    text:{en:'I have watched the evacuation videos', ru:'Я посмотрел(а) видео об эвакуации', fa:'ویدیوهای تخلیه را تماشا کرده‌ام'} },
+  { id:'extinguisher', go:'fire-extinguisher',
+    text:{en:'I know where the nearest fire extinguisher is', ru:'Я знаю, где ближайший огнетушитель', fa:'می‌دانم نزدیک‌ترین کپسول آتش‌نشانی کجاست'} },
+  { id:'assembly', go:'fire-alarm',
+    text:{en:'I know where to go once I am out of the building (the assembly point)',
+          ru:'Я знаю, куда идти после выхода из здания (место сбора)',
+          fa:'می‌دانم بعد از خروج از ساختمان کجا بروم (محل تجمع)'} },
+  { id:'room', go:'fire-banned',
+    text:{en:'My room has no banned appliances (hotplate, microwave, oil heater…)',
+          ru:'В моей комнате нет запрещённых приборов (плитка, микроволновка, масляный обогреватель…)',
+          fa:'در اتاقم وسیلهٔ ممنوعه ندارم (اجاق برقی، مایکروویو، بخاری روغنی…)'} },
+  { id:'say', act:'say',
+    text:{en:'I have tried “What to say when you call 112”', ru:'Я попробовал(а) «Что сказать, когда звоните в 112»', fa:'بخش «هنگام تماس با ۱۱۲ چه بگوییم» را امتحان کرده‌ام'} },
+  { id:'burn', go:'aid-burns',
+    text:{en:'I know how to cool a burn: cool running water for 20 minutes',
+          ru:'Я знаю, как охлаждать ожог: прохладная проточная вода 20 минут',
+          fa:'می‌دانم سوختگی را چطور خنک کنم: ۲۰ دقیقه زیر آب روان خنک'} },
+  { id:'cpr', go:'aid-cpr',
+    text:{en:'I know how to do CPR: push hard and fast in the centre of the chest',
+          ru:'Я знаю, как делать СЛР: сильно и быстро давить на центр грудной клетки',
+          fa:'می‌دانم احیا را چطور انجام دهم: فشار محکم و سریع روی وسط قفسهٔ سینه'} },
+  { id:'install', act:'install',
+    text:{en:'This guide is installed on my phone, so it works offline',
+          ru:'Этот гид установлен на телефоне и работает без интернета',
+          fa:'این راهنما روی گوشی‌ام نصب است و بدون اینترنت کار می‌کند'} }
+];
+
+const READY_UI = {
+  en:{ title:'Am I ready? My safety checklist', sub:'{n} of {t} done · tap to see the list', all:'All done — you are ready! 🎉',
+       note:'Your ticks are saved on this phone only. Nobody else sees them.',
+       open:'Open', contacts:'Save to contacts', say:'Try it', install:'Install' },
+  ru:{ title:'Я готов(а)? Мой чек-лист безопасности', sub:'Выполнено {n} из {t} · нажмите, чтобы открыть список', all:'Всё выполнено — вы готовы! 🎉',
+       note:'Отметки хранятся только на этом телефоне. Их никто не видит.',
+       open:'Открыть', contacts:'В контакты', say:'Попробовать', install:'Установить' },
+  fa:{ title:'آماده‌ام؟ چک‌لیست ایمنی من', sub:'{n} از {t} انجام شده · برای دیدن فهرست بزنید', all:'همه انجام شد — شما آماده‌اید! 🎉',
+       note:'علامت‌ها فقط روی همین گوشی ذخیره می‌شوند و کس دیگری آن‌ها را نمی‌بیند.',
+       open:'باز کردن', contacts:'ذخیره در مخاطبین', say:'امتحان کنید', install:'نصب' }
+};
+
+// The contact card that "Save to contacts" makes (labels come from CONTENT).
+const CONTACT_UI = {
+  en:{ name:'Emergency Russia 112', amb:'Ambulance' },
+  ru:{ name:'Экстренные службы 112', amb:'Скорая помощь' },
+  fa:{ name:'اورژانس روسیه 112', amb:'آمبولانس' }
+};
+
+let readyDone = recall('ready', []);
+if(!Array.isArray(readyDone)) readyDone = [];
+
+function readyTick(id){
+  if(readyDone.includes(id)) return;
+  readyDone = readyDone.concat(id);
+  store('ready', readyDone);
+  if(window.aidReady) renderReady();
+}
+
+function isInstalled(){
+  return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+}
+
+function renderReady(){
+  const L = uiLang(READY_UI), ui = READY_UI[L];
+  if(isInstalled() && !readyDone.includes('install')){ readyDone = readyDone.concat('install'); store('ready', readyDone); }
+  const t = READY_ITEMS.length, n = READY_ITEMS.filter(it => readyDone.includes(it.id)).length;
+  document.getElementById('readyTitle').textContent = ui.title;
+  document.getElementById('readySub').textContent = n === t ? ui.all : ui.sub.replace('{n}', faDigits(n, L)).replace('{t}', faDigits(t, L));
+  document.getElementById('readyNum').textContent = faDigits(n, L);
+  document.getElementById('readyArc').style.strokeDashoffset = (97.4 * (1 - n / t)).toFixed(1);
+  document.getElementById('readyCard').classList.toggle('all', n === t);
+  document.getElementById('readyNote').textContent = ui.note;
+  document.getElementById('readyList').innerHTML = READY_ITEMS.map(it => {
+    const on = readyDone.includes(it.id);
+    let extra = '';
+    if(it.go) extra = `<a class="readyGo" href="#${it.go}">${ui.open}</a>`;
+    else if(it.act === 'contacts') extra = `<button type="button" class="readyGo" data-act="contacts">${ui.contacts}</button>`;
+    else if(it.act === 'say') extra = `<button type="button" class="readyGo" data-act="say">${ui.say}</button>`;
+    else if(it.act === 'install' && installEvt && !on) extra = `<button type="button" class="readyGo" data-act="install">${ui.install}</button>`;
+    return `<li class="${on ? 'on' : ''}">
+        <button type="button" class="readyChk" role="checkbox" aria-checked="${on}" data-ready="${it.id}"><span class="rkBox" aria-hidden="true"></span><span class="readyTxt">${it.text[L]}</span></button>
+        ${extra}
+      </li>`;
+  }).join('');
+}
+
+document.getElementById('readyList').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+  if(b.dataset.ready){
+    const id = b.dataset.ready;
+    readyDone = readyDone.includes(id) ? readyDone.filter(x => x !== id) : readyDone.concat(id);
+    store('ready', readyDone);
+    renderReady();
+    const again = document.querySelector(`#readyList [data-ready="${id}"]`);
+    if(again) again.focus({ preventScroll:true });
+  } else if(b.dataset.act === 'contacts') saveContacts();
+  else if(b.dataset.act === 'say') openSay();
+  else if(b.dataset.act === 'install') doInstall();
+});
+
+// "Save to contacts": one contact card with all the numbers, in the chosen language.
+function vEsc(s){ return String(s).replace(/\\/g, '\\\\').replace(/,/g, '\\,').replace(/;/g, '\\;').replace(/\n/g, '\\n'); }
+function saveContacts(){
+  const L = uiLang(CONTACT_UI), k = CONTACT_UI[L], c = CONTENT[L] || CONTENT.en;
+  const card = [
+    'BEGIN:VCARD', 'VERSION:3.0',
+    'N:;' + vEsc(k.name) + ';;;', 'FN:' + vEsc(k.name),
+    'item1.TEL;TYPE=VOICE:112',          'item1.X-ABLabel:' + vEsc(c.who112),
+    'item2.TEL;TYPE=VOICE:101',          'item2.X-ABLabel:' + vEsc(c.who101),
+    'item3.TEL;TYPE=VOICE:103',          'item3.X-ABLabel:' + vEsc(k.amb),
+    'item4.TEL;TYPE=VOICE:+74954345192', 'item4.X-ABLabel:' + vEsc(c.whoDuty),
+    'URL:' + SITE_URL,
+    'END:VCARD'
+  ].join('\r\n') + '\r\n';
+  const url = URL.createObjectURL(new Blob([card], { type:'text/vcard;charset=utf-8' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = 'emergency-112.vcf';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 20000);
+  readyTick('numbers');
+}
+
+// Watching all three videos ticks "I have watched the evacuation videos".
+document.querySelectorAll('#videos video').forEach((v, i, all) => {
+  v.addEventListener('play', () => {
+    let seen = recall('videosSeen', []);
+    if(!Array.isArray(seen)) seen = [];
+    if(!seen.includes(i)){ seen.push(i); store('videosSeen', seen); }
+    if(seen.length >= all.length) readyTick('videos');
+  });
+});
+
+
+/* ------------------------------------------------------------
+   SHARE THIS GUIDE — the phone's own share menu, a QR code a friend
+   can scan from your screen, or copy the link.
+   ------------------------------------------------------------ */
+
+const SITE_URL = 'https://fire-safety.github.io/-fire-safety/';
+const SHARE_UI = {
+  en:{ title:'Share this guide with a friend', sub:'New international students need it most. Once opened, it works with no internet.',
+       share:'Share', qr:'Show QR code', hideQr:'Hide QR code', copy:'Copy link', copied:'✓ Link copied',
+       text:'Fire safety and first aid guide for international students at RNIMU — works offline:',
+       qrNote:'Your friend points their phone camera at the code to open the guide.' },
+  ru:{ title:'Поделитесь гидом с другом', sub:'Больше всего он нужен новым иностранным студентам. После первого открытия работает без интернета.',
+       share:'Поделиться', qr:'Показать QR-код', hideQr:'Скрыть QR-код', copy:'Скопировать ссылку', copied:'✓ Ссылка скопирована',
+       text:'Гид по пожарной безопасности и первой помощи для иностранных студентов РНИМУ — работает без интернета:',
+       qrNote:'Другу достаточно навести камеру телефона на код, чтобы открыть гид.' },
+  fa:{ title:'این راهنما را با یک دوست به اشتراک بگذارید', sub:'دانشجویان بین‌المللی تازه‌وارد بیشتر از همه به آن نیاز دارند. بعد از اولین بار باز کردن، بدون اینترنت هم کار می‌کند.',
+       share:'اشتراک‌گذاری', qr:'نمایش کد QR', hideQr:'پنهان کردن کد QR', copy:'کپی لینک', copied:'✓ لینک کپی شد',
+       text:'راهنمای ایمنی آتش‌سوزی و کمک‌های اولیه برای دانشجویان بین‌المللی دانشگاه پیروگوف — بدون اینترنت هم کار می‌کند:',
+       qrNote:'دوستتان کافی است دوربین گوشی را روی این کد بگیرد تا راهنما باز شود.' }
+};
+
+function renderShare(){
+  const ui = SHARE_UI[uiLang(SHARE_UI)];
+  document.getElementById('shareTitle').textContent = ui.title;
+  document.getElementById('shareSub').textContent = ui.sub;
+  document.getElementById('shareNative').hidden = !navigator.share;
+  document.getElementById('shareNativeLbl').textContent = ui.share;
+  document.getElementById('shareQrLbl').textContent = document.getElementById('shareQr').hidden ? ui.qr : ui.hideQr;
+  document.getElementById('shareCopyLbl').textContent = ui.copy;
+  document.getElementById('shareQrNote').textContent = ui.qrNote;
+}
+document.getElementById('shareNative').onclick = async () => {
+  const L = uiLang(SHARE_UI);
+  try{ await navigator.share({ title:(CONTENT[L] || CONTENT.en).appTitle, text:SHARE_UI[L].text, url:SITE_URL }); }catch(e){}
+};
+document.getElementById('shareQrBtn').onclick = () => {
+  const box = document.getElementById('shareQr');
+  box.hidden = !box.hidden;
+  document.getElementById('shareQrBtn').setAttribute('aria-expanded', String(!box.hidden));
+  renderShare();
+};
+document.getElementById('shareCopy').onclick = async () => {
+  let ok = false;
+  try{ await navigator.clipboard.writeText(SITE_URL); ok = true; }
+  catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = SITE_URL; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try{ ok = document.execCommand('copy'); }catch(e2){}
+    ta.remove();
+  }
+  if(!ok) return;
+  document.getElementById('shareCopyLbl').textContent = SHARE_UI[uiLang(SHARE_UI)].copied;
+  setTimeout(renderShare, 2500);
+};
+
+
+/* ------------------------------------------------------------
+   "NEW VERSION READY" — when the service worker has saved a newer
+   version of the guide, offer to reload instead of showing the old
+   one until the next visit.
+   ------------------------------------------------------------ */
+
+const UPDATE_UI = {
+  en:{ text:'A new version of this guide is ready.', btn:'Update' },
+  ru:{ text:'Готова новая версия гида.', btn:'Обновить' },
+  fa:{ text:'نسخهٔ جدید این راهنما آماده است.', btn:'به‌روزرسانی' }
+};
+if('serviceWorker' in navigator){
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if(!hadController) return;            // first visit: nothing old to replace
+    const ui = UPDATE_UI[uiLang(UPDATE_UI)];
+    document.getElementById('updateTxt').textContent = ui.text;
+    document.getElementById('updateBtn').textContent = ui.btn;
+    document.getElementById('updateBar').hidden = false;
+  });
+}
+document.getElementById('updateBtn').onclick = () => location.reload();
+
+// Answers that were finished with no internet go now, if they can.
+flushOutbox();
 
 
 window.floorMapsReady = true;
