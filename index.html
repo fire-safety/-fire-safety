@@ -1981,12 +1981,14 @@ const SURVEY_L1 = {
    1) rate each part of the website, 2) two real-life tasks,
    3) the evacuation drill in the main building.
    (The first version of Level 2 and its 17 answers stay in the old
-   form "Fire Safety Quest — Level 2"; nothing new is sent there.)
+   form "Fire Safety Quest — Level 2"; nothing new is sent there.
+   "TEST — Fire Safety Quest Level 2 (simulated data)" is a copy with
+   practice answers only; real answers never go there.)
    ------------------------------------------------------------ */
 
 const SURVEY_L2 = {
   key: 'L2-2026-10',
-  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSdH-yyxOAaXGW3ECCNG289Oo3xUo5m-YC3qT8H0-KmK055d5Q/formResponse',
+  formBase: 'https://docs.google.com/forms/d/e/1FAIpQLSfZOxeVh5qa-8wGg6eMer09oMDM6qUNniguoMi4y5sz5Q68Tw/formResponse',
   pageHistory: '0',
 
   launch: {
@@ -2539,6 +2541,12 @@ function renderQuizSection(){
    the page read its reply (cross-origin), so "sent" means "the request
    reached Google". */
 const OUTBOX = 'quizOutbox';
+// Level 2 answers that were waiting on a phone when the form was swapped
+// for a fresh one (October 2026) go to the new, real form — never to the
+// old one, which is now the TEST form with practice answers.
+const MOVED_FORMS = {
+  'https://docs.google.com/forms/d/e/1FAIpQLSdH-yyxOAaXGW3ECCNG289Oo3xUo5m-YC3qT8H0-KmK055d5Q/formResponse': SURVEY_L2.formBase
+};
 let flushing = null;
 function flushOutbox(){
   if(flushing) return flushing;
@@ -2546,7 +2554,7 @@ function flushOutbox(){
     for(const item of recall(OUTBOX, []).slice()){
       if(!navigator.onLine) break;
       try{
-        await fetch(item.url, { method:'POST', mode:'no-cors', body:new URLSearchParams(item.body) });
+        await fetch(MOVED_FORMS[item.url] || item.url, { method:'POST', mode:'no-cors', body:new URLSearchParams(item.body) });
         store(OUTBOX, recall(OUTBOX, []).filter(x => x.id !== item.id));
       }catch(e){ break; }       // no connection after all — try again later
     }

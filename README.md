@@ -118,6 +118,11 @@ selected; the answers are always saved in English.
 The first version of Level 2 ("Fire Safety Quest — Level 2", with its 17
 answers from September) was left untouched; nothing new is sent there.
 
+**"TEST — Fire Safety Quest Level 2 (simulated data)"** is a practice copy
+filled with 100 made-up answers (their language says "Simulated"), to see
+how the results and charts look. The website never sends real answers
+there — use it only for practice, never as study data.
+
 **Level 2, in detail**
 
 - *Mission 1* rates: In a fire · First aid · What to say when you call 112 ·
