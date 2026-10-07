@@ -112,8 +112,8 @@ selected; the answers are always saved in English.
 
 | Button | Google Form | What it asks |
 |---|---|---|
-| 📝 Level 1 | "Fire Safety Questionnaire — Level 1" | code, year, languages, 8 knowledge questions, 4 readiness questions |
-| 🔥 Level 2 | "Fire Safety Quest — Level 2 (October 2026)" | code · how useful each part of the site was (6 parts, 1–5 or "Didn't use") · 2 real-life tasks · the evacuation drill in the main building |
+| 📝 Level 1 | "Fire Safety Questionnaire — Level 1" | year, languages, 8 knowledge questions, 4 readiness questions |
+| 🔥 Level 2 | "Fire Safety Quest — Level 2 (October 2026)" | how useful each part of the site was (6 parts, 1–5 or "Didn't use") · 2 real-life tasks · the evacuation drill in the main building |
 
 The first version of Level 2 ("Fire Safety Quest — Level 2", with its 17
 answers from September) was left untouched; nothing new is sent there.
@@ -164,9 +164,10 @@ whole answer away.
 - Finished answers wait in an "outbox" on the phone until they have been
   sent. With no internet the student is told so, and the answers go by
   themselves when the phone is back online.
-- The secret code is tidied (`el 7` → `EL07`, Persian digits → 0–9) and
-  checked (2 letters + a day from 01 to 31). Once a student has entered
-  it, it is filled in for them next time on the same phone.
+- There is no secret code any more (October 2026): neither level asks
+  for one. The codes collected before were saved first, in the response
+  spreadsheets "Fire Safety Questionnaire — Level 1 (Responses)" and
+  "TEST - Fire Safety Quest Level 2 (simulated data) (Responses)".
 
 **Test it once after any change**: submit through the real deployed link,
 then open the form's Responses tab and check that the answer arrived in

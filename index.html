@@ -554,9 +554,6 @@ html[lang="fa"] .body ol{list-style-type:persian}
 .inQuiz .quizLaunch{display:none}
 .qSectionTitle:focus,.qDoneTitle:focus{outline:none}
 .qDoneTitle{font-weight:600;font-size:17px;margin:0 0 18px}
-.qCode{text-transform:uppercase;letter-spacing:.08em;font-weight:600}
-.qCode::placeholder{text-transform:none;letter-spacing:normal;font-weight:400}
-.qSaved{margin:6px 0 0}
 .qResumed{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:10px 12px;border-radius:var(--radius);background:#EAF5EF;font-size:14px;line-height:1.4}
 .qResumed button{flex:none;padding:6px 12px;border:1px solid var(--green);border-radius:999px;background:var(--paper);color:var(--green-dark);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .qResumed button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
@@ -1678,7 +1675,6 @@ if('serviceWorker' in navigator){
    Other things a question can have:
      optional:true     may be left empty
      showIf:{q,is}     only shown when question q was answered "is"
-     format:'code'     the secret code: tidied to 2 letters + 2 digits
      learn:[...]       links to guide cards, shown on the results screen
      why:{...}         (on an option) the reason, shown on the results screen
    A level can also have "auto" answers that the website fills in
@@ -1692,8 +1688,6 @@ if('serviceWorker' in navigator){
 /* Words used by both levels. */
 const QUIZ_UI = {
   en: { back:'Back to guide', prev:'Previous', next:'Next', submit:'Submit', required:'Please answer this question.',
-        codeBad:'Use 2 letters and 2 digits, for example EL07.',
-        codeSaved:'Filled in from last time on this phone — check that it is right.',
         resumed:'Welcome back! We kept the answers you had already given.', restart:'Start over',
         offline:"You'll need an internet connection to submit this. Your answers are still here — try again once you're online.",
         sending:'Sending your answers…', sent:'✓ Your answers were sent.',
@@ -1704,8 +1698,6 @@ const QUIZ_UI = {
         perfect:'Perfect — every choice was right!', readMore:'Read:', done:'✓ Done',
         doneBody:'Thanks, agent! Your answers help the team improve this guide for other students.', doneBtn:'Back to guide' },
   ru: { back:'Назад к инструкции', prev:'Предыдущий шаг', next:'Далее', submit:'Отправить', required:'Пожалуйста, ответьте на этот вопрос.',
-        codeBad:'Нужны 2 буквы и 2 цифры, например EL07.',
-        codeSaved:'Подставлен код, который вы вводили на этом телефоне, — проверьте его.',
         resumed:'С возвращением! Мы сохранили ответы, которые вы уже дали.', restart:'Начать заново',
         offline:'Для отправки нужен интернет. Ваши ответы сохранены — попробуйте снова при подключении к сети.',
         sending:'Отправляем ответы…', sent:'✓ Ваши ответы отправлены.',
@@ -1716,8 +1708,6 @@ const QUIZ_UI = {
         perfect:'Отлично — все решения верные!', readMore:'Подробнее:', done:'✓ Пройдено',
         doneBody:'Спасибо, агент! Ваши ответы помогут команде улучшить этот гид для других студентов.', doneBtn:'Назад к инструкции' },
   fa: { back:'بازگشت به راهنما', prev:'مرحلهٔ قبل', next:'بعدی', submit:'ارسال', required:'لطفاً به این سؤال پاسخ دهید.',
-        codeBad:'از ۲ حرف و ۲ رقم استفاده کنید، مثلاً <bdi>EL07</bdi>.',
-        codeSaved:'کدی که دفعهٔ قبل در این گوشی وارد کردید اینجا آمده است — درستی‌اش را بررسی کنید.',
         resumed:'خوش برگشتید! پاسخ‌هایی را که قبلاً داده بودید نگه داشتیم.', restart:'شروع دوباره',
         offline:'برای ارسال به اینترنت نیاز دارید. پاسخ‌های شما ذخیره شده‌اند — پس از اتصال دوباره امتحان کنید.',
         sending:'در حال ارسال پاسخ‌ها…', sent:'✓ پاسخ‌های شما ارسال شد.',
@@ -1893,11 +1883,11 @@ const SURVEY_L1 = {
 
   ui: {
     en: Object.assign({}, QUIZ_UI.en, { doneTitle:'Thank you!', doneScore:'correct answers on the knowledge questions',
-          doneBody:'Your answers help the team understand what to teach first. Remember your code — you will need it for Level 2.' }),
+          doneBody:'Your answers help the team understand what to teach first.' }),
     ru: Object.assign({}, QUIZ_UI.ru, { doneTitle:'Спасибо!', doneScore:'правильных ответов в вопросах на знание',
-          doneBody:'Ваши ответы помогут команде понять, чему учить в первую очередь. Запомните свой код — он понадобится для уровня 2.' }),
+          doneBody:'Ваши ответы помогут команде понять, чему учить в первую очередь.' }),
     fa: Object.assign({}, QUIZ_UI.fa, { doneTitle:'سپاسگزاریم!', doneScore:'پاسخ درست در سؤالات دانشی',
-          doneBody:'پاسخ‌های شما به تیم کمک می‌کند بداند اول چه چیزی را آموزش دهد. کدتان را به خاطر بسپارید — برای مرحلهٔ ۲ لازم است.' })
+          doneBody:'پاسخ‌های شما به تیم کمک می‌کند بداند اول چه چیزی را آموزش دهد.' })
   },
 
   ranks: null,   // Level 1 shows the score only.
@@ -1908,12 +1898,6 @@ const SURVEY_L1 = {
              ru:'Этот опрос — часть университетского проекта о знаниях, осведомлённости и готовности студентов в вопросах пожарной безопасности. Внимательно прочитайте каждый вопрос и выберите ответ, который лучше всего отражает ваши знания или мнение.',
              fa:'این پرسشنامه بخشی از یک پروژهٔ دانشگاهی دربارهٔ دانش، آگاهی و آمادگی دانشجویان در زمینهٔ ایمنی آتش‌سوزی است. هر سؤال را با دقت بخوانید و پاسخی را انتخاب کنید که بهتر از همه دانش یا نظر شما را نشان می‌دهد.'},
       questions:[
-        { id:'code', entry:'entry.2146882345', type:'text', format:'code',
-          text:{en:'Your secret code', ru:'Ваш секретный код', fa:'کد مخفی شما'},
-          help:{en:'The first 2 letters of your first name + the day you were born (2 digits). Remember it — you will use the same code in Level 2.',
-                ru:'Первые 2 буквы вашего имени + день вашего рождения (2 цифры). Запомните его — этот же код понадобится на уровне 2.',
-                fa:'دو حرف اول نام خودتان + روز تولدتان (دو رقم). آن را به خاطر بسپارید — همین کد را در مرحلهٔ ۲ هم وارد می‌کنید.'},
-          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} },
         { id:'year', entry:'entry.375323732', type:'scale',
           values:['0','1','2','3','4','5','6'],
           text:{en:'Which year of study are you in?', ru:'На каком вы курсе?', fa:'در چه سال تحصیلی هستید؟'} },
@@ -2016,24 +2000,10 @@ const SURVEY_L2 = {
   ],
 
   sections: [
-    { title:{en:'Before you begin', ru:'Перед началом', fa:'پیش از شروع'},
-      intro:{en:'Welcome back, agent! 🕵️ Three short missions: rate each part of our website, solve two real-life situations, and tell us how the evacuation drill went.',
-             ru:'С возвращением, агент! 🕵️ Впереди три короткие миссии: оцените каждый раздел нашего сайта, решите две жизненные ситуации и расскажите, как прошла учебная эвакуация.',
-             fa:'دوباره خوش آمدید، مأمور! 🕵️ سه مأموریت کوتاه در پیش است: به هر بخش وب‌سایت ما نمره بدهید، دو موقعیت واقعی را حل کنید و از مانور تخلیه برایمان بگویید.'},
-      questions:[
-        { id:'code', entry:'entry.980163913', type:'text', format:'code',
-          text:{en:'Your secret agent code', ru:'Ваш секретный код агента', fa:'کد مخفی مأمور شما'},
-          help:{en:'Same code as in Level 1: the first 2 letters of your first name + the day you were born (2 digits).',
-                ru:'Тот же код, что и на уровне 1: первые 2 буквы вашего имени + день вашего рождения (2 цифры).',
-                fa:'همان کد مرحلهٔ ۱: دو حرف اول نام خودتان + روز تولدتان (دو رقم).'},
-          placeholder:{en:'e.g. EL07', ru:'например, EL07', fa:'مثلاً EL07'} }
-      ]
-    },
-
     { title:{en:'⭐ Mission 1 — Rate our website', ru:'⭐ Миссия 1 — Оцените наш сайт', fa:'⭐ مأموریت ۱ — به وب‌سایت ما نمره بدهید'},
-      intro:{en:'How useful and educational was each part of our website for you? 1 = not useful, 5 = very useful, I learned a lot. If you never opened a part, tap “Didn’t use”.',
-             ru:'Насколько полезным и познавательным был для вас каждый раздел сайта? 1 — бесполезно, 5 — очень полезно, я многое узнал(а). Если вы не открывали раздел, нажмите «Не открывал(а)».',
-             fa:'هر بخش وب‌سایت ما چقدر برایتان مفید و آموزنده بود؟ ۱ یعنی مفید نبود و ۵ یعنی خیلی مفید بود و چیزهای زیادی یاد گرفتم. اگر بخشی را باز نکرده‌اید، «استفاده نکردم» را بزنید.'},
+      intro:{en:'Welcome back, agent! 🕵️ Three short missions: rate our website, solve two real-life situations, and tell us about the evacuation drill. First, the website: 1 = not useful, 5 = very useful, I learned a lot. If you never opened a part, tap “Didn’t use”.',
+             ru:'С возвращением, агент! 🕵️ Три короткие миссии: оцените наш сайт, решите две жизненные ситуации и расскажите об учебной эвакуации. Сначала сайт: 1 — бесполезно, 5 — очень полезно, я многое узнал(а). Если вы не открывали раздел, нажмите «Не открывал(а)».',
+             fa:'دوباره خوش آمدید، مأمور! 🕵️ سه مأموریت کوتاه: به وب‌سایت ما نمره بدهید، دو موقعیت واقعی را حل کنید و از مانور تخلیه برایمان بگویید. اول وب‌سایت: ۱ یعنی مفید نبود و ۵ یعنی خیلی مفید بود و چیزهای زیادی یاد گرفتم. اگر بخشی را باز نکرده‌اید، «استفاده نکردم» را بزنید.'},
       questions:[
         { id:'parts', type:'grid',
           text:{en:'How useful and educational was each part?', ru:'Насколько полезен и познавателен каждый раздел?', fa:'هر بخش چقدر مفید و آموزنده بود؟'},
@@ -2202,26 +2172,12 @@ function isAnswered(q){
   return v !== undefined && String(v).trim() !== '';
 }
 
-/* The secret code: " el 7 " -> "EL07". Persian digits become 0–9.
-   Letters may be Latin, Cyrillic or Persian. */
-function tidyCode(v){
-  let s = String(v || '').replace(/\s+/g, '')
-    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-    .toUpperCase();
-  const m = s.match(/^([^\d]{2})(\d)$/);
-  if(m) s = m[1] + '0' + m[2];
-  return s;
-}
-function codeOk(v){
-  const m = tidyCode(v).match(/^[^\d\s.,;:!?'"()\-_\/\\#@+*=]{2}(\d{2})$/);
-  return !!m && +m[1] >= 1 && +m[1] <= 31;
-}
-
 /* ---------- remembering things on this phone ---------- */
 function store(key, value){ try{ localStorage.setItem(key, JSON.stringify(value)); return true; }catch(e){ return false; } }
 function recall(key, fallback){ try{ const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); }catch(e){ return fallback; } }
 function forget(key){ try{ localStorage.removeItem(key); }catch(e){} }
+// The secret code is no longer asked; remove the copy older versions kept on the phone.
+forget('myCode');
 
 function draftKey(){ return 'quizDraft-' + SURVEY.key; }
 function saveDraft(){
@@ -2254,12 +2210,8 @@ function shuffleScored(){
 }
 
 function startFresh(){
-  quizState = { section:0, answers:{}, order:{}, done:false, resumed:false, prefilled:false };
+  quizState = { section:0, answers:{}, order:{}, done:false, resumed:false };
   shuffleScored();
-  // The code the student used last time on this phone (Level 1 → Level 2).
-  const codeQ = allQuestions().find(q => q.format === 'code');
-  const mine = recall('myCode', '');
-  if(codeQ && mine){ quizState.answers[codeQ.id] = mine; quizState.prefilled = true; }
 }
 
 function openQuiz(level){
@@ -2396,11 +2348,8 @@ function renderQuizSection(){
     const tid = 'qt-' + q.id;
     let inputHtml = '';
     if(q.type === 'text'){
-      const code = q.format === 'code';
-      inputHtml = `<input class="qInput${code ? ' qCode' : ''}" type="text" id="qin-${q.id}" data-qid="${q.id}" aria-labelledby="${tid}"
-        placeholder="${esc((q.placeholder && q.placeholder[L]) || '')}" value="${val ? esc(val) : ''}"
-        ${code ? 'autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10" dir="ltr"' : ''}>
-        ${code && quizState.prefilled && val ? `<p class="qHelp qSaved">${ui.codeSaved}</p>` : ''}`;
+      inputHtml = `<input class="qInput" type="text" id="qin-${q.id}" data-qid="${q.id}" aria-labelledby="${tid}"
+        placeholder="${esc((q.placeholder && q.placeholder[L]) || '')}" value="${val ? esc(val) : ''}">`;
     } else if(q.type === 'long'){
       inputHtml = `<textarea class="qInput" rows="3" id="qin-${q.id}" data-qid="${q.id}" aria-labelledby="${tid}">${val ? esc(val) : ''}</textarea>`;
     } else if(q.type === 'radio'){
@@ -2476,12 +2425,6 @@ function renderQuizSection(){
 
   view.querySelectorAll('.qInput').forEach(el => {
     el.oninput = () => { quizState.answers[el.dataset.qid] = el.value; saveDraft(); };
-    if(el.classList.contains('qCode')){
-      el.onblur = () => {
-        const t = tidyCode(el.value);
-        if(t !== el.value){ el.value = t; quizState.answers[el.dataset.qid] = t; saveDraft(); }
-      };
-    }
   });
   view.querySelectorAll('.qOption[data-val], .qScaleBtn').forEach(el => {
     el.onclick = () => { quizState.answers[el.dataset.qid] = el.dataset.val; redraw(el.id); };
@@ -2516,21 +2459,25 @@ function renderQuizSection(){
     let ok = true, firstErr = null;
     section.questions.filter(isVisible).forEach(q => {
       const errEl = view.querySelector(`[data-qerr="${q.id}"]`);
-      let msg = null;
-      if(!q.optional && !isAnswered(q)) msg = ui.required;
-      else if(q.format === 'code' && isAnswered(q)){
-        quizState.answers[q.id] = tidyCode(quizState.answers[q.id]);
-        const input = document.getElementById('qin-' + q.id);
-        if(input) input.value = quizState.answers[q.id];
-        if(!codeOk(quizState.answers[q.id])) msg = ui.codeBad;
-      }
-      if(msg){
+      if(!q.optional && !isAnswered(q)){
         ok = false;
-        if(errEl){ errEl.innerHTML = msg; errEl.hidden = false; if(!firstErr) firstErr = errEl; }
+        if(errEl){ errEl.hidden = false; if(!firstErr) firstErr = errEl; }
       } else if(errEl){ errEl.hidden = true; }
     });
     if(!ok){ firstErr.parentElement.scrollIntoView({behavior:'smooth', block:'center'}); return; }
-    if(isLast) submitQuiz(); else goSection(1);
+    if(!isLast){ goSection(1); return; }
+    // Before sending, check every page (answers kept from an older version
+    // of the questionnaire may have skipped one) and open the first gap.
+    const gap = SURVEY.sections.findIndex(sec => sec.questions.some(q => isVisible(q) && !q.optional && !isAnswered(q)));
+    if(gap >= 0 && gap !== quizState.section){
+      quizState.section = gap;
+      saveDraft();
+      renderQuizSection();
+      quizScrollTop();
+      document.getElementById('qNextBtn').click();   // shows what is missing there
+      return;
+    }
+    submitQuiz();
   };
 }
 
@@ -2581,7 +2528,7 @@ async function submitQuiz(){
     } else if(q.type === 'checkbox'){
       (v || []).forEach(x => body.append(q.entry, x));
     } else if(v !== undefined && String(v).trim() !== ''){
-      body.append(q.entry, q.format === 'code' ? tidyCode(v) : String(v).trim());
+      body.append(q.entry, String(v).trim());
     }
   });
   (SURVEY.auto || []).forEach(a => body.append(a.entry, a.get({ got:res.got, max:res.max, lang:L })));
@@ -2592,8 +2539,6 @@ async function submitQuiz(){
   const queued = store(OUTBOX, recall(OUTBOX, []).concat(item));
   if(!queued && !navigator.onLine){ alert(SURVEY.ui[L].offline); return; }
 
-  const codeQ = allQuestions().find(q => q.format === 'code');
-  if(codeQ && quizState.answers[codeQ.id]) store('myCode', tidyCode(quizState.answers[codeQ.id]));
   store('quizDone-' + SURVEY.key, Date.now());
   forget(draftKey());
   quizState.done = true;
