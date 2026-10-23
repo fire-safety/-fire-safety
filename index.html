@@ -18,6 +18,7 @@
      install it to the home screen. Without it, it is just a website. -->
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 
 <style>
 /* ============================================================
@@ -134,15 +135,20 @@ body.is-offline #offline{display:block}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ---------- quiz launch ---------- */
+/* Outlined on purpose: the solid green belongs to the emergency numbers. */
+.survey{padding:20px 18px 22px;border-top:1px solid var(--line)}
+.survey h2{margin:0 0 2px;font-size:17px;font-weight:600}
+.survey .vSub{margin:0 0 12px;font-size:14px;color:var(--muted)}
 .quizLaunch{
-  display:block;width:calc(100% - 36px);margin:16px 18px;
-  background:var(--green);color:#fff;border:none;border-radius:var(--radius);
-  padding:14px 16px;font:inherit;font-size:15px;font-weight:600;
+  display:block;width:100%;margin:0 0 8px;
+  background:var(--paper);color:var(--green-dark);border:1.5px solid var(--green);border-radius:var(--radius);
+  padding:12px 16px;font:inherit;font-size:15px;font-weight:600;
   text-align:start;cursor:pointer;
 }
-.quizLaunch + .quizLaunch{margin-top:-6px}
+.quizLaunch:last-child{margin-bottom:0}
+.quizLaunch:active{background:#EAF5EF}
 .quizLaunch:focus-visible{outline:3px solid var(--green-dark);outline-offset:2px}
-.quizLaunch .sub{display:block;font-weight:400;font-size:13px;opacity:.85;margin-top:2px}
+.quizLaunch .sub{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px}
 
 /* ---------- quiz flow ---------- */
 #quizView{padding:0 0 40px}
@@ -302,16 +308,16 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .qDone .score{font-size:40px;font-weight:700;color:var(--green-dark);margin:0 0 6px}
 
 /* ---------- jump-to row ---------- */
-.jump{display:flex;gap:8px;overflow-x:auto;padding:4px 18px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.jump{display:flex;gap:8px;overflow-x:auto;padding:16px 18px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .jump::-webkit-scrollbar{display:none}
 .jump a,.jump button{
-  flex:none;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;
+  flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;
   border:1px solid var(--line);border-radius:999px;background:var(--paper);
   font:inherit;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;cursor:pointer;
 }
 .jump svg{flex:none;color:var(--green)}
 .jump a:focus-visible,.jump button:focus-visible{outline:3px solid var(--green);outline-offset:1px}
-#guide,#first-aid,#plans,#videos,#breathe,#ready,#share{scroll-margin-top:8px}
+#guide,#first-aid,#plans,#videos,#breathe,#ready,#share,#survey{scroll-margin-top:8px}
 @media (hover:hover) and (pointer:fine){.jump{flex-wrap:wrap;overflow-x:visible}}
 .list details{scroll-margin-top:8px}
 
@@ -334,13 +340,14 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 .sayOpen:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
 /* ---------- section headings for the guide ---------- */
-.guideHead{padding:20px 18px 2px}
+#guide{padding:20px 18px 22px}
 .guideHead h2{font-size:17px;font-weight:600;margin:0}
 .guideIcon{background:var(--ink)}
-#guide .list{padding:4px 0 8px}
+#guide .vSub{font-size:14px;color:var(--muted);margin:0 0 14px}
+.fireList .aidIco{background:var(--ink)}
 
 /* ---------- first aid ---------- */
-.aid{padding:20px 18px 26px}
+.aid{padding:20px 18px 26px;border-top:1px solid var(--line)}
 .aid .vSub{font-size:14px;color:var(--muted);margin:0 0 14px}
 .aidFirstTitle{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--green-dark);margin:0 0 6px}
 .aidFirst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 14px;padding:0;list-style:none;counter-reset:first}
@@ -354,6 +361,11 @@ textarea.qInput{min-height:84px;resize:vertical;display:block}
 html[lang="fa"] .aidFirst li::before{content:counter(first,persian)}
 html[lang="fa"] .body ol{list-style-type:persian}
 .nw{white-space:nowrap}
+.ruWords{margin:0 0 12px;padding:12px 14px;border-radius:var(--radius);background:var(--wash);font-size:14.5px;line-height:1.5}
+.ruWords b[lang="ru"]{font-weight:700;color:var(--ink)}
+.ruWords dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:6px 0 0}
+.ruWords dt{font-weight:700}
+.ruWords dd{margin:0;color:var(--muted)}
 .aidList{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);box-shadow:0 1px 3px rgba(20,38,28,.08)}
 .aidList details:last-child{border-bottom:none}
 .aidList summary{justify-content:flex-start;padding:12px 14px}
@@ -549,7 +561,7 @@ html[lang="fa"] .body ol{list-style-type:persian}
 #sayBig p{margin:0;font-size:clamp(28px,8.5vw,60px);font-weight:700;line-height:1.25}
 #sayBig small{display:block;margin-top:24px;font-size:14px;color:#555}
 /* ---------- questionnaire: extras ---------- */
-.qChip{display:inline-block;margin-inline-start:8px;padding:1px 9px;border-radius:999px;background:rgba(255,255,255,.22);font-size:12px;font-weight:600;vertical-align:2px;white-space:nowrap}
+.qChip{display:inline-block;margin-inline-start:8px;padding:1px 9px;border-radius:999px;background:#EAF5EF;color:var(--green-dark);font-size:12px;font-weight:600;vertical-align:2px;white-space:nowrap}
 .qChip[hidden]{display:none}
 .inQuiz .quizLaunch{display:none}
 .qSectionTitle:focus,.qDoneTitle:focus{outline:none}
@@ -599,7 +611,7 @@ html[lang="fa"] .body ol{list-style-type:persian}
 .readyList li.on .rkBox{background:var(--green);border-color:var(--green)}
 .readyList li.on .rkBox::after{content:"\2713";color:#fff;font-size:14px;font-weight:700;line-height:1}
 .readyList li.on .readyTxt{color:var(--muted)}
-.readyGo{flex:none;margin-block:4px;margin-inline-start:auto;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--green-dark);font:inherit;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer}
+.readyGo{flex:none;margin-block:2px;margin-inline-start:auto;display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--green-dark);font:inherit;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer}
 .readyChk:focus-visible,.readyGo:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 .readyNote{margin:10px 0 0}
 
@@ -608,7 +620,7 @@ html[lang="fa"] .body ol{list-style-type:persian}
 .share h2{margin:0 0 2px;font-size:17px;font-weight:600}
 .share .vSub{margin:0 0 12px;font-size:14px;color:var(--muted)}
 .shareBtns{display:flex;flex-wrap:wrap;gap:8px}
-.shareBtn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.shareBtn{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 15px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .shareBtn.primary{background:var(--green);border-color:var(--green);color:#fff}
 .shareBtn[hidden]{display:none}
 .shareBtn svg{flex:none}
@@ -634,7 +646,7 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <span class="sub" id="buildingLabel">RNIMU — Ostrovityanova 1</span>
     </h1>
     <!-- Add a new <option> here when you add a language below. -->
-    <select id="lang" aria-label="Language">
+    <select id="lang" aria-label="Language" style="min-height:44px">
       <option value="en">English</option>
       <option value="ru">Русский</option>
       <option value="fa">فارسی</option>
@@ -656,16 +668,6 @@ html[lang="fa"] .body ol{list-style-type:persian}
     </button>
   </section>
 
-  <!-- One button per questionnaire level (SURVEYS in the script, in this order). -->
-  <button class="quizLaunch" id="quizLaunchBtn0" type="button">
-    <span id="quizLaunchTitle0"></span><span class="qChip" id="quizDone0" hidden></span>
-    <span class="sub" id="quizLaunchSub0"></span>
-  </button>
-  <button class="quizLaunch" id="quizLaunchBtn1" type="button">
-    <span id="quizLaunchTitle1"></span><span class="qChip" id="quizDone1" hidden></span>
-    <span class="sub" id="quizLaunchSub1"></span>
-  </button>
-
   <div id="infoView">
     <!-- QUICK LINKS to each part of the page (words in NAV_UI in the script). -->
     <nav class="jump" id="jump" aria-label="Go to">
@@ -674,8 +676,9 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <button type="button" data-nav="say"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span></span></button>
       <a href="#plans" data-nav="plans"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg><span></span></a>
       <a href="#videos" data-nav="videos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2l5 2.8-5 2.8z"/></svg><span></span></a>
-      <a href="#breathe" data-nav="breathe"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg><span></span></a>
       <a href="#ready" data-nav="ready"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h10M9 12h10M9 19h10"/><path d="m3.5 5 1.5 1.5L7.5 4M3.5 12l1.5 1.5L7.5 11M3.5 19l1.5 1.5L7.5 18"/></svg><span></span></a>
+      <a href="#breathe" data-nav="breathe"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg><span></span></a>
+      <a href="#survey" data-nav="survey"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4M8.5 10h7M8.5 14h7M8.5 18h4"/></svg><span></span></a>
     </nav>
 
     <!-- "Install this guide" card: only shown when the phone can install it. -->
@@ -685,18 +688,39 @@ html[lang="fa"] .body ol{list-style-type:persian}
       <button type="button" class="installX" id="instX" aria-label="Hide">✕</button>
     </div>
 
-    <!-- AM I READY? checklist: items in READY_ITEMS in the script; ticks stay on the phone. -->
-    <section class="ready" id="ready" aria-labelledby="readyTitle">
-      <details class="readyCard" id="readyCard">
-        <summary>
-          <span class="readyRing" aria-hidden="true"><svg viewBox="0 0 36 36"><circle class="rrBg" cx="18" cy="18" r="15.5"/><circle class="rrFg" id="readyArc" cx="18" cy="18" r="15.5"/></svg><span id="readyNum"></span></span>
-          <span class="readyHead"><span class="readyName" id="readyTitle"></span><span class="readyTag" id="readySub"></span></span>
-        </summary>
-        <div class="readyBody">
-          <ul class="readyList" id="readyList"></ul>
-          <p class="note readyNote" id="readyNote"></p>
-        </div>
-      </details>
+    <!-- IN A FIRE: the cards are filled in from CONTENT (sections) in the script. -->
+    <section id="guide" aria-labelledby="guideTitle">
+      <div class="plansHead guideHead">
+        <span class="plansIcon guideIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/></svg></span>
+        <h2 id="guideTitle"></h2>
+      </div>
+      <p class="vSub" id="guideSub"></p>
+      <div class="aidList fireList" id="list"></div>
+    </section>
+
+    <!-- FIRST AID: words from CONTENT (aid), pictures from AID_ART in the script. -->
+    <section class="aid" id="first-aid" aria-labelledby="aidTitle">
+      <div class="plansHead">
+        <span class="plansIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"/></svg></span>
+        <h2 id="aidTitle"></h2>
+      </div>
+      <p class="vSub" id="aidSub"></p>
+      <p class="aidFirstTitle" id="aidFirstTitle"></p>
+      <ol class="aidFirst" id="aidFirst"></ol>
+      <div class="aidList" id="aidList"></div>
+      <p class="note aidNote" id="aidNote"></p>
+    </section>
+    <!-- FLOOR PLANS: the list of floors is filled in from FLOOR_MAPS in the script. -->
+    <section class="plans" id="plans" aria-labelledby="plansTitle">
+      <div class="plansHead">
+        <span class="plansIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg>
+        </span>
+        <h2 id="plansTitle"></h2>
+      </div>
+      <p class="vSub" id="plansSub"></p>
+      <div class="floorMaps" id="floorMaps"></div>
+      <p class="note plansNote" id="plansNote"></p>
     </section>
 
     <!-- VIDEOS: to add one, put the .mp4 (and a .jpg preview) in the videos
@@ -720,17 +744,18 @@ html[lang="fa"] .body ol{list-style-type:persian}
       </div>
     </section>
 
-    <!-- FLOOR PLANS: the list of floors is filled in from FLOOR_MAPS in the script. -->
-    <section class="plans" id="plans" aria-labelledby="plansTitle">
-      <div class="plansHead">
-        <span class="plansIcon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5M15 6.5V20"/></svg>
-        </span>
-        <h2 id="plansTitle"></h2>
-      </div>
-      <p class="vSub" id="plansSub"></p>
-      <div class="floorMaps" id="floorMaps"></div>
-      <p class="note plansNote" id="plansNote"></p>
+    <!-- AM I READY? checklist: items in READY_ITEMS in the script; ticks stay on the phone. -->
+    <section class="ready" id="ready" aria-labelledby="readyTitle">
+      <details class="readyCard" id="readyCard">
+        <summary>
+          <span class="readyRing" aria-hidden="true"><svg viewBox="0 0 36 36"><circle class="rrBg" cx="18" cy="18" r="15.5"/><circle class="rrFg" id="readyArc" cx="18" cy="18" r="15.5"/></svg><span id="readyNum"></span></span>
+          <span class="readyHead"><span class="readyName" id="readyTitle"></span><span class="readyTag" id="readySub"></span></span>
+        </summary>
+        <div class="readyBody">
+          <ul class="readyList" id="readyList"></ul>
+          <p class="note readyNote" id="readyNote"></p>
+        </div>
+      </details>
     </section>
 
     <!-- BREATHING EXERCISE: the full-screen part is at the bottom of the page. -->
@@ -748,26 +773,19 @@ html[lang="fa"] .body ol{list-style-type:persian}
       </button>
       <p class="note breNote" id="breNote"></p>
     </section>
-    <!-- IN A FIRE: the cards are filled in from CONTENT (sections) in the script. -->
-    <section id="guide" aria-labelledby="guideTitle">
-      <div class="plansHead guideHead">
-        <span class="plansIcon guideIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/></svg></span>
-        <h2 id="guideTitle"></h2>
-      </div>
-      <div class="list" id="list"></div>
-    </section>
-
-    <!-- FIRST AID: words from CONTENT (aid), pictures from AID_ART in the script. -->
-    <section class="aid" id="first-aid" aria-labelledby="aidTitle">
-      <div class="plansHead">
-        <span class="plansIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"/></svg></span>
-        <h2 id="aidTitle"></h2>
-      </div>
-      <p class="vSub" id="aidSub"></p>
-      <p class="aidFirstTitle" id="aidFirstTitle"></p>
-      <ol class="aidFirst" id="aidFirst"></ol>
-      <div class="aidList" id="aidList"></div>
-      <p class="note aidNote" id="aidNote"></p>
+    <!-- QUESTIONNAIRES: one button per level (SURVEYS in the script, in this order).
+         The heading words are surveyTitle / surveySub in CONTENT. -->
+    <section class="survey" id="survey" aria-labelledby="surveyTitle">
+      <h2 id="surveyTitle"></h2>
+      <p class="vSub" id="surveySub"></p>
+    <button class="quizLaunch" id="quizLaunchBtn0" type="button">
+      <span id="quizLaunchTitle0"></span><span class="qChip" id="quizDone0" hidden></span>
+      <span class="sub" id="quizLaunchSub0"></span>
+    </button>
+    <button class="quizLaunch" id="quizLaunchBtn1" type="button">
+      <span id="quizLaunchTitle1"></span><span class="qChip" id="quizDone1" hidden></span>
+      <span class="sub" id="quizLaunchSub1"></span>
+    </button>
     </section>
     <!-- SHARE: words in SHARE_UI in the script. The QR code opens SITE_URL. -->
     <section class="share" id="share" aria-labelledby="shareTitle">
@@ -910,6 +928,10 @@ const CONTENT = {
 
   en: {
     appTitle: "Fire Safety for International Students",
+    buildingLabel: "RNIMU — Ostrovityanova 1",
+    guideSub: "Tap what is happening to see what to do.",
+    surveyTitle: "Help us improve this guide",
+    surveySub: "Two short questionnaires for our student project. Your answers show us what to fix.",
     vidTitle: "Watch: how to evacuate",
     vidSub: "Our team shows the real evacuation routes. Needs internet.",
     vid1: "From the university building",
@@ -1057,7 +1079,7 @@ const CONTENT = {
     ],
     sections: [
 
-      { title: "The alarm sounds",
+      { title: "The alarm sounds", tag: "Leave now — stairs, not the lift",
         html: `
           <ol>
             <li>Leave straight away. Do not wait to be told a second time, and do not wait to see fire or smoke.</li>
@@ -1069,7 +1091,7 @@ const CONTENT = {
           <p class="note">RNIMU instruction: the building should be clear within 5–7 minutes, and you should move 20–25 metres away from it.</p>`
       },
 
-      { title: "You see a fire",
+      { title: "You see a fire", tag: "Warn others, call 112, leave",
         html: `
           <ol>
             <li>Warn the people around you and set off the nearest alarm.</li>
@@ -1079,7 +1101,7 @@ const CONTENT = {
           <p>Only consider an extinguisher if the fire is small, you have been trained, other people already know, and there is a clear way out behind you. If any of those is missing, leave.</p>`
       },
 
-      { title: "Smoke in the corridor",
+      { title: "Smoke in the corridor", tag: "Stay low, find another way out",
         html: `
           <p>Smoke kills far more people than flames. It rises, so the cleanest air is low down.</p>
           <ol>
@@ -1089,7 +1111,7 @@ const CONTENT = {
           </ol>`
       },
 
-      { title: "You cannot get out",
+      { title: "You cannot get out", tag: "Close the door, call 112, go to the window",
         html: `
           <ol>
             <li>Stay in the room and close the door.</li>
@@ -1100,7 +1122,7 @@ const CONTENT = {
           <div class="never"><b>Do not open windows wide</b> if smoke is coming in from outside. Air movement can pull fire towards you.</div>`
       },
 
-      { title: "Clothing catches fire",
+      { title: "Clothing catches fire", tag: "Stop, drop and roll",
         html: `
           <p><strong>Stop. Drop. Roll.</strong></p>
           <ol>
@@ -1111,19 +1133,22 @@ const CONTENT = {
           <p>To help someone else, smother the flames with a coat or blanket, then cool the burn with cool running water for 20 minutes.</p>`
       },
 
-      { title: "Using an extinguisher",
+      { title: "Using an extinguisher", tag: "Only for a small fire — exit behind you",
         html: `
           <ol>
-            <li>Pull the pin.</li>
-            <li>Aim at the <strong>base</strong> of the fire, not at the flames.</li>
-            <li>Squeeze the handle.</li>
+            <li>Pull the pin (<b lang="ru">чека</b>). It is held by a small seal — pull hard and it breaks.</li>
+            <li>Aim the nozzle (<b lang="ru">раструб</b>) at the <strong>base</strong> of the fire, not at the flames.</li>
+            <li>Squeeze the lever (<b lang="ru">рычаг</b>).</li>
             <li>Sweep side to side.</li>
           </ol>
+          <div class="ruWords">Extinguishers in Russia are labelled in Russian. The letters on the side tell you the type:
+            <dl><dt lang="ru">ОП</dt><dd>powder — the most common one</dd>
+                <dt lang="ru">ОУ</dt><dd>carbon dioxide (CO₂) — do not hold the black horn, it gets cold enough to freeze your skin</dd></dl></div>
           <p>Keep your back to the exit so you can always leave. If the fire does not go out within seconds, leave.</p>`
       },
 
 
-      { title: "Not allowed in the dormitory",
+      { title: "Not allowed in the dormitory", tag: "Banned appliances and fire doors",
         html: `
           <div class="never"><b>Banned in rooms:</b> microwave ovens, hotplates, washing machines, oil heaters, charging e-bikes and scooters.</div>
           <p>Allowed, one each: kettle, iron, fridge. A heater up to 1100 W. Computer equipment up to 700 W total.</p>
@@ -1136,6 +1161,10 @@ const CONTENT = {
   },
 
   ru: {
+    buildingLabel: "РНИМУ — ул. Островитянова, 1",
+    guideSub: "Нажмите на то, что происходит, — и увидите, что делать.",
+    surveyTitle: "Помогите улучшить этот гид",
+    surveySub: "Два коротких опроса для нашего студенческого проекта. Ваши ответы покажут, что исправить.",
     appTitle: "Пожарная безопасность для иностранных студентов",
     vidTitle: "Видео: как эвакуироваться",
     vidSub: "Наша команда показывает настоящие пути эвакуации. Нужен интернет.",
@@ -1283,7 +1312,7 @@ const CONTENT = {
 
     ],
     sections: [
-      { title: "Сработала сигнализация",
+      { title: "Сработала сигнализация", tag: "Выходите сразу — по лестнице, не на лифте",
         html: `
           <ol>
             <li>Выходите сразу. Не ждите повторного сигнала и не ждите, пока увидите огонь или дым.</li>
@@ -1294,7 +1323,7 @@ const CONTENT = {
           <div class="never"><b>Лифтом пользоваться запрещено.</b> Он может остановиться на горящем этаже или обесточиться.</div>
           <p class="note">Инструкция РНИМУ: эвакуация — не более 5–7 минут, отойти от здания на 20–25 метров.</p>`
       },
-      { title: "Вы увидели пожар",
+      { title: "Вы увидели пожар", tag: "Предупредите других, звоните 112, уходите",
         html: `
           <ol>
             <li>Предупредите людей рядом и включите ближайший извещатель.</li>
@@ -1303,7 +1332,7 @@ const CONTENT = {
           </ol>
           <p>Браться за огнетушитель можно, только если очаг маленький, вы умеете им пользоваться, другие уже предупреждены и позади вас свободный выход. Нет хотя бы одного — уходите.</p>`
       },
-      { title: "Дым в коридоре",
+      { title: "Дым в коридоре", tag: "Пригнитесь, ищите другой выход",
         html: `
           <p>Дым опаснее огня. Он поднимается вверх, поэтому чистый воздух — внизу.</p>
           <ol>
@@ -1312,7 +1341,7 @@ const CONTENT = {
             <li>Если безопасного пути нет — вернитесь в помещение и закройте дверь.</li>
           </ol>`
       },
-      { title: "Выйти невозможно",
+      { title: "Выйти невозможно", tag: "Закройте дверь, звоните 112, подойдите к окну",
         html: `
           <ol>
             <li>Останьтесь в комнате, закройте дверь.</li>
@@ -1322,7 +1351,7 @@ const CONTENT = {
           </ol>
           <div class="never"><b>Не открывайте окно широко</b>, если дым идёт снаружи. Движение воздуха притягивает огонь.</div>`
       },
-      { title: "Загорелась одежда",
+      { title: "Загорелась одежда", tag: "Остановись, упади, катись",
         html: `
           <p><strong>Остановись. Упади. Катись.</strong></p>
           <ol>
@@ -1332,7 +1361,7 @@ const CONTENT = {
           </ol>
           <p>Чтобы помочь другому, накройте пламя курткой или одеялом, затем охлаждайте ожог прохладной водой 20 минут.</p>`
       },
-      { title: "Как пользоваться огнетушителем",
+      { title: "Как пользоваться огнетушителем", tag: "Только при маленьком огне — выход за спиной",
         html: `
           <ol>
             <li>Выдерните чеку.</li>
@@ -1340,9 +1369,12 @@ const CONTENT = {
             <li>Нажмите рычаг.</li>
             <li>Ведите из стороны в сторону.</li>
           </ol>
+          <div class="ruWords">Тип огнетушителя написан на корпусе:
+            <dl><dt>ОП</dt><dd>порошковый — встречается чаще всего</dd>
+                <dt>ОУ</dt><dd>углекислотный — не держитесь за раструб, он охлаждается так, что можно обморозить руку</dd></dl></div>
           <p>Стойте спиной к выходу, чтобы всегда можно было уйти. Не погасло за несколько секунд — уходите.</p>`
       },
-      { title: "Запрещено в общежитии",
+      { title: "Запрещено в общежитии", tag: "Запрещённые приборы и противопожарные двери",
         html: `
           <div class="never"><b>Запрещены в комнатах:</b> микроволновые печи, электроплиты, стиральные машины, масляные радиаторы, зарядка электросамокатов и велосипедов.</div>
           <p>Разрешено по одному: чайник, утюг, холодильник. Обогреватель до 1100 Вт. Компьютерная техника суммарно до 700 Вт.</p>
@@ -1354,6 +1386,9 @@ const CONTENT = {
   },
 
   fa: {
+    guideSub: "روی موقعیتی که پیش آمده بزنید تا ببینید چه باید کرد.",
+    surveyTitle: "به بهتر شدن این راهنما کمک کنید",
+    surveySub: "دو پرسشنامهٔ کوتاه برای پروژهٔ دانشجویی ما. پاسخ‌های شما نشان می‌دهد چه چیزی را باید درست کنیم.",
     appTitle: "ایمنی در برابر آتش‌سوزی برای دانشجویان بین‌المللی",
     vidTitle: "ویدیو: نحوه تخلیه اضطراری",
     vidSub: "تیم ما مسیرهای واقعی تخلیه را نشان می‌دهد. به اینترنت نیاز دارد.",
@@ -1501,7 +1536,7 @@ const CONTENT = {
 
     ],
     sections: [
-      { title: "آژیر به صدا درآمد",
+      { title: "آژیر به صدا درآمد", tag: "فوراً خارج شوید — از پله، نه آسانسور",
         html: `
           <ol>
             <li>بلافاصله خارج شوید. منتظر هشدار دوم یا دیدن آتش و دود نمانید.</li>
@@ -1512,7 +1547,7 @@ const CONTENT = {
           <div class="never"><b>هرگز از آسانسور استفاده نکنید.</b> ممکن است در طبقه آتش متوقف شود یا برق آن قطع شود.</div>
           <p class="note">دستورالعمل دانشگاه: تخلیه حداکثر ۵ تا ۷ دقیقه، و فاصله گرفتن ۲۰ تا ۲۵ متر از ساختمان.</p>`
       },
-      { title: "آتش می‌بینید",
+      { title: "آتش می‌بینید", tag: "به دیگران خبر دهید، با ۱۱۲ تماس بگیرید، خارج شوید",
         html: `
           <ol>
             <li>به اطرافیان هشدار دهید و نزدیک‌ترین آژیر را فعال کنید.</li>
@@ -1521,7 +1556,7 @@ const CONTENT = {
           </ol>
           <p>تنها زمانی سراغ خاموش‌کننده بروید که آتش کوچک باشد، آموزش دیده باشید، دیگران خبر داشته باشند و راه خروج پشت سر شما باز باشد.</p>`
       },
-      { title: "دود در راهرو",
+      { title: "دود در راهرو", tag: "خم شوید و راه دیگری پیدا کنید",
         html: `
           <p>دود بیش از شعله قربانی می‌گیرد. دود بالا می‌رود، پس هوای سالم پایین است.</p>
           <ol>
@@ -1530,7 +1565,7 @@ const CONTENT = {
             <li>اگر هیچ مسیر امنی نیست، به اتاق برگردید و در را ببندید.</li>
           </ol>`
       },
-      { title: "راه خروج ندارید",
+      { title: "راه خروج ندارید", tag: "در را ببندید، با ۱۱۲ تماس بگیرید، کنار پنجره بروید",
         html: `
           <ol>
             <li>در اتاق بمانید و در را ببندید.</li>
@@ -1540,7 +1575,7 @@ const CONTENT = {
           </ol>
           <div class="never"><b>پنجره را کاملاً باز نکنید</b> اگر دود از بیرون می‌آید. جریان هوا آتش را به سمت شما می‌کشد.</div>`
       },
-      { title: "لباس آتش گرفت",
+      { title: "لباس آتش گرفت", tag: "بایست، بیفت، بغلت",
         html: `
           <p><strong>بایست. بیفت. بغلت.</strong></p>
           <ol>
@@ -1550,17 +1585,20 @@ const CONTENT = {
           </ol>
           <p>برای کمک به دیگری، شعله را با کاپشن یا پتو خفه کنید، سپس ۲۰ دقیقه سوختگی را با آب خنک بشویید.</p>`
       },
-      { title: "استفاده از کپسول آتش‌نشانی",
+      { title: "استفاده از کپسول آتش‌نشانی", tag: "فقط برای آتش کوچک — خروجی پشت سرتان",
         html: `
           <ol>
-            <li>ضامن را بکشید.</li>
-            <li>به <strong>پایه</strong> آتش نشانه بگیرید، نه به شعله.</li>
-            <li>اهرم را فشار دهید.</li>
+            <li>ضامن (<b lang="ru" dir="ltr">чека</b>) را بکشید. با یک پلمب کوچک بسته شده — محکم بکشید تا پاره شود.</li>
+            <li>سر لوله (<b lang="ru" dir="ltr">раструб</b>) را به <strong>پایه</strong> آتش نشانه بگیرید، نه به شعله.</li>
+            <li>اهرم (<b lang="ru" dir="ltr">рычаг</b>) را فشار دهید.</li>
             <li>از یک طرف به طرف دیگر حرکت دهید.</li>
           </ol>
+          <div class="ruWords">روی کپسول‌ها در روسیه همه‌چیز به روسی نوشته شده. حروف روی بدنه نوع آن را نشان می‌دهد:
+            <dl><dt lang="ru" dir="ltr">ОП</dt><dd>پودری — رایج‌ترین نوع</dd>
+                <dt lang="ru" dir="ltr">ОУ</dt><dd>دی‌اکسید کربن (CO₂) — سر لولهٔ مشکی را با دست نگیرید، آن‌قدر سرد می‌شود که پوست را یخ می‌زند</dd></dl></div>
           <p>پشت شما به سمت خروجی باشد. اگر ظرف چند ثانیه خاموش نشد، خارج شوید.</p>`
       },
-      { title: "ممنوع در خوابگاه",
+      { title: "ممنوع در خوابگاه", tag: "وسایل ممنوع و درهای ضدحریق",
         html: `
           <div class="never"><b>ممنوع در اتاق‌ها:</b> مایکروویو، اجاق برقی، ماشین لباسشویی، شوفاژ روغنی، شارژ اسکوتر و دوچرخه برقی.</div>
           <p>مجاز، هرکدام یکی: کتری، اتو، یخچال. بخاری تا ۱۱۰۰ وات. تجهیزات رایانه‌ای مجموعاً تا ۷۰۰ وات.</p>
@@ -1584,6 +1622,18 @@ const langEl = document.getElementById('lang');
 // opens it (a section can also set its own: { id:"...", title:"...", html:`...` }).
 const GUIDE_IDS = ['fire-alarm','fire-see','fire-smoke','fire-trapped','fire-clothing','fire-extinguisher','fire-banned'];
 
+// Icon for each "In a fire" card, by the same address as above.
+const FIRE_ICONS = {
+  'fire-alarm':        '<path d="M6.5 16.5v-5a5.5 5.5 0 0 1 11 0v5l1.5 2h-14z"/><path d="M10 21a2 2 0 0 0 4 0"/><path d="M3 9.5a9.5 9.5 0 0 1 2.2-5M21 9.5a9.5 9.5 0 0 0-2.2-5"/>',
+  'fire-see':          '<path d="M12 3c.6 3.2-2.4 4.6-2.4 7.6 0 1.3.9 2.2 2 2.2 1.5 0 2.2-1.4 1.8-3.3 2.4 1.4 3.9 3.8 3.9 6.3A5.3 5.3 0 0 1 12 21a5.3 5.3 0 0 1-5.3-5.2C6.7 11 10 8.4 12 3z"/>',
+  'fire-smoke':        '<path d="M7.5 13.5h9a3.6 3.6 0 0 0 .4-7.2 5 5 0 0 0-9.6 1.4 2.9 2.9 0 0 0 .2 5.8z"/><path d="M12 16v5M9.5 18.5 12 21l2.5-2.5"/>',
+  'fire-trapped':      '<path d="M6 21V3.5h12V21"/><path d="M3 21h18"/><path d="M14.5 12.5v.01"/>',
+  'fire-clothing':     '<path d="M8 3 4 5.5 2.5 10l3 1.2V21h13v-9.8l3-1.2L20 5.5 16 3c-.5 1.7-2 2.8-4 2.8S8.5 4.7 8 3z"/>',
+  'fire-extinguisher': '<path d="M7.5 21.5V11a3.5 3.5 0 0 1 7 0v10.5z"/><path d="M11 7.5V4.5M8 4.5h6.5M14.5 4.5c2.5 0 4 2 4 5v3"/><path d="M7.5 14.5h7"/>',
+  'fire-banned':       '<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>'
+};
+let fireFirstRender = true;
+
 function render(code){
   const c = CONTENT[code];
   if(!c) return;
@@ -1595,7 +1645,7 @@ function render(code){
   document.getElementById('appTitle').textContent = c.appTitle;
   document.title = c.appTitle + ' — RNIMU';
   ['vidTitle','vidSub','vid1','vid2','vid3','plansTitle','plansSub','plansNote','breTitle','breSub','breBtn','breNote',
-   'guideTitle','aidTitle','aidSub','aidFirstTitle','aidNote'].forEach(id => {
+   'guideTitle','guideSub','aidTitle','aidSub','aidFirstTitle','aidNote','surveyTitle','surveySub','buildingLabel'].forEach(id => {
     document.getElementById(id).textContent = c[id] || CONTENT.en[id];
   });
   document.getElementById('emTitle').textContent = c.emTitle;
@@ -1610,10 +1660,16 @@ function render(code){
     const id = s.id || GUIDE_IDS[i];
     return `
     <details${id ? ` id="${id}"` : ''}>
-      <summary>${s.title}</summary>
+      <summary>
+        <span class="aidIco" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${FIRE_ICONS[id] || FIRE_ICONS['fire-see']}</svg></span>
+        <span class="aidHead"><span class="aidName">${s.title}</span>${s.tag ? `<span class="aidTag">${s.tag}</span>` : ''}</span>
+      </summary>
       <div class="body">${s.html}</div>
     </details>`;
   }).join('');
+  // The first card ("The alarm sounds") is open when the page first loads.
+  if(fireFirstRender && listEl.firstElementChild) wasOpen.push(listEl.firstElementChild.id);
+  fireFirstRender = false;
   reopenDetails(listEl, wasOpen);
   // Floor plans are filled in by the FLOOR PLANS script further down, once it has loaded.
   if(window.floorMapsReady) renderFloorMaps(code);
@@ -3119,9 +3175,9 @@ const AID_ICONS = {
 
 /* Words for the quick links, the tools and the install card. */
 const NAV_UI = {
-  en:{ label:'Go to', fire:'In a fire', aid:'First aid', say:'What to say', plans:'Floor plans', videos:'Videos', breathe:'Breathe', ready:'Checklist' },
-  ru:{ label:'Разделы', fire:'При пожаре', aid:'Первая помощь', say:'Что сказать', plans:'Планы этажей', videos:'Видео', breathe:'Дыхание', ready:'Чек-лист' },
-  fa:{ label:'بخش‌ها', fire:'هنگام آتش‌سوزی', aid:'کمک‌های اولیه', say:'چه بگوییم', plans:'نقشهٔ طبقات', videos:'ویدیوها', breathe:'تنفس', ready:'چک‌لیست' }
+  en:{ label:'Go to', fire:'In a fire', aid:'First aid', say:'What to say', plans:'Floor plans', videos:'Videos', breathe:'Breathe', ready:'Checklist', survey:'Questionnaires' },
+  ru:{ label:'Разделы', fire:'При пожаре', aid:'Первая помощь', say:'Что сказать', plans:'Планы этажей', videos:'Видео', breathe:'Дыхание', ready:'Чек-лист', survey:'Опросы' },
+  fa:{ label:'بخش‌ها', fire:'هنگام آتش‌سوزی', aid:'کمک‌های اولیه', say:'چه بگوییم', plans:'نقشهٔ طبقات', videos:'ویدیوها', breathe:'تنفس', ready:'چک‌لیست', survey:'پرسشنامه‌ها' }
 };
 
 const INSTALL_UI = {

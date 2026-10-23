@@ -63,13 +63,13 @@ const CONTENT = {
 
 Everything the app says is below that line, grouped by language (`en`, `ru`, `fa`). Change the words between the quote marks and nothing else. Keep every comma and bracket where it is.
 
-**To add a section:** copy one whole block that looks like
+**To add a card to "In a fire":** copy one whole block that looks like
 
 ```
-{ title: "...", html: `...` },
+{ title: "...", tag: "...", html: `...` },
 ```
 
-paste it after another one, and change the words.
+paste it after another one, and change the words. `tag` is the short grey line under the title (for example "Stay low, find another way out"). Give the new card an address and an icon too: add an `id: "fire-..."` to the block, and a matching line to `FIRE_ICONS` in `index.html` (a card without its own icon shows the flame).
 
 **To add a language:** copy an entire language block, change the two-letter code at the top of it, translate the text, and add one more line to the language menu near the top of the file:
 
@@ -105,7 +105,11 @@ That number is how phones know a new version exists. If you do not change it, pe
 
 ## The questionnaires
 
-The two green buttons under the emergency numbers open the questionnaires.
+The questionnaires are in the "Help us improve this guide" section near the
+bottom of the page (the "Questionnaires" quick link jumps there, and so does a
+link ending in `#survey`). They sit low on purpose: someone opening the page
+in an emergency should see the phone numbers and "In a fire" first. The two
+outlined buttons there open them.
 Each one sends its answers straight into its own Google Form — no one has
 to open the Form itself. The questions show in whichever language is
 selected; the answers are always saved in English.
@@ -173,6 +177,13 @@ whole answer away.
 then open the form's Responses tab and check that the answer arrived in
 the right questions. Then delete that test response. Google does not let
 the page read its reply, so the website cannot check this for you.
+
+## The order of the page
+
+Most urgent first: emergency numbers → In a fire → First aid → Floor plans →
+Videos → "Am I ready?" checklist → Breathing exercise → Questionnaires →
+Share. "The alarm sounds" is open when the page loads. If you move sections
+around in `index.html`, keep "In a fire" right under the quick links.
 
 ## First aid
 
@@ -246,6 +257,7 @@ Opening the link opens that card:
 | `#fire-alarm`, `#fire-see`, `#fire-smoke`, `#fire-trapped`, `#fire-clothing`, `#fire-extinguisher`, `#fire-banned` | one fire guide card, in order |
 | `#say` | the "what to say when you call" helper |
 | `#plans`, `#videos`, `#breathe`, `#share` | those sections |
+| `#survey` | the questionnaires |
 | `#ready` | the "Am I ready?" checklist, opened |
 
 For example: `https://fire-safety.github.io/-fire-safety/#aid-burns`
